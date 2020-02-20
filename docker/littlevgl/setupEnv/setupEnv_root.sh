@@ -10,6 +10,6 @@ cd "$MYDIR"
 # install dependencies
 if [ ! -f ~/.littlevgl_apt_done ]; then
     # development
-    apt-get -y install iproute2 iputils-ping build-essential libsdl2-dev
+    apt-get -y install iproute2 iputils-ping git build-essential libsdl2-dev
     touch ~/.littlevgl_apt_done
 fi
