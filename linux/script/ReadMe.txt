@@ -20,3 +20,8 @@ clearEmptyFolder
 	./clearEmptyFolder.sh /git/umixers
 
 ---------------------------------------------------------------------------------------------------------
+
+sed√¸¡Ó
+
+https://www.cnblogs.com/zoe233/p/11920446.html
+https://blog.csdn.net/qq_42334372/article/details/83037362
