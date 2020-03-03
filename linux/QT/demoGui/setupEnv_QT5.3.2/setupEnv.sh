@@ -28,6 +28,8 @@ if [ ! -f ~/.x86_qt5.3.2_done ]; then
 	
 	rm -rf $CACHE_DATA_DIR/qt-everywhere-opensource-src-5.3.2
 	tar zxvf qt-everywhere-opensource-src-5.3.2.tar.gz
+	
+	echo "QMAKE_CXXFLAGS += -std=gnu++98" >> qt-everywhere-opensource-src-5.3.2/qtbase/mkspecs/common/g++-unix.conf
 
 	cd $CACHE_DATA_DIR/qt-everywhere-opensource-src-5.3.2
 	./configure \
