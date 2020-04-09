@@ -16,3 +16,8 @@ Makefile.Debug
 *.bat
 release/
 debug/
+*.Debug
+*.Release
+*.vcxproj
+*.vcxproj.*
+*_plugin_import.cpp

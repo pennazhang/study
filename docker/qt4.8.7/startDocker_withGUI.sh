@@ -5,9 +5,11 @@ set -e
 DOCKER_IMAGE_NAME=qt4.8.7
 DOCKER_IMAGE_VERSION=0.2
 
-HOST_GIT_DIR=/home/share/pzhang/git
+HOST_GIT_DIR=/git
 DOCKER_GIT_DIR=/git
 
+PORT=5023
+PORT_MAP="-p $PORT:$PORT "
 if [ ! -d $HOST_GIT_DIR ]; then
     echo "$HOST_GIT_DIR not Exist."
     exit -1
@@ -42,5 +44,5 @@ echo "To build demoGui, run the following commands:"
 echo "    cd /git/docker/qt4.8.7/setupEnv/demoGui"
 echo "    qmake && make"
 docker run -it --rm $X11_OPTION $DIR_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION bash
-#docker run    --rm $X11_OPTION $DIR_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION sh -c "cd /git/docker/qt4.8.7/setupEnv/demoGui && qmake && make && ./demoGui"
+#docker run    --rm $X11_OPTION $PORT_MAP $DIR_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION sh -c "cd /git/docker/qt4.8.7/setupEnv/demoGui && qmake && make && ./demoGui"
 

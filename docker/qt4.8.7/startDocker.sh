@@ -5,7 +5,7 @@ set -e
 DOCKER_IMAGE_NAME=qt4.8.7
 DOCKER_IMAGE_VERSION=0.2
 
-HOST_GIT_DIR=/home/share/pzhang/git
+HOST_GIT_DIR=/git
 DOCKER_GIT_DIR=/git
 
 if [ ! -d $HOST_GIT_DIR ]; then
