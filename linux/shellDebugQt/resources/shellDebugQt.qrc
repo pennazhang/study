@@ -1,0 +1,7 @@
+<RCC>
+  <qresource>
+    <file>shellDebugQt.qss</file>
+    <file>logo.png</file>
+    <file>shellDebugQt.ico</file>
+  </qresource>
+</RCC>

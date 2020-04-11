@@ -22,8 +22,8 @@ MOC_DIR = $$PWD/../out/$$BUILDDIR/moc
 RCC_DIR = $$PWD/../out/$$BUILDDIR/rcc
 DESTDIR = $$PWD/../out/$$BUILDDIR/bin
 INCLUDEPATH += $$PWD/../Headers
-#RESOURCES += $$PWD/../resources/shellDebugQt.qrc
-#RC_FILE += 	$$PWD/../resources/shellDebugQt.rc
+RESOURCES += $$PWD/../resources/shellDebugQt.qrc
+RC_FILE += 	$$PWD/../resources/shellDebugQt.rc
 DEFINES += _CRT_SECURE_NO_WARNINGS 
 
 # Header file

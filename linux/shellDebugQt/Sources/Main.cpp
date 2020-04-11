@@ -3,6 +3,9 @@
 #include "MainApplication.h"
 #include "ShellServer.h"
 #include "ShellScript.h"
+#include <QScreen>
+#include <QFile>
+#include <QIcon>
 
 MainWidget *g_pMainWidget;
 MainApplication *g_pApp;
@@ -14,16 +17,31 @@ int main(int argc, char *argv[])
     MainApplication app(argc, argv);
 	g_pApp = &app;
 
-//    QFile qss(":kx200.qss");
-//    qss.open(QFile::ReadOnly);
-//    app.setStyleSheet(qss.readAll());
-//    qss.close();
-
 	/* Set the default font, so we can use it in all kinds of windows version */
-	QFont font("Tahoma", 8);
-	app.setFont(font);
+	{
+//		QFont font("Tahoma", 12);
+		QFont font = g_pApp->font();
+		font.setPointSize(10);
 
-//    app.setWindowIcon(QIcon(":/logo.png"));
+		QScreen *pScreen = g_pApp->primaryScreen ();
+		QRect mm =pScreen->availableGeometry() ;
+		int screen_width = mm.width();
+		int screen_height = mm.height();
+		float currentDPI = pScreen->logicalDotsPerInch();
+		QMessageBox::information(nullptr, "Information", QString("logicalDotsPerInch = %1, screenWidth = %2, screenHeight = %3").arg(currentDPI).arg(screen_width).arg(screen_height), "OK");
+
+//		int pointSize = qRound((float)8 * 96 / currentDPI);
+//		g_defaultFontSize = pointSize;
+//		font.setPointSize(pointSize);
+		
+		app.setFont(font);
+	}
+
+    QFile qss(":/shellDebugQt.qss");
+    qss.open(QFile::ReadOnly);
+    app.setStyleSheet(qss.readAll());
+    qss.close();
+    app.setWindowIcon(QIcon(":/logo.png"));
 
 	/* Create the Main Window */
     MainWidget w;
