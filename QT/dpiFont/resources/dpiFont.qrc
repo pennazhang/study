@@ -1,0 +1,7 @@
+<RCC>
+  <qresource>
+    <file>dpiFont.qss</file>
+    <file>logo.png</file>
+    <file>dpiFont.ico</file>
+  </qresource>
+</RCC>

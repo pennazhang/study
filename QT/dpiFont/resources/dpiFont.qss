@@ -1,0 +1,1267 @@
+
+#m_pCalcButton {
+    padding: 2px;
+	border: 2px;
+	border-image: url(:/calculate.png);
+}
+
+#m_pCalcButton:hover {
+    padding: 2px;
+	border: 2px;
+	border-image: url(:/calculate_black.png);
+}
+
+#m_pMenuBar {
+	background-color: transparent; 
+	spacing: 21 px;
+	font: 12px;
+	color: #ff0000;
+}
+
+#m_pMenuBar::item {
+	color: #d0d0d0;
+	background: transparent;
+ }
+
+#m_pGEQWidget {
+	border-radius: 6;
+	background-color:rgb(16, 16, 16); 
+ }
+
+#m_pSpeakerListWidget::item:selected {
+    border: 1px solid #6a6ea9;
+}
+
+#m_pGEQFrame{
+	border-radius: 6;
+	background-color:rgb(187, 187, 187); 
+}
+
+#m_pMenuBar::item:selected { 
+	color: #ffffff;
+    background: transparent;
+}
+
+#m_pTitleLabel {
+	font: 14px;
+	color: rgb(255, 255, 255);
+	border-radius: 3;
+	background-color:qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgb(10,100,133),stop:1 rgb(10, 40, 70));
+}
+
+#m_pTitleLabelDisabled {
+	font: 14px;
+	color: rgb(128, 128, 128);
+	border-radius: 3;
+	background-color:qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgb(239,239,239),stop:1 rgb(200, 200, 200));
+}
+
+#deviceListLabel {
+	font: bold, 14px;
+}
+
+QHeaderView {
+	font: bold;
+}
+
+#lineFrame {
+    color: #a0a0a0;
+}
+
+#backgroundFrame {
+    border: 1px solid #202020;
+}
+
+#chineseButton, #englishButton {
+	margin-top: 1px;
+	border: none;
+	padding: 0;
+	background-color: transparent;
+}
+
+#chineseButton:checked {
+	background-image: url(:/ChineseChecked.png);
+}
+#chineseButton:!checked {
+	background-image: url(:/ChineseUnchecked.png);
+}
+
+#englishButton:!checked {
+	background-image: url(:/EnglishUnchecked.png);
+}
+#englishButton:checked {
+	background-image: url(:/EnglishChecked.png);
+}
+
+#tabButton {
+	color: #E0E0E0; 
+	border: 1px solid #202020;
+	padding: 0;
+	Font: 12px;
+}
+
+#tabButton:hover {
+	color: #FFFFFF;
+}
+
+#tabButton:!checked {
+	background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 
+			stop: 0 #848484, 
+			stop: 1 #2A2A2A); 
+}
+
+#tabButton:checked {
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 
+			stop: 0 #0F6888, 
+			stop: 1 #0B3241); 
+}
+
+#mainWidget {
+	border: none;
+	background-color: #4c4c4c;
+}
+
+#topFrame {
+	border: none;
+	background-color: #030303;
+}
+
+#bottomFrame {
+	border: none;
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 
+			stop: 0 #135d7c, 
+			stop: 0.5 #114d65,
+			stop: 1 #0b3c50); 
+}
+
+#LineLabel {
+	Font: 12px;	
+	color: #101010; 
+	background-color: #bbbbbb;
+}
+
+#m_pChineseButton, #m_pEnglishButton {
+	margin-top: 1px;
+	border: none;
+	padding: 0;
+	background-color: transparent;
+}
+
+#m_pChineseButton:checked {
+	border-radius: 3;
+	margin-bottom: 1px;
+/*	background-image: url(:/ChineseChecked.png);  */
+	border-image: url(:/ChineseChecked.png) 0 0 0 0 stretch;
+}
+
+#m_pEnglishButton:checked {
+	border-radius: 3;
+	margin-bottom: 1px;
+/*	background-image: url(:/EnglishChecked.png); */
+	border-image: url(:/EnglishChecked.png) 0 0 0 0 stretch;
+}
+
+#m_pChineseButton:!checked {
+	border-radius: 3;
+	margin-bottom: 1px;
+/*	background-image: url(:/ChineseUnchecked.png); */
+	border-image: url(:/ChineseUnchecked.png) 0 0 0 0 stretch;
+}
+
+#m_pEnglishButton:!checked {
+	border-radius: 3;
+	margin-bottom: 1px;
+/*	background-image: url(:/EnglishUnchecked.png); */
+	border-image: url(:/EnglishUnchecked.png);
+}
+
+#headWidget {
+	background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0,
+				stop: 0 #d0d0d0, stop: 0.2 #e0e0e0,
+				stop: 0.4 #d0d0d0, stop: 0.6 #e0e0e0,
+				stop: 0.8 #d0d0d0, stop: 1 #e0e0e0);
+}
+
+QMessageBox {
+	Font: 12px;
+}
+
+QMenu {
+	Font: 12px;
+}
+
+QListView::item:selected {
+    background-color: cornsilk;
+    selection-color: #0a214c; 
+    selection-background-color: #C19A6B;
+}
+
+
+
+#ERConfigureDlg, #LRLinkDialog, #DeviceSettingDialog {
+	background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0,
+				stop: 0 #d0d0d0, stop: 0.2 #e0e0e0,
+				stop: 0.4 #d0d0d0, stop: 0.6 #e0e0e0,
+				stop: 0.8 #d0d0d0, stop: 1 #e0e0e0);
+}
+
+#PasswordSettingDialog, #AddMicDialog, #AddSpeakerDialog, #RecallDialog, #OpenPresetDialog, #MSSaveDialog {
+	background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0,
+				stop: 0 #e0e0e0, stop: 0.2 #f0f0f0,
+				stop: 0.4 #e0e0e0, stop: 0.6 #f0f0f0,
+				stop: 0.8 #e0e0e0, stop: 1 #f0f0f0);
+}
+
+#EQWidget {
+	qproperty-backgroundColor: rgb(3, 4, 5);
+} 
+
+#GroupBox {
+	image: none;
+	margin: none;
+	border: none;
+	content: none;
+	padding: none;
+}
+
+#m_pLine1, #m_pLine2, #m_pLine3, #m_pLine4 {
+    color: #D0D0D0;
+}
+
+
+#m_pPresetLabel {
+	color: #d0d0d0;
+}
+
+#m_pPresetNameLabel {
+	color: #d0d0d0;
+	padding: 1;
+	background-color: #030303;
+}
+
+#KX200BigButton {
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+				stop: 0 #ffffff, stop: 0.05 #d8d8d8,
+				stop: 0.1 #cbcbcb, stop: 0.15 #989898, 
+				stop: 0.2 #808080, stop: 0.9 #3f3f3f,
+				stop: 0.95 #b8b8b8, stop: 1 #ffffff);
+	border: 1px solid #404040;
+	border-radius: 2;
+    padding-bottom: 2px;
+    color: #e8e8e8;
+	font: 14px;
+}
+
+#KX200BigButton:hover {
+	color: #FFFFFF;
+}
+
+
+
+#BigBlueButton:enabled {
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+			stop: 0 #0F6888, 
+			stop: 1 #0B3241); 
+	border: 1px solid #000040;
+	border-radius: 2;
+    padding-bottom: 2px;
+    color: #e8e8e8;
+	font: 14px;
+}
+
+#BigBlueButton:hover {
+	color: #FFFFFF;
+	font: 16px;
+}
+
+#RadioButton {
+	padding: 4;	
+}
+
+#KX200BigButton:pressed {
+	color: #FFFFFF;
+    padding-left: 2px;
+    padding-top: 2px;
+}
+
+#KX200PushButton:!disabled {
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+				stop: 0 #ffffff, stop: 0.05 #d8d8d8,
+				stop: 0.1 #cbcbcb, stop: 0.15 #989898, 
+				stop: 0.2 #808080, stop: 0.9 #3f3f3f,
+				stop: 0.95 #b8b8b8, stop: 1 #ffffff);
+	border-top: 1px solid #404040;
+	border-left: 1px solid #404040;
+	border-right: 2px solid #606060;
+	border-bottom: 1px solid #202020;
+	border-radius: 3;
+    color: #d0d0d0;
+	font: 12px;
+}
+
+#KX200PushButton:hover {
+	color: #FFFFFF;
+}
+
+#KX200PushButton:pressed {
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+				stop: 0 #606060, 
+				stop: 0.15 #d8d8d8, 
+				stop: 0.2 #989898, 
+				stop: 0.95 #3f3f3f, stop: 1 #b8b8b8);
+
+/*
+				stop: 0 #ffffff, stop: 0.05 #d8d8d8,
+				stop: 0.1 #cbcbcb, stop: 0.15 #989898, 
+				stop: 0.2 #808080, stop: 0.9 #3f3f3f,
+				stop: 0.95 #b8b8b8, stop: 1 #ffffff);
+*/
+	border-top: 1px solid #202020;
+	border-left: 2px solid #404040;
+	border-right: 1px solid #202020;
+	border-bottom: 1px solid #202020;
+	color: #FFFFFF;
+    padding-left: 2px;
+    padding-top: 2px;
+}
+
+#m_pMarkLabel {
+/*     background-image: url(:/Lexicon_logo.png);   */
+/*    background-image: url(:/EnglishChecked.png);  */
+}
+
+#BigKX200PushButton {
+	font: 14px;
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+				stop: 0 #ffffff, stop: 0.05 #d8d8d8,
+				stop: 0.1 #cbcbcb, stop: 0.15 #989898, 
+				stop: 0.2 #808080, stop: 0.9 #3f3f3f,
+				stop: 0.95 #b8b8b8, stop: 1 #ffffff);
+	border-top: 1px solid #404040;
+	border-left: 1px solid #404040;
+	border-right: 2px solid #606060;
+	border-bottom: 1px solid #202020;
+	border-radius: 3;
+    color: #d0d0d0;
+}
+
+#BigKX200PushButton:hover {
+	color: #FFFFFF;
+}
+
+#BigKX200PushButton:pressed {
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+				stop: 0 #606060, 
+				stop: 0.15 #d8d8d8, 
+				stop: 0.2 #989898, 
+				stop: 0.95 #3f3f3f, stop: 1 #b8b8b8);
+
+/*
+				stop: 0 #ffffff, stop: 0.05 #d8d8d8,
+				stop: 0.1 #cbcbcb, stop: 0.15 #989898, 
+				stop: 0.2 #808080, stop: 0.9 #3f3f3f,
+				stop: 0.95 #b8b8b8, stop: 1 #ffffff);
+*/
+	border-top: 1px solid #202020;
+	border-left: 2px solid #404040;
+	border-right: 1px solid #202020;
+	border-bottom: 1px solid #202020;
+	color: #FFFFFF;
+    padding-left: 2px;
+    padding-top: 2px;
+}
+
+
+#m_pEQButton {
+	color: #f0f0f0;
+	border-radius: 0;
+	border: 1px solid #000000;
+	font: bold 12px;
+}
+
+
+#m_pEQButton:hover {
+	color: #FFFFFF;
+}
+
+#m_pEQButton:pressed {
+	color: #FFFFFF;
+    padding-left: 0px;
+    padding-top: 0px;
+}
+
+/*
+#m_pEQButton[markFlag=true][selectFlag=false] {
+    image: url(:/EQButton-enable-unfocus.png);
+}
+
+#m_pEQButton[markFlag=false][selectFlag=false] {
+    image: url(:/EQButton-disable-unfocus.png);
+}
+
+#m_pEQButton[markFlag=true][selectFlag=true] {
+	color: #FFFFFF;
+    image: url(:/EQButton-enable-focus.png);
+}
+
+#m_pEQButton[markFlag=false][selectFlag=true] {
+    image: url(:/EQButton-disable-focus.png);
+}
+*/
+
+#BigWidgetLabel {
+    font: 14px;
+}
+
+#WidgetLabel_14 {
+    font: 14px;
+}
+#WidgetLabel_16 {
+    font: 16px;
+}
+
+#WidgetLabel_18 {
+    font: 16px;
+}
+
+#WidgetLabel_20 {
+    font: 16px;
+}
+
+
+#ButtonLabel {
+	font: 14px; 
+	border: 1px solid #404040;
+	margin-top: 1;
+	margin-bottom: 9; 
+	margin-right: 9;
+    border-radius: 5;
+    padding: 1px;
+    color: #202020;  
+
+
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+				stop: 0.00 #A3A3A3, stop: 0.04 #E8E8E8,
+				stop: 0.08 #D5D5D5, stop: 0.12 #C2C2C2,
+				stop: 0.16 #AFAFAF, stop: 0.76 #949494,
+				stop: 0.80 #A1A1A1, stop: 0.84 #B4B4B4,
+				stop: 0.88 #C6C6C6, stop: 0.92 #CACACA,
+				stop: 0.96 #D6D6D6, stop: 1.00 #FFFFFF);
+
+}
+
+#ParamDialog {
+	background: transparent; 
+/*	background-color: red;  */
+/*	background: url(:/FrameBackground.png);  */
+/*
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+				stop: 0.00 #A3A3A3, stop: 0.04 #E8E8E8,
+				stop: 0.08 #D5D5D5, stop: 0.12 #C2C2C2,
+				stop: 0.16 #AFAFAF, stop: 0.76 #949494,
+				stop: 0.80 #A1A1A1, stop: 0.84 #B4B4B4,
+				stop: 0.88 #C6C6C6, stop: 0.92 #CACACA,
+				stop: 0.96 #D6D6D6, stop: 1.00 #FFFFFF);
+*/
+}
+
+QTableView {
+selection-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #c2d7e1, stop:1 #e9edef);
+selection-color: #0a057b;
+}
+
+
+#PhantomButton[markFlag=true]:enabled { 
+	background: #ff0000;
+}
+
+
+#muteButton { 
+/*
+	border: none;  
+	padding: 0;
+	background-color: transparent;  */
+}
+
+#muteButton[markFlag=true] { 
+	border-image: url(:/Mute.png);
+}  
+
+#muteButton[markFlag=true]:hover { 
+	border: 1px solid #0000FF;
+	border-radius: 3;
+    padding-bottom: 2px;
+/*	border-image: url(:/Mute_hover.png); */
+}  
+
+#muteButton[markFlag=false] { 
+	border-image: url(:/unMute.png);
+}  
+
+#muteButton[markFlag=false]:hover { 
+	border: 1px solid #0000FF;
+	border-radius: 3;
+    padding-bottom: 2px;
+/*	border-image: url(:/unMute_hover.png); */
+}  
+
+#connectButton:hover { 
+	color: #FFFFFF; 
+}  
+
+#connectButton:pressed {	
+	color: #FFFFFF;     
+	padding-left: 2px;     
+	padding-top: 2px; 
+} 
+				
+
+#connectButton[markFlag=true]:enabled { 
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 
+				stop: 0 #ffffff, stop: 0.05 #ffffff, stop: 0.1 #a6bad9, 
+				stop: 0.15 #7597c4,
+				stop: 0.25 #007acc, stop: 0.85 #007acc, 
+				stop: 0.90 #7597c4, stop: 0.95 #ffffff, stop: 1 #ffffff); 
+	border: 1px solid #404040; 
+	font: 12px; 
+	border-radius: 2; 
+	color: #d0d0d0; 
+} 
+
+#connectButton[markFlag=false]:enabled { 
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 
+				stop: 0 #ffffff, stop: 0.05 #e80000, 
+				stop: 0.1 #ab0000, stop: 0.15 #880000,  
+				stop: 0.2 #600000, stop: 0.9 #3f0000, 
+				stop: 0.95 #b80000, stop: 1 #ffffff); 
+	border: 1px solid #404040; 
+	border-radius: 2; 
+	font: 12px; 
+	color: #d0d0d0; 
+} 
+
+#m_pNormalLabel {
+	font: 12px;
+	color: #d0d0d0; 
+}
+
+#m_pVolumeLabel {
+	font: 26px;
+	color: #ffffff; 
+}
+ 
+#m_pDeviceHallLabel {
+	font: 12px;
+	color: #ffffff; 
+}
+
+#m_pOutputLabel {
+	font: 18px;
+	color: #ffffff;
+	background-color: #404040;
+}
+
+
+#CurrentChannel {
+	font: bold 60px;
+	color: #f0f0f0;
+}
+
+#BlackFont18 {
+	font: 18px;
+	color: #000000;
+}
+
+
+#BlackFont24 {
+	font: 24px;
+	color: #000000;
+}
+
+#BrownFont12 {
+	font: 12px;
+	color: #800020;
+/*	color: #f2684B; */
+}
+
+#RedFont12 {
+	font: 12px;
+	color: #f00020;
+}
+
+#RedFont14 {
+	font: 14px;
+	color: #f00020;
+}
+
+#RedFont16 {
+	font: 16px;
+	color: #f00020;
+}
+
+#BrownFont16 {
+	font: 16px;
+	color: #f2583B;
+}
+
+#BrownFont20 {
+	font: 20px;
+	color: #800020;
+}
+
+#BlackFont14 {
+	font: 14pt;
+	color: #000000;
+}
+
+#WhiteFont10 {
+	font: 10px;
+	color: #ffffff;
+}
+ 
+#WhiteFont12 {
+	font: 12px;
+	color: #ffffff;
+}
+
+#BlackFont10 {
+	font: 10pt;
+	color: #000000;
+}
+
+#BlackFont12 {
+	font: 12pt;
+	color: #000000;
+}
+
+#WhiteFont18 {
+	font: 18px;
+	color: #ffffff;
+}
+
+#BandEQLabel {
+	font: 20px;
+	color: #008DCE;
+}
+
+#WhiteFont14 {
+	font: 14px;
+	color: #ffffff;
+}
+
+#CheckBox_WhiteFont14:enabled {
+	font: 14px;
+	color: #ffffff;
+}
+
+#CheckBox_WhiteFont14::indicator:disabled {
+  image: url(:/null.png);
+}
+
+
+#WhiteFont16 {
+	font: 16px;
+	color: #ffffff;
+}
+
+#m_pNormalWhilteLabel {
+	font: 12px;
+	color: #ffffff; 	
+}
+
+#PanelWidget {
+	background-color: #909090; 
+}
+
+#m_pLineFrame {
+   color: #808080;
+}
+
+#m_pDelayLine {
+   color: #202020;
+}
+
+#ButtonVerticalSlider::groove:vertical {
+	border: 1px solid transparent; 
+}
+
+#ButtonVerticalSlider::handle {
+	 image: url(:/QSlider-button.png);
+ }
+
+#ButtonVerticalSlider::handle:focus {
+	 image: url(:/QSlider-button-selected.png); 
+ }
+
+#ButtonHorizontalSlider {
+	qproperty-textColor: #c0c0c0;
+}
+
+#ButtonHorizontalSlider::groove:horizontal {
+	border: 1px solid transparent; 
+	height: 25;
+}
+
+#ButtonHorizontalSlider::handle {
+	 image: url(:/QSlider-horizontal-button.png);
+ }
+
+#ButtonHorizontalSlider::handle:focus {
+	 image: url(:/QSlider-horizontal-button-selected.png); 
+ }
+/*
+#ButtonHorizontalSlider::groove {
+    position: absolute;
+	top: 20;  
+}
+*/
+#PanelMuteButton[markFlag=true]:enabled { 
+	border: transparent; 
+	background-color: transparent; 
+	border-image: url(:/light_red.png); 
+} 
+
+#PanelMuteButton[markFlag=false]:enabled { 
+	border: transparent; 
+	background-color: transparent; 
+	border-image: url(:/light_off.png); 
+} 
+
+#m_pTabFrame {
+    border: 6px solid black;
+    border-radius: 6px;
+    padding: 6px;
+	background-color: #595959;
+}
+
+#m_pOutputLevelLabel {
+	font: bold, 14px;
+	color: #ffffff;
+}
+
+#m_pMasterVolumeFrame {
+	border-radius: 8;
+	background-color: #c9c9c9; 
+}
+
+#headFrame {
+	border-radius: 8;
+	background-color: #6e6e6e; 
+}
+
+#headFrameDisabled {
+	border-radius: 8;
+	background-color: #aeaeae; 
+}
+
+#pinkNoise:hover { 
+	color: #FFFFFF; 
+}  
+
+#pinkNoise:pressed {	
+	color: #FFFFFF;     
+	padding-left: 2px;     
+	padding-top: 2px; 
+} 
+				
+
+#pinkNoise[markFlag=true]:enabled { 
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 
+				stop: 0 #ffffff, stop: 0.05 #ffffff, stop: 0.1 #a6bad9, 
+				stop: 0.15 #7597c4,
+				stop: 0.25 #007acc, stop: 0.85 #007acc, 
+				stop: 0.90 #7597c4, stop: 0.95 #ffffff, stop: 1 #ffffff); 
+	border: 1px solid #404040; 
+	font: 12px; 
+	border-radius: 2; 
+	color: #d0d0d0; 
+}
+
+#InputPresetButton:hover { 
+	color: #FFFFFF; 
+}  
+
+#InputPresetButton:pressed {	
+	color: #FFFFFF;     
+	padding-left: 2px;     
+	padding-top: 2px; 
+} 
+				
+
+#InputPresetButton[markFlag=true]:enabled { 
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 
+				stop: 0 #ffffff, stop: 0.05 #ffffff, stop: 0.1 #a6bad9, 
+				stop: 0.15 #7597c4,
+				stop: 0.25 #007acc, stop: 0.85 #007acc, 
+				stop: 0.90 #7597c4, stop: 0.95 #ffffff, stop: 1 #ffffff); 
+
+	border: 1px solid #404040; 
+	font: 12px; 
+	border-radius: 2; 
+	color: #d0d0d0; 
+}
+
+#speakerEditorButton:hover { 
+	color: #000000; 
+}  
+
+#speakerEditorButton:pressed {	
+	color: #FFFFFF;     
+	padding-left: 2px;     
+	padding-top: 2px; 
+} 
+				
+#speakerEditorButton[markFlag=false] { 
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+			stop: 0 #ececec, 
+			stop: 1 #999999); 
+	border: 1px solid #404040; 
+	font: 12px; 
+	border-radius: 2; 
+	color: #202020; 
+}
+
+#speakerEditorButton[markFlag=true] { 
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+			stop: 0 #0F98ba, 
+			stop: 1 #0a5878); 
+
+	border: 1px solid #404040; 
+	font: 12px; 
+	border-radius: 2; 
+	color: #d0d0d0; 
+}
+
+
+#GEQTuningButton, #PEQTuningButton {
+	border-radius: 5; 
+}
+
+#GEQTuningButton[markFlag=true] { 
+	border-image: url(:/GEQ_Enabled.png);
+}  
+
+#GEQTuningButton[markFlag=false] { 
+	border-image: url(:/GEQ_Disabled.png);
+}  
+
+#PEQTuningButton[markFlag=true] { 
+	border-image: url(:/PEQ_Enabled.png);
+}  
+
+#PEQTuningButton[markFlag=false] { 
+	border-image: url(:/PEQ_Disabled.png);
+}  
+
+#GEQValueLabel {
+	border: 1px solid #101010;	
+}
+
+#PEQWidget {
+	background-color: #101010;
+	border-radius: 6; 
+}
+
+#m_pLowShelfFilterWidget {
+	background-color: #8B608B;
+	border-radius: 4; 
+}
+
+#m_pHighShelfFilterWidget {
+	background-color: #7F9E60;
+	border-radius: 4; 
+}
+
+#m_pPEQWidget1 {
+	background-color: #F37322;
+	border-radius: 4; 
+}
+
+#m_pPEQWidget2 {
+	background-color: #4CC9EE;
+	border-radius: 4; 
+}
+
+#m_pPEQWidget3 {
+	background-color: #5050c0;
+	border-radius: 4; 
+}
+
+
+#bypassButton { 
+	border: 1px solid #404040; 
+	border-radius: 2; 
+	color: #e0e0e0;
+	font: 12px;
+}
+
+#bypassButton[markFlag=false] { 
+	/* green */
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 
+							stop: 0 #ffffff, stop: 0.05 #00e800, 
+							stop: 0.1 #00ab00, stop: 0.15 #00a800,  
+							stop: 0.2 #008000, stop: 0.9 #006000, 
+							stop: 0.95 #00b800, stop: 1 #ffffff); 
+}  
+
+#bypassButton:hover { 
+	color: #ffffff;
+}  
+
+#bypassButton[markFlag=true] { 
+	/* grey */
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 
+							stop: 0 #ffffff, stop: 0.05 #d8d8d8, 
+							stop: 0.1 #9b9b9b, stop: 0.15 #787878,  
+							stop: 0.2 #606060, stop: 0.9 #3f3f3f, 
+							stop: 0.95 #b8b8b8, stop: 1 #ffffff); 
+} 
+
+
+
+#bypassGreenButton:disabled { 
+	color: #808080;
+}
+
+#bypassGreenButton:enabled { 
+	border: 1px solid #404040; 
+	border-radius: 2; 
+	font: 12px;
+}
+
+#bypassGreenButton[markFlag=false]:enabled { 
+	/* green */
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 
+							stop: 0 #ffffff, stop: 0.05 #00e800, 
+							stop: 0.1 #00ab00, stop: 0.15 #00a800,  
+							stop: 0.2 #008000, stop: 0.9 #006000, 
+							stop: 0.95 #00b800, stop: 1 #ffffff); 
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+			stop: 0 #00ab00, 
+			stop: 1 #008000); 
+	color: #e0e0e0;
+}  
+#bypassGreenButton[markFlag=false]:hover { 
+	color: #ffffff;
+}  
+#bypassGreenButton[markFlag=true]:enabled { 
+	/* grey */
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+			stop: 0 #ececec, 
+			stop: 1 #999999); 
+	color: #202020;
+} 
+#bypassGreenButton[markFlag=true]:hover { 
+	color: #000000;
+}  
+
+#lightBlueBackground {
+	background: #3e8484;
+}
+
+#m_pGEQGroup {
+	border: 1px solid #202020; 
+	background: #202020;
+}
+
+#RTAGroup{
+	border: none;
+}
+
+#SpeakerGroupBox {
+	border: 1px solid #202020;
+	background: #bbbbbb;
+}
+
+#SpeakerGroupBox::title {
+	font: 14;
+	background: transparent;
+}
+
+#ActiveChannel {
+	border: 1px solid #202020;
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+			stop: 0 #057193, 
+			stop: 1 #046182); 
+}
+
+#disabledYellowButton:enabled { 
+	border: 1px solid #404040; 
+	border-radius: 2; 
+	font: 12px;
+}
+
+#disabledYellowButton[markFlag=false]:enabled { 
+	/* Yellow */
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+			stop: 0 #909040, 
+			stop: 1 #a0a030); 
+	color: #e0e0e0;
+}  
+#disabledYellowButton[markFlag=false]:hover { 
+	color: #ffffff;
+}  
+#disabledYellowButton[markFlag=true]:enabled { 
+	/* green */
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+			stop: 0 #00ab00, 
+			stop: 1 #008000); 
+	color: #e0e0e0;
+} 
+#disabledYellowButton[markFlag=true]:hover { 
+	color: #ffffff;
+}  
+
+
+
+#enableGreenButton:enabled { 
+	border: 1px solid #404040; 
+	border-radius: 2; 
+	font: 12px;
+}
+
+#enableGreenButton[markFlag=true]:enabled { 
+	/* green */
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+			stop: 0 #00ab00, 
+			stop: 1 #008000); 
+	color: #e0e0e0;
+}  
+#enableGreenButton[markFlag=true]:hover { 
+	color: #ffffff;
+}  
+#enableGreenButton[markFlag=false]:enabled { 
+	/* grey */
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+			stop: 0 #ececec, 
+			stop: 1 #999999); 
+	color: #202020;
+} 
+#enableGreenButton[markFlag=false]:hover { 
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+			stop: 0 #dddddd, 
+			stop: 1 #888888); 
+	color: #000000;
+}  
+
+#FilterEnableButton { 
+	border: 1px solid #404040; 
+	border-radius: 2; 
+	color: #e0e0e0;
+	font: 12px;
+}
+
+#FilterEnableButton[markFlag=true] { 
+	/* green */
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 
+							stop: 0 #ffffff, stop: 0.05 #00e800, 
+							stop: 0.1 #00ab00, stop: 0.15 #00a800,  
+							stop: 0.2 #008000, stop: 0.9 #006000, 
+							stop: 0.95 #00b800, stop: 1 #ffffff); 
+}  
+
+#FilterEnableButton:hover { 
+	color: #ffffff;
+}  
+
+#FilterEnableButton[markFlag=false] { 
+	/* grey */
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 
+							stop: 0 #ffffff, stop: 0.05 #d8d8d8, 
+							stop: 0.1 #9b9b9b, stop: 0.15 #787878,  
+							stop: 0.2 #606060, stop: 0.9 #3f3f3f, 
+							stop: 0.95 #b8b8b8, stop: 1 #ffffff); 
+} 
+
+#MuteButton[markFlag=true] { 
+	border-image: url(:/Mute_On.png);
+}  
+
+#MuteButton[markFlag=false] { 
+	border-image: url(:/Mute_Off.png);
+}  
+
+#DigitalButton[markFlag=true] { 
+	border-image: url(:/Digital_On.png);
+}  
+
+#DigitalButton[markFlag=false] { 
+	border-image: url(:/Digital_Off.png);
+}  
+
+#AnalogButton[markFlag=true] { 
+	border-image: url(:/Analog_On.png);
+}  
+
+#AnalogButton[markFlag=false] { 
+	border-image: url(:/Analog_Off.png);
+}  
+
+#MusicButton[markFlag=true] { 
+	border-image: url(:/Music_On.png);
+}  
+
+#MusicButton[markFlag=false] { 
+	border-image: url(:/Music_Off.png);
+}  
+
+
+#MicButton[markFlag=true] { 
+	border-image: url(:/Mic_On.png);
+}  
+
+#MicButton[markFlag=false] { 
+	border-image: url(:/Mic_Off.png);
+}  
+
+#MenuButton {
+	border-image: url(:/Menu_Off.png);
+}  
+
+#m_pLogTable {
+	font: 12px;
+}
+
+
+#yellowButton { 
+	border: 1px solid #404040; 
+	border-radius: 2; 
+	font: 12px;
+}
+
+#yellowButton:enabled { 
+	/* yellow */
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 
+							stop: 0 #ffffff, stop: 0.05 #fff800, 
+							stop: 0.1 #fff000, stop: 0.15 #f0f000,  
+							stop: 0.2 #f0d000, stop: 0.9 #f0d000, 
+							stop: 0.95 #ffb800, stop: 1 #ffffff); 
+	color: #202020;
+}  
+
+#yellowButton:hover { 
+	color: #000000; 
+}  
+
+QTabWidget::pane {
+    border: 5px solid black;
+	background: #c0c0c0; 
+}
+
+QTabWidget::tab-bar:top {
+    top: 1px;
+}
+
+QTabWidget::tab-bar:bottom {
+    bottom: 1px;
+}
+
+QTabWidget::tab-bar:left {
+    right: 1px;
+}
+
+QTabWidget::tab-bar:right {
+    left: 1px;
+}
+
+QTabBar::tab {
+	font: 12px;
+    width: 100px;
+	height: 25;
+	padding: 0;
+	color:  #ffffff;
+	border: 1px solid black; 
+}
+
+QTabBar::tab:selected {
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 
+			stop: 0 #0F6888, 
+			stop: 1 #0B3241); 
+}
+
+QTabBar::tab:!selected {
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 
+			stop: 0 #848484, 
+			stop: 1 #2A2A2A); 
+}
+
+#LittleSlider::focus {
+	padding: 1;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	margin-left: 2px;
+	margin-right: 2px;
+	border: 1px solid #20f020;
+}
+
+#LittleSlider::handle:enabled {
+	 image: url(:/qslider_button2.png);
+	 margin: -7px -7px -7px -7px;
+}
+/*
+#LittleSlider::handle:focus {
+	 image: url(:/qslider_button2_focus.png); 
+ }
+*/
+#LittleSlider::handle:disabled {
+	 image: url(:/qslider_button3.png);
+	 margin: -7px -7px -7px -7px;
+}
+
+#LittleSlider::groove:vertical:enabled {
+	background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, 
+			stop: 0 #000000, 
+			stop: 1 #c0c0c0); 
+	width: 3px;
+	margin-top: 7px;
+	margin-bottom: 7px;
+}
+
+#LittleSlider::groove:vertical:disabled {
+	background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, 
+			stop: 0 #000000, 
+			stop: 1 #ffffff); 
+	width: 3px;
+	margin-top: 7px;
+	margin-bottom: 7px;
+}
+
+#ScrollWidget {
+	background-color: transparent; 
+}
+
+#ScrollArea {
+	background-color: transparent; 
+/*	border: none;  */
+}
+
+#Black_Font_10px {
+	font: 10px;
+	color: #000000;
+}
+
+#Black_Font_12px {
+	font: 12px;
+	color: #000000;
+}
+
+#Black_Font_14px {
+	font: 14px;
+	color: #000000;
+}
+
+#Black_Font_10pt {
+	font: 10pt;
+	color: #000000;
+}
+
+#Black_Font_12pt {
+	font: 12pt;
+	color: #000000;
+}
+
+#Black_Font_14pt {
+	font: 14pt;
+	color: #000000;
+}
+
