@@ -23,3 +23,4 @@ debug/
 *_plugin_import.cpp
 *.opensdf
 *.sdf
+out/
