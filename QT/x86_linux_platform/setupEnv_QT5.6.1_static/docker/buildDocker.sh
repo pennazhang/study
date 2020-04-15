@@ -4,9 +4,9 @@ set -e
 
 DOCKER_IMAGE_NAME=qt5.6.1_static
 LINUX_VERSION=ubuntu:18.04
-DEBUG_FLAG=0
+DEBUG_FLAG=1
 #we will download qt or other software to $HOST_CACHE_DIR just once.
-HOST_CACHE_DIR=/git
+HOST_CACHE_DIR=/git/cacheData
 
 CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
 SETUP_ENV_DIR=`cd $CURRENT_DIR/..; pwd`

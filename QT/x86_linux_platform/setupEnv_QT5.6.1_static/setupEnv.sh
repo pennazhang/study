@@ -16,6 +16,7 @@ echo CACHE_DATA_DIR=$CACHE_DATA_DIR
 echo "CROSS_COMPILE=$CROSS_COMPILE"
 
 cd $MYDIR
+cp .qt-license ~/.
 sudo bash -e "$MYDIR/setupEnv_root.sh" "$1"
 
 #build and install QT5.6.1 for x86 in Linux
@@ -26,16 +27,16 @@ if [ ! -f ~/.x86_qt5.6.1_done ]; then
 		wget https://download.qt.io/archive/qt/5.6/5.6.1/single/qt-everywhere-opensource-src-5.6.1.tar.gz
 	fi
 	
-	rm -rf $CACHE_DATA_DIR/qt-everywhere-opensource-src-5.6.1
+	cd $CACHE_DATA_DIR
+	rm -rf qt-everywhere-opensource-src-5.6.1
 	tar zxvf qt-everywhere-opensource-src-5.6.1.tar.gz
 	
 	echo "QMAKE_CXXFLAGS += -std=gnu++98" >> qt-everywhere-opensource-src-5.6.1/qtbase/mkspecs/common/g++-unix.conf
 
 	cd $CACHE_DATA_DIR/qt-everywhere-opensource-src-5.6.1
 	./configure \
-        -opensource \
-        -confirm-license \
-        -release -shared \
+        -commercial -confirm-license \
+        -debug-and-release -static \
         -directfb -linuxfb \
         -no-kms -no-opengl -no-pch \
         -no-xinput2 -no-xcb-xlib -no-glib -no-pulseaudio \
