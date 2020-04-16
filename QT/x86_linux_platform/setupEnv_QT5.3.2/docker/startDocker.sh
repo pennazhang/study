@@ -33,7 +33,6 @@ if [ -z "$imageExistFlag" ];then
     exit -1
 fi
 
-sudo apt install -y x11-utils
 xhost
 export XSOCK=/tmp/.X11-unix
 export XAUTH=/tmp/.docker.xauth
