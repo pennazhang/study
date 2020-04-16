@@ -4,6 +4,9 @@ set -e
 
 DOCKER_IMAGE_NAME=qt4.8.7
 LINUX_VERSION=ubuntu:18.04
+DEBUG_FLAG=0
+#we will download qt or other software to $HOST_CACHE_DIR just once.
+HOST_CACHE_DIR=/git/cacheData
 
 CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
 SETUP_ENV_DIR=`cd $CURRENT_DIR/..; pwd`
@@ -11,7 +14,6 @@ SETUP_ENV_NAME=${SETUP_ENV_DIR##*/}
 PROJECT_DIR=`cd $CURRENT_DIR/../..; pwd`
 PROJECT_NAME=${PROJECT_DIR##*/}
 HOST_GIT_DIR=`cd $CURRENT_DIR/../../..; pwd`; 
-HOST_CACHE_DIR=$HOME/cacheData
 
 echo "CURRENT_DIR = $CURRENT_DIR"
 echo "SETUP_ENV_DIR = $SETUP_ENV_DIR"
@@ -22,7 +24,9 @@ echo "HOST_CACHE_DIR = $HOST_CACHE_DIR"
 
 
 if [ ! -d $HOST_CACHE_DIR ];then
-	mkdir -p $HOST_CACHE_DIR
+#    mkdir -p $HOST_CACHE_DIR
+    echo "Can not find HOST_CACHE_DIR: $HOST_CACHE_DIR, please create it first!"
+    exit 0
 fi
 
 #Auto run script in Docker to build environment
@@ -96,11 +100,13 @@ if [ -z "$imageExistFlag" ];then
     echo ------------------------------------------------------------------------------
     echo "auto run in Docker: cd $AUTO_START_DIR && ./$AUTO_START_SCRIPT\n"
 
-#    docker run -it ${FOLDER_MAP} --name "${TEMP_CONTAINER_NAME}" ${DOCKER_IMAGE_NAME}:0.1 bash
-    docker run ${FOLDER_MAP} --name "${TEMP_CONTAINER_NAME}" ${DOCKER_IMAGE_NAME}:0.1 sh -c "cd $AUTO_START_DIR && ./$AUTO_START_SCRIPT"
-    docker commit -m "build ${DOCKER_IMAGE_NAME}:0.2" ${TEMP_CONTAINER_NAME} $DOCKER_IMAGE_NAME:0.2
-    docker rm ${TEMP_CONTAINER_NAME}
-    
-    echo build $DOCKER_IMAGE_NAME:0.2 OK!
+    if [ $DEBUG_FLAG == 1 ]; then
+         docker run -it ${FOLDER_MAP} --name "${TEMP_CONTAINER_NAME}" ${DOCKER_IMAGE_NAME}:0.1 bash
+    else
+        docker run ${FOLDER_MAP} --name "${TEMP_CONTAINER_NAME}" ${DOCKER_IMAGE_NAME}:0.1 sh -c "cd $AUTO_START_DIR && ./$AUTO_START_SCRIPT"
+        docker commit -m "build ${DOCKER_IMAGE_NAME}:0.2" ${TEMP_CONTAINER_NAME} $DOCKER_IMAGE_NAME:0.2
+        docker rm ${TEMP_CONTAINER_NAME}
+        echo build $DOCKER_IMAGE_NAME:0.2 OK!
+    fi
 fi
 

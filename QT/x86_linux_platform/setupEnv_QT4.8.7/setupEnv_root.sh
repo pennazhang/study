@@ -10,7 +10,8 @@ cd "$MYDIR"
 # install dependencies
 if [ ! -f ~/.qt4.8.7_apt_done ]; then
     # development
-	apt-get update
-	apt-get -y install iproute2 iputils-ping build-essential qt4-dev-tools x11-apps
+    apt-get update
+    apt-get install -y iproute2 iputils-ping git 
+    apt-get install -y build-essential qt4-dev-tools x11-apps
     touch ~/.qt4.8.7_apt_done
 fi

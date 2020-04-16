@@ -9,14 +9,14 @@ CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
 SETUP_ENV_DIR=`cd $CURRENT_DIR/..; pwd`
 PROJECT_DIR=`cd $CURRENT_DIR/../..; pwd`
 PROJECT_NAME=${PROJECT_DIR##*/}
-HOST_GIT_DIR=`cd $CURRENT_DIR/../../..; pwd`; 
+HOST_GIT_DIR=/git 
 
 echo "CURRENT_DIR = $CURRENT_DIR"
 echo "PROJECT_NAME = $PROJECT_NAME"
 echo "HOST_GIT_DIR = $HOST_GIT_DIR"
 
 # The following PARMA is used to start docker images.
-RUN_ENV="-e QT_SELECT=x86_qt5.3.2"
+RUN_ENV="-e QT_SELECT=x86_qt5.3.2 -e LD_LIBRARY_PATH=/opt/qt5.3.2/lib -e QT_XKB_CONFIG_ROOT=/usr/share/X11/xkb"
 #HOST_NAME="-h juneBox_docker"
 DIR_MAP="-v $HOST_GIT_DIR:/git"
 USER_ID=`id -u`
@@ -39,7 +39,7 @@ export XSOCK=/tmp/.X11-unix
 export XAUTH=/tmp/.docker.xauth
 sudo rm -rf /tmp/.docker.xauth
 xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $XAUTH nmerge -
-X11_OPTION="-v $XSOCK:$XSOCK -v $XAUTH:$XAUTH -e XAUTHORITY=$XAUTH --env DISPLAY=${DISPLAY#localhost} --env QT_X11_NO_MITSHM=1 "
+X11_OPTION="-v $XSOCK:$XSOCK -v $XAUTH:$XAUTH -e XAUTHORITY=$XAUTH --env DISPLAY=${DISPLAY#localhost} --env QT_X11_NO_MITSHM=1 -v /usr/share/X11/xkb:/usr/share/X11/xkb"
 echo "X11_OPTION=$X11_OPTION"
 
 echo "To build demoGui, run the following commands:"

@@ -19,7 +19,7 @@ void ShellInputThread::run()
 	qDebug() << "[TID " << QThread::currentThreadId() << "] id "<< m_id << ", quit " << m_id;
 }
 
-MainApplication *g_pApp = nullptr;
+MainApplication *g_pApp = NULL;
 ShellInputThread *g_pInputThread;
 
 int main(int argc, char **argv)

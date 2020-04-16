@@ -9,7 +9,7 @@ CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
 SETUP_ENV_DIR=`cd $CURRENT_DIR/..; pwd`
 PROJECT_DIR=`cd $CURRENT_DIR/../..; pwd`
 PROJECT_NAME=${PROJECT_DIR##*/}
-HOST_GIT_DIR=`cd $CURRENT_DIR/../../..; pwd`; 
+HOST_GIT_DIR=/git 
 
 echo "CURRENT_DIR = $CURRENT_DIR"
 echo "PROJECT_NAME = $PROJECT_NAME"

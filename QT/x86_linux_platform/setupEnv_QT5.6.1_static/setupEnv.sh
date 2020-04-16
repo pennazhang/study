@@ -27,29 +27,19 @@ if [ ! -f ~/.x86_qt5.6.1_done ]; then
 		wget https://download.qt.io/archive/qt/5.6/5.6.1/single/qt-everywhere-opensource-src-5.6.1.tar.gz
 	fi
 	
-	cd $CACHE_DATA_DIR
 	rm -rf qt-everywhere-opensource-src-5.6.1
 	tar zxvf qt-everywhere-opensource-src-5.6.1.tar.gz
 	
 	echo "QMAKE_CXXFLAGS += -std=gnu++98" >> qt-everywhere-opensource-src-5.6.1/qtbase/mkspecs/common/g++-unix.conf
 
+	export QMAKESPEC=linux-g++
 	cd $CACHE_DATA_DIR/qt-everywhere-opensource-src-5.6.1
 	./configure \
-        -commercial -confirm-license \
-        -debug-and-release -static \
-        -directfb -linuxfb \
-        -no-kms -no-opengl -no-pch \
-        -no-xinput2 -no-xcb-xlib -no-glib -no-pulseaudio \
-        -no-alsa -no-gtkstyle -nomake examples -no-compile-examples -no-nis \
-        -no-cups -no-iconv -no-icu -no-fontconfig -no-dbus -no-xcb -no-eglfs \
-        -no-opengl \
-        -no-openssl \
-        -no-nis \
-        -no-opengl \
-        -no-cups \
-        -no-glib \
-        -no-xcursor -no-xfixes -no-xrandr -no-xrender \
-        -no-separate-debug-info \
+        -opensource -confirm-license \
+	-platform linux-g++ \
+        -release -shared \
+	-nomake tests -nomake examples \
+	-qt-xcb \
         --prefix=/opt/qt5.6.1
 
 	make -j4
