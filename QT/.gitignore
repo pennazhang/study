@@ -8,12 +8,12 @@
 
 *.o
 Makefile
-demoGui
 moc_*
 .qmake.stash
 Makefile.Release
 Makefile.Debug
 *.bat
+*.exe
 release/
 debug/
 *.Debug

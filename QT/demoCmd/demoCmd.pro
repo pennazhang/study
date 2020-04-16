@@ -1,6 +1,13 @@
-QT       += network
+QT       += core network
 TEMPLATE = app
 CONFIG += console
+
+OBJECTS_DIR = $$PWD/out/obj
+MOC_DIR = $$PWD/out/moc
+RCC_DIR = $$PWD/out/$$BUILDDIR/rcc
+DESTDIR = $$PWD/out/bin
+
+INCLUDEPATH += $$PWD/include
 
 SOURCES += $$PWD/src/main.cpp \
 
