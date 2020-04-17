@@ -33,7 +33,9 @@ if [ -z "$imageExistFlag" ];then
     exit -1
 fi
 
-xhost
+# disable X-Windows server access control, clients can connect from any host
+xhost +
+
 export XSOCK=/tmp/.X11-unix
 export XAUTH=/tmp/.docker.xauth
 sudo rm -rf /tmp/.docker.xauth

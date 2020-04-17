@@ -35,11 +35,13 @@ if [ ! -f ~/.x86_qt5.6.1_done ]; then
 	export QMAKESPEC=linux-g++
 	cd $CACHE_DATA_DIR/qt-everywhere-opensource-src-5.6.1
 	./configure \
-        -opensource -confirm-license \
-	-platform linux-g++ \
+        -commercial -confirm-license \
+		-platform linux-g++ \
+		-c++std c++11 \
         -release -shared \
-	-nomake tests -nomake examples \
-	-qt-xcb \
+		-nomake tests -nomake examples \
+		-qt-xcb -qt-sql-sqlite -qt-zlib \
+		-skip qtquickcontrols -skip qtquickcontrols2 -skip qtsensors -skip qtdoc \
         --prefix=/opt/qt5.6.1
 
 	make -j4

@@ -2,7 +2,7 @@
 
 set -e
 
-DOCKER_IMAGE_NAME=qt5.3.2
+DOCKER_IMAGE_NAME=qt4.8.7
 DOCKER_IMAGE_VERSION=0.2
 
 CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
@@ -16,7 +16,7 @@ echo "PROJECT_NAME = $PROJECT_NAME"
 echo "HOST_GIT_DIR = $HOST_GIT_DIR"
 
 # The following PARMA is used to start docker images.
-RUN_ENV="-e QT_SELECT=x86_qt5.3.2 -e LD_LIBRARY_PATH=/opt/qt5.3.2/lib -e QT_XKB_CONFIG_ROOT=/usr/share/X11/xkb"
+#RUN_ENV="-e QT_SELECT=junebox"
 #HOST_NAME="-h juneBox_docker"
 DIR_MAP="-v $HOST_GIT_DIR:/git"
 USER_ID=`id -u`
@@ -33,18 +33,20 @@ if [ -z "$imageExistFlag" ];then
     exit -1
 fi
 
-xhost
+# disable X-Windows server access control, clients can connect from any host
+xhost +
+
 export XSOCK=/tmp/.X11-unix
 export XAUTH=/tmp/.docker.xauth
 sudo rm -rf /tmp/.docker.xauth
 xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $XAUTH nmerge -
-X11_OPTION="-v $XSOCK:$XSOCK -v $XAUTH:$XAUTH -e XAUTHORITY=$XAUTH --env DISPLAY=${DISPLAY#localhost} --env QT_X11_NO_MITSHM=1 -v /usr/share/X11/xkb:/usr/share/X11/xkb"
+X11_OPTION="-v $XSOCK:$XSOCK -v $XAUTH:$XAUTH -e XAUTHORITY=$XAUTH --env DISPLAY=${DISPLAY#localhost} --env QT_X11_NO_MITSHM=1 "
 echo "X11_OPTION=$X11_OPTION"
 
 echo "To build demoGui, run the following commands:"
 echo "    cd /git/demoGui/src"
 echo "    qmake && make"
 docker run -it --rm $X11_OPTION $DIR_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION bash
-#docker run --rm $X11_OPTION $DIR_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION sh -c "cd /git/demoGui/src && qmake && make"
+#docker run --rm $X11_OPTION $DIR_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION sh -c "cd /git/junebox/software && ./makeAll.sh"
 
 
