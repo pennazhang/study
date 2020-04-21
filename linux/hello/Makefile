@@ -7,7 +7,7 @@ LD 				:= $(CROSS_COMPILE)ld
 AR 				:= $(CROSS_COMPILE)
 
 
-CPPFLAGS			+= -DRUN_SYSTEM_WHEN_POSSIBLE
+CPPFLAGS			+= -DRUN_SYSTEM_WHEN_POSSIBLE 
 LDFLAGS            += -g -Wall  -lstdc++
 
 ifeq ($(MAKELEVEL),0)
