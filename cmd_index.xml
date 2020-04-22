@@ -1,0 +1,41 @@
+<?xml  version="1.0" encoding="gb2312"?>
+<!-- Edited by XMLSpy -->
+<CATALOG>
+  <GROUP title="Harman Project">
+    <GROUP title="cpi2000">
+      <ITEM title="build docker">
+        <script>cd /git/cpi2000_software/setupEnv/docker
+./buildDocker.sh</script>
+      </ITEM>
+      <ITEM title="start docker">
+        <script>cd /git/cpi2000_software/setupEnv/docker
+./startDocker.sh</script>
+      </ITEM>
+      <ITEM title="build all">
+        <script>cd /git/cpi2000_software/software
+./makeAll.sh</script>
+      </ITEM>
+    </GROUP>
+    <GROUP title="junebox">
+      <ITEM title="build docker">
+        <script>cd /git/junebox/setupEnv/docker
+./buildDocker.sh</script>
+      </ITEM>
+      <ITEM title="start docker">
+        <script>cd /git/junebox/setupEnv/docker
+./startDocker.sh</script>
+      </ITEM>
+      <ITEM title="build all">
+        <script>cd /git/junebox/software
+./makeAll.sh</script>
+      </ITEM>
+    </GROUP>
+  </GROUP>
+  <GROUP title="QT Project">
+    <GROUP title="QT 4.8.7 for X86 Linux">
+      <ITEM title="张鹏，abc">
+        <script>cd /git/cpi2000/software &amp;&amp; ./build_all.sh</script>
+      </ITEM>
+    </GROUP>
+  </GROUP>
+</CATALOG>
