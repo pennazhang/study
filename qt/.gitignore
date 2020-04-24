@@ -12,7 +12,6 @@ moc_*
 .qmake.stash
 Makefile.Release
 Makefile.Debug
-*.bat
 *.exe
 release/
 debug/

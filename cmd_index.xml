@@ -1,41 +1,78 @@
 <?xml  version="1.0" encoding="gb2312"?>
 <!-- Edited by XMLSpy -->
 <CATALOG>
-  <GROUP title="Harman Project">
-    <GROUP title="cpi2000">
-      <ITEM title="build docker">
-        <script>cd /git/cpi2000_software/setupEnv/docker
+	<GROUP title="Harman Project">
+
+		<GROUP title="cpi2000">
+			<ITEM title="build docker">
+				<script>cd /git/cpi2000_software/setupEnv/docker
 ./buildDocker.sh</script>
-      </ITEM>
-      <ITEM title="start docker">
-        <script>cd /git/cpi2000_software/setupEnv/docker
+			</ITEM>
+			<ITEM title="start docker">
+				<script>cd /git/cpi2000_software/setupEnv/docker
 ./startDocker.sh</script>
-      </ITEM>
-      <ITEM title="build all">
-        <script>cd /git/cpi2000_software/software
+			</ITEM>
+			<ITEM title="build all">
+				<script>cd /git/cpi2000_software/software
 ./makeAll.sh</script>
-      </ITEM>
-    </GROUP>
-    <GROUP title="junebox">
-      <ITEM title="build docker">
-        <script>cd /git/junebox/setupEnv/docker
+			</ITEM>
+		</GROUP>
+		<GROUP title="junebox">
+			<ITEM title="build docker">
+				<script>cd /git/junebox/setupEnv/docker
 ./buildDocker.sh</script>
-      </ITEM>
-      <ITEM title="start docker">
-        <script>cd /git/junebox/setupEnv/docker
+			</ITEM>
+			<ITEM title="start docker">
+				<script>cd /git/junebox/setupEnv/docker
 ./startDocker.sh</script>
-      </ITEM>
-      <ITEM title="build all">
-        <script>cd /git/junebox/software
+			</ITEM>
+			<ITEM title="build all">
+				<script>cd /git/junebox/software
 ./makeAll.sh</script>
-      </ITEM>
-    </GROUP>
-  </GROUP>
-  <GROUP title="QT Project">
-    <GROUP title="QT 4.8.7 for X86 Linux">
-      <ITEM title="张鹏，abc">
-        <script>cd /git/cpi2000/software &amp;&amp; ./build_all.sh</script>
-      </ITEM>
-    </GROUP>
-  </GROUP>
+			</ITEM>
+		</GROUP>
+	</GROUP>
+	<GROUP title="QT">
+		<GROUP title="setup QT Platform">
+			<GROUP title="QT 4.8.7 for X86 Linux">
+				<ITEM title="build docker">
+					<script>cd /git/study/qt/x86_linux_platform/setupEnv_QT4.8.7/docker
+./buildDocker.sh</script>
+				</ITEM>
+				<ITEM title="start docker">
+					<script>cd /git/study/qt/x86_linux_platform/setupEnv_QT4.8.7/docker
+./startDocker.sh</script>
+				</ITEM>
+			</GROUP>
+			<GROUP title="QT 5.11.1 for X86 Linux">
+				<ITEM title="build docker">
+					<script>cd /git/study/qt/x86_linux_platform/setupEnv_QT5.11.1/docker
+./buildDocker.sh</script>
+				</ITEM>
+				<ITEM title="start docker">
+					<script>cd /git/study/qt/x86_linux_platform/setupEnv_QT5.11.1/docker
+./startDocker.sh</script>
+				</ITEM>
+			</GROUP>
+		</GROUP>
+		<GROUP title="study">
+
+			<GROUP title="process">
+				<ITEM title="process_start">
+					<script>cd /git/study/qt/study/process/process_start
+mkdir -p /git/temp
+cp -rf test.sh /git/temp/.	
+cd project
+rm -rf Makefile out
+qmake
+make
+./out/bin/process_start</script>
+
+				</ITEM>
+			</GROUP>
+
+
+		</GROUP>
+
+	</GROUP>
 </CATALOG>
