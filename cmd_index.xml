@@ -69,6 +69,17 @@ make
 ./out/bin/process_start</script>
 
 				</ITEM>
+				<ITEM title="process_execute">
+					<script>cd /git/study/qt/study/process/process_execute
+mkdir -p /git/temp
+cp -rf test.sh /git/temp/.	
+cd project
+rm -rf Makefile out
+qmake
+make
+./out/bin/process_execute</script>
+
+				</ITEM>
 			</GROUP>
 
 
