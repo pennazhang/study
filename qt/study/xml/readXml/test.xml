@@ -1,0 +1,16 @@
+<?xml  version="1.0" encoding="utf-8"?>
+<!-- Edited by XMLSpy -->
+<persons name="Qt">
+	<person id="1">
+		<name>wang</name>
+		<age>24</age>
+		<email>wang@sina.com</email>
+		<website>www.sina.com</website>	
+	</person>
+	<person id="2">
+		<name>sugon</name>
+		<age>25</age>
+		<email>wang@sugon.com</email>
+		<website>www.sugon.com</website>	
+	</person>
+</persons>

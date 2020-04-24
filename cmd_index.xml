@@ -100,6 +100,18 @@ make
 ./out/bin/process_connect_finish</script>
 				</ITEM>
 			</GROUP>
+			<GROUP title="xml">
+				<ITEM title="read_xml">
+						<script>/git/study/qt/study/xml/readXml
+mkdir -p /git/temp
+cp -rf test.xml /git/temp/.
+cd project
+rm -rf Makefile out
+qmake
+make
+./out/bin/readXml</script>			
+				</ITEM>
+			</GROUP>
 		</GROUP>
 	</GROUP>
 </CATALOG>
