@@ -54,6 +54,18 @@
 ./startDocker.sh</script>
 				</ITEM>
 			</GROUP>
+			<ITEM title="demoCmd">
+				<script>cd /git/study/qt/demoCmd/project
+qmake
+make
+out/bin/demoCmd</script>
+			</ITEM>
+			<ITEM title="demoGui">
+				<script>cd /git/study/qt/demoGui/project
+qmake
+make
+out/bin/demoGui</script>
+			</ITEM>
 		</GROUP>
 		<GROUP title="study">
 			<GROUP title="process">

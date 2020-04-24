@@ -1,33 +1,23 @@
 #include <QTextStream>
-#include <QtCore/QCoreApplication>
 #include <QThread>
+#include <QProcess>
+#include <QString>
+#include "mainApplication.h"
+
+
+MainApplication *g_pApp = NULL;
+QTextStream *g_pCout = NULL;
 
 int main(int argc, char **argv)
 {
 	QString strCmd;
-    QCoreApplication app(argc, argv);
+    MainApplication app(argc, argv);
+	g_pApp = &app;
 
 	QTextStream cout(stdout);
 	QTextStream cin(stdin);
-	
-	cout << "[TID " << QThread::currentThreadId() << "] Hello, world!\n";
+	g_pCout = &cout;
 
-	for ( ; ; )
-	{
-		cout << "\nType \"exit\" to quit...\n -> ";
-		cout.flush();
-		
-		cin >> strCmd;
-		if (strCmd != "exit")
-		{
-			cout << strCmd << endl;
-		}
-		else
-		{
-			break;
-		}
-
-	}
-	return 0;
-//	return g_pApp->exec();
+	cout << "Hello, world!\n";
+	return g_pApp->exec();
 }
