@@ -16,11 +16,11 @@ CONFIG(debug, debug|release){
 } else {
     BUILDDIR = release
 }
-OBJECTS_DIR = $$PWD/../out/$$BUILDDIR/obj
-UI_DIR = $$PWD/../out/$$BUILDDIR/ui
-MOC_DIR = $$PWD/../out/$$BUILDDIR/moc
-RCC_DIR = $$PWD/../out/$$BUILDDIR/rcc
-DESTDIR = $$PWD/../out/$$BUILDDIR/bin
+OBJECTS_DIR = $$PWD/out/$$BUILDDIR/obj
+UI_DIR = $$PWD/out/$$BUILDDIR/ui
+MOC_DIR = $$PWD/out/$$BUILDDIR/moc
+RCC_DIR = $$PWD/out/$$BUILDDIR/rcc
+DESTDIR = $$PWD/out/$$BUILDDIR/bin
 INCLUDEPATH += $$PWD/../Headers
 RESOURCES += $$PWD/../resources/dpiFont.qrc
 RC_FILE += 	$$PWD/../resources/dpiFont.rc

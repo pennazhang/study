@@ -2,9 +2,9 @@ QT       += network
 TEMPLATE = app
 DEPENDPATH += .
 INCLUDEPATH += . $$PWD/../../common
-OBJECTS_DIR = $$PWD/../out/obj
-MOC_DIR = $$PWD/../out/moc
-DESTDIR = $$PWD/../out/bin
+OBJECTS_DIR = $$PWD/out/obj
+MOC_DIR = $$PWD/out/moc
+DESTDIR = $$PWD/out/bin
 CONFIG += console
 
 #COMMON_DIR = $$PWD/../../common
