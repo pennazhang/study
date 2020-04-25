@@ -16,9 +16,8 @@ HEADERS +=  $$PWD/../src/mainApplication.h \
 SOURCES += $$PWD/../src/main.cpp \
 	$$PWD/../src/mainApplication.cpp \
 
-
 win32 {
-	DEFINES += __WINDOWS__ 
+	DEFINES += _WINDOWS_
 #    LIBS += \
 #        $$PWD/../libs/win7/i386/setupapi.lib \
 #        $$PWD/../libs/win7/ia64/setupapi.lib \
@@ -26,7 +25,7 @@ win32 {
 }
 
 linux-arm-g++ {
-	DEFINES += __LINUX__ 
+	DEFINES += _LINUX_ARM_
 	
 #	HEADERS += $$COMMON_DIR/Hal.h \
 #				$$COMMON_DIR/shellDebug/tcpServerFrame.h \
@@ -37,4 +36,8 @@ linux-arm-g++ {
 #				$$COMMON_DIR/shellDebug/tcpServerFrame.cpp \
 #				$$COMMON_DIR/shellDebug/commonLib.cpp
 					
+}
+
+linux-g++*{
+	DEFINES += _LINUX_
 }
