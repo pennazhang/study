@@ -11,7 +11,6 @@ cd "$MYDIR"
 if [ ! -f ~/.qt4.8.7_apt_done ]; then
     # development
     apt-get update
-    apt-get install -y iproute2 iputils-ping git 
-    apt-get install -y build-essential qt4-dev-tools x11-apps
+	sudo apt install -y git iproute2 iputils-ping x11-utils dos2unix zip unzip	apt-get install -y build-essential qt4-dev-tools 
     touch ~/.qt4.8.7_apt_done
 fi

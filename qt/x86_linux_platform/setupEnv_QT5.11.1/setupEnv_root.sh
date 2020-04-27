@@ -11,7 +11,7 @@ cd "$MYDIR"
 if [ ! -f ~/.qt5_apt_done ]; then
     # development
     apt-get update
-    apt-get install -y iproute2 iputils-ping git 
-    apt-get install -y build-essential qt5-default x11-apps
+	sudo apt install -y git iproute2 iputils-ping x11-utils dos2unix zip unzip  x11-apps
+    apt-get install -y build-essential qt5-default
     touch ~/.qt5_apt_done
 fi
