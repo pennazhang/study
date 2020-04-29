@@ -17,6 +17,7 @@
 ./makeAll.sh</script>
 			</ITEM>
 		</GROUP>
+
 		<GROUP title="junebox">
 			<ITEM title="build docker">
 				<script>cd /git/junebox/setupEnv/docker
@@ -31,6 +32,40 @@
 ./makeAll.sh</script>
 			</ITEM>
 		</GROUP>
+
+		<GROUP title="ui-mixers">
+			<ITEM title="build docker">
+				<script>cd /git/ui-mixers/scripts/ubuntu_install_dev/docker
+./buildDocker.sh</script>
+			</ITEM>
+			<ITEM title="start docker">
+				<script>cd /git/ui-mixers/scripts/ubuntu_install_dev/docker
+./startDocker.sh</script>
+			</ITEM>
+			<ITEM title="build ui24">
+				<script>echo "Please run the following command in docker: ui-mixer:0.2"
+cd /git/ui-mixers/ui24
+./build_ui24_local.sh</script>
+			</ITEM>
+		</GROUP>
+
+		<GROUP title="junebox">
+			<ITEM title="build docker">
+				<script>cd /git/junebox/setupEnv/docker
+./buildDocker.sh</script>
+			</ITEM>
+			<ITEM title="start docker">
+				<script>cd /git/junebox/setupEnv/docker
+./startDocker.sh</script>
+			</ITEM>
+			<ITEM title="build all">
+				<script>echo "Please run the following command in docker: junebox:0.2"
+cd /git/junebox/software
+./makeAll.sh</script>
+			</ITEM>
+		</GROUP>
+
+		
 	</GROUP>
 	<GROUP title="QT">
 		<GROUP title="setup QT Platform">

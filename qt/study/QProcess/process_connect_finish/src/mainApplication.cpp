@@ -27,16 +27,22 @@ MainApplication::MainApplication(int argc, char *argv[])
 
 void MainApplication::onReadStdout()
 {
-    while(m_process.canReadLine())
+	if (m_process.state() == QProcess::Running)
 	{
-        *g_pCout << m_process.readLine() << endl;
-    }
+	    while(m_process.canReadLine())
+		{
+	        *g_pCout << m_process.readLine() << endl;
+	    }
+	}
 }
 
 void MainApplication::onReadStderr()
 {
-	QString strOutput = m_process.readAllStandardError();
-	*g_pCout << "stderr: " << strOutput;
+	if (m_process.state() == QProcess::Running)
+	{
+		QString strOutput = m_process.readAllStandardError();
+		*g_pCout << "stderr: " << strOutput;
+	}
 }
 
 MainApplication::~MainApplication()
@@ -47,7 +53,7 @@ void MainApplication::onTimer_CmdLoop()
 {
 	static int index = 0;
 	index++;
-
+	
 	switch (index)
 	{
 	case 1:
