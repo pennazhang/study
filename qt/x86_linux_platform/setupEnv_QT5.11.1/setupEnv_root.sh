@@ -8,10 +8,13 @@ MYDIR=`dirname "$0"`; MYDIR=`realpath "$MYDIR"`; export MYDIR
 cd "$MYDIR"
 
 # install dependencies
-if [ ! -f ~/.qt5_apt_done ]; then
+if [ ! -f ~/.qt5.11.1_apt_done ]; then
     # development
-    apt-get update
-	sudo apt install -y git iproute2 iputils-ping x11-utils dos2unix zip unzip  x11-apps
-    apt-get install -y build-essential qt5-default
-    touch ~/.qt5_apt_done
+    apt update
+    apt install -y git iproute2 iputils-ping x11-utils dos2unix zip unzip  x11-apps
+    apt install -y build-essential qt5-default
+    # gnome-calculator is only available for Ubuntu 18.04 or above
+    apt install -y gnome-calculator
+    ln -s /git/study/bin/runCommand.sh /bin/runCommand.sh
+    touch ~/.qt5.11.1_apt_done
 fi

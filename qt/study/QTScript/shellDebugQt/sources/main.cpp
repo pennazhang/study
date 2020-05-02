@@ -1,8 +1,8 @@
 ﻿
-#include <MainWidget.h>
-#include "MainApplication.h"
-#include "ShellServer.h"
-#include "ShellScript.h"
+#include "mainWidget.h"
+#include "mainApplication.h"
+#include "shellServer.h"
+#include "shellScript.h"
 #include <QScreen>
 #include <QFile>
 #include <QIcon>
@@ -23,13 +23,14 @@ int main(int argc, char *argv[])
 		QFont font = g_pApp->font();
 		font.setPointSize(10);
 
+#if 0		
 		QScreen *pScreen = g_pApp->primaryScreen ();
 		QRect mm =pScreen->availableGeometry() ;
 		int screen_width = mm.width();
 		int screen_height = mm.height();
 		float currentDPI = pScreen->logicalDotsPerInch();
 		QMessageBox::information(nullptr, "Information", QString("logicalDotsPerInch = %1, screenWidth = %2, screenHeight = %3").arg(currentDPI).arg(screen_width).arg(screen_height), "OK");
-
+#endif
 //		int pointSize = qRound((float)8 * 96 / currentDPI);
 //		g_defaultFontSize = pointSize;
 //		font.setPointSize(pointSize);

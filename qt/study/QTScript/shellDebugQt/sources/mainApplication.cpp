@@ -1,4 +1,4 @@
-#include "MainApplication.h"
+#include "mainApplication.h"
 #include <QTime>
 
 MainApplication::MainApplication(int &argc, char *argv[])

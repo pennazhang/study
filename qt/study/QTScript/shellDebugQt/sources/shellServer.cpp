@@ -1,4 +1,4 @@
-#include "ShellServer.h"
+#include "shellServer.h"
 
 ShellServer::ShellServer(QObject *parent) :
     QTcpServer(parent)

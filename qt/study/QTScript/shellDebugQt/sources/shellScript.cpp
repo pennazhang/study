@@ -1,9 +1,9 @@
 #include <QWaitCondition>
-#include "MainWidget.h"
-#include "ShellScript.h"
+#include "mainWidget.h"
+#include "shellScript.h"
 #include <QDebug>
-#include "ShellSocket.h"
-#include "MainApplication.h"
+#include "shellSocket.h"
+#include "mainApplication.h"
 
 ShellScript* g_pShellScript = nullptr;
 

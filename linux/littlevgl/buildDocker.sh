@@ -3,7 +3,7 @@
 set -e
 
 DOCKER_IMAGE_NAME=littlevgl
-LINUX_VERSION=ubuntu:18.10
+LINUX_VERSION=ubuntu:18.04
 
 CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
 PROJECT_DIR=$CURRENT_DIR

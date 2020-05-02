@@ -17,7 +17,7 @@ MainData g_mainData;
 #define SESSION_NAME	"settings"
 #define KEY_COMMAND_FILE	"Command File"
 #define KEY_CURRENT_NODE	"LAST CHOICE"
-#define DEFAULT_COMMAND_FILE "cmd_index.xml"
+#define DEFAULT_COMMAND_FILE "/git/study/cmd_index.xml"
 
 
 MainData::MainData()

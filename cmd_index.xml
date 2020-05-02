@@ -79,33 +79,33 @@ cd /git/junebox/software
 ./startDocker.sh</script>
 				</ITEM>
 			</GROUP>
-			<GROUP title="QT 5.11.1 for X86 Linux">
-				<ITEM title="build docker">
-					<script>cd /git/study/qt/x86_linux_platform/setupEnv_QT5.11.1/docker
-./buildDocker.sh</script>
-				</ITEM>
-				<ITEM title="start docker">
-					<script>cd /git/study/qt/x86_linux_platform/setupEnv_QT5.11.1/docker
-./startDocker.sh</script>
-				</ITEM>
-			</GROUP>
 			<ITEM title="demoCmd">
 				<script>cd /git/study/qt/demoCmd/project
+rm -rf Makefile out
 qmake
 make
 out/bin/demoCmd</script>
 			</ITEM>
 			<ITEM title="demoGui">
 				<script>cd /git/study/qt/demoGui/project
+rm -rf Makefile out
 qmake
 make
 out/bin/demoGui</script>
 			</ITEM>
+			<ITEM title="shellDebugQt">
+				<script>cd /git/study/qt/study/QTScript/shellDebugQt/project
+rm -rf Makefile out
+qmake
+make
+./out/release/bin/shellDebugQt</script>
+			</ITEM>
+
 		</GROUP>
 		<GROUP title="study">
 			<GROUP title="process">
 				<ITEM title="process_start">
-					<script>cd /git/study/qt/study/process/process_start
+					<script>cd /git/study/qt/study/QProcess/process_start
 mkdir -p /git/temp
 cp -rf test.sh /git/temp/.
 cd project
@@ -115,7 +115,7 @@ make
 ./out/bin/process_start</script>
 				</ITEM>
 				<ITEM title="process_execute">
-					<script>cd /git/study/qt/study/process/process_execute
+					<script>cd /git/study/qt/study/QProcess/process_execute
 mkdir -p /git/temp
 cp -rf test.sh /git/temp/.
 cd project
@@ -125,7 +125,7 @@ make
 ./out/bin/process_execute</script>
 				</ITEM>
 				<ITEM title="process_connect_finish">
-					<script>cd /git/study/qt/study/process/process_connect_finish
+					<script>cd /git/study/qt/study/QProcess/process_connect_finish
 mkdir -p /git/temp
 cp -rf test.sh /git/temp/.
 cd project
@@ -137,7 +137,7 @@ make
 			</GROUP>
 			<GROUP title="xml">
 				<ITEM title="read_xml">
-						<script>/git/study/qt/study/xml/readXml
+						<script>cd /git/study/qt/study/xml/readXml
 mkdir -p /git/temp
 cp -rf test.xml /git/temp/.
 cd project
@@ -149,4 +149,30 @@ make
 			</GROUP>
 		</GROUP>
 	</GROUP>
+	<GROUP title="Other Project">
+		<GROUP title="Little_vgl">
+			<ITEM title = "Build Docker">
+				<script>cd /git/study/linux/littlevgl
+./buildDocker.sh</script>
+			</ITEM>
+
+			<ITEM title = "Start Docker">
+				<script>cd /git/study/linux/littlevgl
+./startDocker.sh</script>
+			</ITEM>
+			<ITEM title = "Build and Run">
+				<script>			
+if [ ! -f /git/pc_simulator_sdl_eclipse/Makefile ]; then
+	rm -rf /git/pc_simulator_sdl_eclipse
+	git clone --recursive https://github.com/littlevgl/pc_simulator_sdl_eclipse.git
+fi
+cd /git/pc_simulator_sdl_eclipse
+make clean
+make -j8
+./demo			</script>
+			</ITEM>
+ 
+		</GROUP>
+	</GROUP>
+
 </CATALOG>

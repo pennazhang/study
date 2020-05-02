@@ -17,7 +17,7 @@ echo "HOST_GIT_DIR = $HOST_GIT_DIR"
 
 # The following PARMA is used to start docker images.
 RUN_ENV="-e QT_SELECT=x86_qt5.3.2 -e LD_LIBRARY_PATH=/opt/qt5.3.2/lib -e QT_XKB_CONFIG_ROOT=/usr/share/X11/xkb"
-#HOST_NAME="-h juneBox_docker"
+HOST_NAME="-h qt5_3_2"
 DIR_MAP="-v $HOST_GIT_DIR:/git"
 USER_ID=`id -u`
 GROUP_ID=`id -g`
@@ -40,7 +40,7 @@ export XSOCK=/tmp/.X11-unix
 export XAUTH=/tmp/.docker.xauth
 sudo rm -rf /tmp/.docker.xauth
 xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $XAUTH nmerge -
-X11_OPTION="-v $XSOCK:$XSOCK -v $XAUTH:$XAUTH -e XAUTHORITY=$XAUTH --env DISPLAY=${DISPLAY#localhost} --env QT_X11_NO_MITSHM=1 "
+X11_OPTION="-v $XSOCK:$XSOCK -v $XAUTH:$XAUTH -e XAUTHORITY=$XAUTH -e DISPLAY --net=host --env QT_X11_NO_MITSHM=1 "
 #echo "X11_OPTION=$X11_OPTION"
 
 #echo "To build demoGui, run the following commands:"

@@ -3,7 +3,7 @@
 #define ShellDebug_H
 
 #include <QTcpServer>
-#include "ShellSocket.h"
+#include "shellSocket.h"
 
 class ShellServer : public QTcpServer
 {

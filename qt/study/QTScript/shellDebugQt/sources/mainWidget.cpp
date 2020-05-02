@@ -1,9 +1,9 @@
-#include <MainWidget.h>
+#include "mainWidget.h"
 #include <QVariant>
 #include <QMessageBox>
 #include <QFileDialog>
-#include "ShellSocket.h"
-#include "MainApplication.h"
+#include "shellSocket.h"
+#include "mainApplication.h"
 #include <QScreen>
 
 void setPosition(QWidget *pWidget, qreal x, qreal y, qreal w, qreal h)
@@ -56,18 +56,18 @@ MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent)
 {
 	/* Create Label */
-	QScreen *pScreen = g_pApp->primaryScreen ();
-	QRect mm =pScreen->availableGeometry() ;
-	int screen_width = mm.width();
-	int screen_height = mm.height();
-	float currentDPI = pScreen->logicalDotsPerInch();
+//	QScreen *pScreen = g_pApp->primaryScreen ();
+//	QRect mm =pScreen->availableGeometry() ;
+//	int screen_width = mm.width();
+//	int screen_height = mm.height();
+//	float currentDPI = pScreen->logicalDotsPerInch();
 
 	QFont font("Tahoma");
 	font.setPointSize(8);
 	g_pApp->setFont(font);
 
 	m_pLabel_default = new QLabel(this);
-	m_pLabel_default->setText(QString("DPI = %1, screen_width = %2, screen_height = %3").arg(currentDPI).arg(screen_width).arg(screen_height));
+//	m_pLabel_default->setText(QString("DPI = %1, screen_width = %2, screen_height = %3").arg(currentDPI).arg(screen_width).arg(screen_height));
 	m_pLabel_default->setWordWrap(true);
 
 	m_pLabel_10px = new QLabel(tr("Black_Font_10px"), this);
