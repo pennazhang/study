@@ -8,13 +8,13 @@
 #include <QDomDocument>   
 
 MainApplication *g_pApp = NULL;
-QTextStream *g_pCout = NULL;
+QTextStream g_stdOut(stdout);
 
 bool xml_parse(QString file_name)  
 {  
     if(file_name.isEmpty())
 	{
-		*g_pCout << "file_name is NULL" << endl;
+		g_stdOut << "file_name is NULL" << endl;
 		return false;  
 	}
 
@@ -22,7 +22,7 @@ bool xml_parse(QString file_name)
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {  
 //       QMessageBox::information(NULL, QString("title"), QString("open error!"));
-		*g_pCout << "Failed to open file:" << file_name << endl;
+		g_stdOut << "Failed to open file:" << file_name << endl;
 		return false;  
     }
   
@@ -32,7 +32,7 @@ bool xml_parse(QString file_name)
 	if(!document.setContent(&file, false, &error, &row, &column))
     {  
 //       QMessageBox::information(NULL, QString("title"), QString("parse file failed at line row and column") + QString::number(row, 10) + QString(",") + QString::number(column, 10));
-		*g_pCout << "Failed to setContent, error = " << error << ", row = " << row << endl;
+		g_stdOut << "Failed to setContent, error = " << error << ", row = " << row << endl;
 		file.close();
 		return false;  
     }  
@@ -41,7 +41,7 @@ bool xml_parse(QString file_name)
 	if(document.isNull())
     {  
  //      QMessageBox::information(NULL, QString("title"), QString("document is null!"));
-		*g_pCout << "document is NULL" << endl;
+		g_stdOut << "document is NULL" << endl;
 		 return false;  
     }  
   
@@ -53,7 +53,7 @@ bool xml_parse(QString file_name)
     {
 		//name should be Qt
 		QString name = root.attributeNode("name").value(); 
-		*g_pCout << root_tag_name << "=" << name << endl; 
+		g_stdOut << root_tag_name << "=" << name << endl; 
     }
       
     //get the first node.
@@ -79,7 +79,7 @@ bool xml_parse(QString file_name)
        //get the value for "id". id1 should be equal as id2.
        QString id_1 = element.attributeNode("id").value(); 
        QString id_2 = element.attribute("id");
-	   *g_pCout << "\t tag_name=" << tag_name << ",   id = " << id_1 << endl; 
+	   g_stdOut << "\t tag_name=" << tag_name << ",   id = " << id_1 << endl; 
 
        //get the child nodes. cound = 4, including: name, age, email and website
        QDomNodeList child_list = element.childNodes();
@@ -90,7 +90,7 @@ bool xml_parse(QString file_name)
            QDomElement child_element = child_dom_node.toElement();
            QString child_tag_name = child_element.tagName();
            QString child_tag_value = child_element.text();
-		   *g_pCout << "\t\t" << child_tag_name << " = " << child_tag_value << endl;
+		   g_stdOut << "\t\t" << child_tag_name << " = " << child_tag_value << endl;
        }
     }
 
@@ -112,11 +112,7 @@ int main(int argc, char **argv)
     MainApplication app(argc, argv);
 	g_pApp = &app;
 
-	QTextStream cout(stdout);
-	QTextStream cin(stdin);
-	g_pCout = &cout;
-
-	cout << "Hello, world!\n";
+	g_stdOut << "Hello, world!\n";
 #ifdef _WINDOWS_	
 	xml_parse("c:\\temp\\test.xml");
 #endif

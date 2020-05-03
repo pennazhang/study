@@ -1,0 +1,15 @@
+<RCC>
+  <qresource>
+    <file>translateGui.qss</file>
+    <file>chineseChecked.png</file>
+    <file>chineseUnchecked.png</file>
+    <file>englishChecked.png</file>
+    <file>englishUnchecked.png</file>
+    <file>logo.png</file>
+    <file>translateGui.ico</file>
+    
+    <file>translateGui_en.qm</file>
+    <file>translateGui_zh.qm</file>
+
+  </qresource>
+</RCC>

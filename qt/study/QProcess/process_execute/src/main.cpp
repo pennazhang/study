@@ -9,8 +9,8 @@ int main(int argc, char **argv)
 	QString strCmd;
     QCoreApplication app(argc, argv);
 
-	QTextStream cout(stdout);
-	QTextStream cin(stdin);
+	QTextStream stdOut(stdout);
+	QTextStream stdIn(stdin);
 	
 #ifdef _LINUX_
 	QProcess::execute("bash -c /git/temp/test.sh");
@@ -20,7 +20,7 @@ int main(int argc, char **argv)
 	QProcess::execute("c:/temp/test.bat");
 #endif
 
-	cout << "Hello, world!\n";
+	stdOut << "Hello, world!\n";
 	return 0;	
 //	return g_pApp->exec();
 }

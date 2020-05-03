@@ -32,5 +32,5 @@ protected:
 
 
 extern MainApplication *g_pApp;
-extern QTextStream *g_pCout;
+extern QTextStream g_stdOut;
 #endif

@@ -6,7 +6,7 @@
 
 
 MainApplication *g_pApp = NULL;
-QTextStream *g_pCout = NULL;
+QTextStream g_stdOut(stdout);
 
 int main(int argc, char **argv)
 {
@@ -14,10 +14,6 @@ int main(int argc, char **argv)
     MainApplication app(argc, argv);
 	g_pApp = &app;
 
-	QTextStream cout(stdout);
-	QTextStream cin(stdin);
-	g_pCout = &cout;
-
-	cout << "Hello, world!\n";
+	g_stdOut << "Hello, world!\n";
 	return g_pApp->exec();
 }

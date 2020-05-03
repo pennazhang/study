@@ -12,4 +12,4 @@ fi
 #to build checkCmd, we need docker qt5.11.1:0.2 first
 cd /git/study/qt/x86_linux_platform/setupEnv_QT5.11.1/docker
 ./buildDocker.sh
-./startDocker.sh "cd /git/study/bin && ./build_checkCmd.sh"
+./startDocker.sh "cd /git/study/bin && ./build_checkCmd_qt5.sh"

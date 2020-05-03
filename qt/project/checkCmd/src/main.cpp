@@ -9,8 +9,8 @@
 #include <QDomDocument> 
 #include "main.h"
 
-QTextStream cout(stdout);
-QTextStream cin(stdin);
+QTextStream stdOut(stdout);
+QTextStream stdIn(stdin);
 MainData g_mainData;
 
 #define INI_FILE_NAME	"checkCmd.ini"
@@ -47,16 +47,16 @@ void MainData::loadCurrentNodeId()
 	QStringList nodeList = strNode.split(" ", QString::SkipEmptyParts);
 //	for (int i = 0; i < nodeList.count(); i++)
 //	{
-//		cout << i << " " << nodeList.at(i).trimmed() << endl;
+//		stdOut << i << " " << nodeList.at(i).trimmed() << endl;
 //	}
 	int count = nodeList.at(0).trimmed().toInt();
 
 	m_currentNodeId.clear();
-//	cout << count << endl;
-//	cout << nodeList.count() << "  " << strNode << endl;
+//	stdOut << count << endl;
+//	stdOut << nodeList.count() << "  " << strNode << endl;
 	if (count != nodeList.count() - 1)
 	{
-		cout << "Invalid Node List: " << strNode << endl;
+		stdOut << "Invalid Node List: " << strNode << endl;
 		saveCurrentNodeId();
 		return;
 	}
@@ -119,7 +119,7 @@ NODE_TYPE MainData::getCurrentNode(QStringList & childList, QString &strCommand)
 
     if(m_strXMLFilePath.isEmpty())
 	{
-		cout << "file_name is NULL" << endl;
+		stdOut << "file_name is NULL" << endl;
 		return NODE_NONE;  
 	}
 
@@ -127,7 +127,7 @@ NODE_TYPE MainData::getCurrentNode(QStringList & childList, QString &strCommand)
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {  
 //       QMessageBox::information(NULL, QString("title"), QString("open error!"));
-		cout << "Failed to open file:" << m_strXMLFilePath << endl;
+		stdOut << "Failed to open file:" << m_strXMLFilePath << endl;
 		return NODE_NONE;  
     }
   
@@ -137,7 +137,7 @@ NODE_TYPE MainData::getCurrentNode(QStringList & childList, QString &strCommand)
 	if(!document.setContent(&file, false, &error, &row, &column))
     {  
 //       QMessageBox::information(NULL, QString("title"), QString("parse file failed at line row and column") + QString::number(row, 10) + QString(",") + QString::number(column, 10));
-		cout << "Failed to setContent, error = " << error << ", row = " << row << endl;
+		stdOut << "Failed to setContent, error = " << error << ", row = " << row << endl;
 		file.close();
 		return NODE_NONE;  
     }  
@@ -146,7 +146,7 @@ NODE_TYPE MainData::getCurrentNode(QStringList & childList, QString &strCommand)
 	if(document.isNull())
     {  
  //      QMessageBox::information(NULL, QString("title"), QString("document is null!"));
-		cout << "document is NULL" << endl;
+		stdOut << "document is NULL" << endl;
 		 return NODE_NONE;  
     }  
   
@@ -157,7 +157,7 @@ NODE_TYPE MainData::getCurrentNode(QStringList & childList, QString &strCommand)
     QString root_tag_name = root.tagName();
 	if (root_tag_name != "CATALOG")
 	{
-		cout << "Invalid tag for root node: " << root_tag_name << endl;
+		stdOut << "Invalid tag for root node: " << root_tag_name << endl;
 		return NODE_NONE;
 	}
 
@@ -191,14 +191,14 @@ NODE_TYPE MainData::getCurrentNode(QStringList & childList, QString &strCommand)
 		QDomElement child_element = element.firstChildElement();
 		if (child_element.tagName() != "script")
 		{
-			cout << "Invalid tag Name: " << child_element.tagName();
+			stdOut << "Invalid tag Name: " << child_element.tagName();
 			return NODE_NONE;
 		}
 		strCommand = element.text();
 	}
 	else
 	{
-		cout << "Invalid tag name" << tag_name << endl;
+		stdOut << "Invalid tag name" << tag_name << endl;
 		return NODE_NONE;
 	}
 
@@ -218,7 +218,7 @@ int main(int argc, char **argv)
 		QString strChoice;
 		int nChoice;
 
-		cout << "---------------------------------------------------------------------" << endl;
+		stdOut << "---------------------------------------------------------------------" << endl;
 		NODE_TYPE nodeType = g_mainData.getCurrentNode(childList, strCommand);
 		QStringList currentNodeName = g_mainData.getCurrentNodeName();
 		switch (nodeType)
@@ -226,52 +226,52 @@ int main(int argc, char **argv)
 			case NODE_NONE:
 			{
 				QString strCommandFilePath = g_mainData.getXMLFilePath() ;
-				cout << QString("Faild to read file: %1, Please check the configure file: %2!").arg(strCommandFilePath).arg(INI_FILE_NAME) << endl;
+				stdOut << QString("Faild to read file: %1, Please check the configure file: %2!").arg(strCommandFilePath).arg(INI_FILE_NAME) << endl;
 				return (-1);
 			}
 
 			case NODE_GROUP:
 			{
-//				cout << "Current position: " << g_mainData.getCurrentNodeName() << endl;
-				cout << "/root =>" << endl;
+//				stdOut << "Current position: " << g_mainData.getCurrentNodeName() << endl;
+				stdOut << "/root =>" << endl;
 				for (int i = 0; i < currentNodeName.count(); i++)
 				{
-					cout << "    ";
+					stdOut << "    ";
 					for (int j = 0; j < i; j++)
 					{
-						cout << "    ";
+						stdOut << "    ";
 					}
-					cout << currentNodeName.at(i) << " =>" << endl;
+					stdOut << currentNodeName.at(i) << " =>" << endl;
 				}
 				for (int i = 0; i < childList.count(); i++)
 				{
 					for (int j = 0; j <= currentNodeName.count(); j++)
 					{
-						cout << "    ";
+						stdOut << "    ";
 					}
-					cout << QString("%1. -- %2").arg(i + 1).arg(childList.at(i)) << endl;
+					stdOut << QString("%1. -- %2").arg(i + 1).arg(childList.at(i)) << endl;
 				}
 
 				for (int j = 0; j <= currentNodeName.count(); j++)
 				{
-					cout << "    ";
+					stdOut << "    ";
 				}
-				cout << "b. -- Back to previous level" << endl;
+				stdOut << "b. -- Back to previous level" << endl;
 
 				for (int j = 0; j <= currentNodeName.count(); j++)
 				{
-					cout << "    ";
+					stdOut << "    ";
 				}
-				cout << "x. -- Exit" << endl << endl;
+				stdOut << "x. -- Exit" << endl << endl;
 
 				for (int j = 0; j <= currentNodeName.count(); j++)
 				{
-					cout << "    ";
+					stdOut << "    ";
 				}
-				cout << "    Enter you choice: ";
-				cout.flush();
-				cin >> strChoice;
-				cout << endl;
+				stdOut << "    Enter you choice: ";
+				stdOut.flush();
+				stdIn >> strChoice;
+				stdOut << endl;
 				if (strChoice.length() == 0)
 				{
 					break;
@@ -295,46 +295,46 @@ int main(int argc, char **argv)
 			}
 			case NODE_ITEM:
 			{
-				cout << "/root =>" << endl;
+				stdOut << "/root =>" << endl;
 				for (int i = 0; i < currentNodeName.count(); i++)
 				{
-					cout << "    ";
+					stdOut << "    ";
 					for (int j = 0; j < i; j++)
 					{
-						cout << "    ";
+						stdOut << "    ";
 					}
-					cout << currentNodeName.at(i) << " =>" << endl;
+					stdOut << currentNodeName.at(i) << " =>" << endl;
 				}
 
-				cout << endl << strCommand << endl << endl;
+				stdOut << endl << strCommand << endl << endl;
 
 				for (int j = 0; j <= currentNodeName.count(); j++)
 				{
-					cout << "    ";
+					stdOut << "    ";
 				}
-				cout << "r. -- Run Command" << endl;
+				stdOut << "r. -- Run Command" << endl;
 
 				for (int j = 0; j <= currentNodeName.count(); j++)
 				{
-					cout << "    ";
+					stdOut << "    ";
 				}
-				cout << "b. -- Back to previous level" << endl;
+				stdOut << "b. -- Back to previous level" << endl;
 
 				for (int j = 0; j <= currentNodeName.count(); j++)
 				{
-					cout << "    ";
+					stdOut << "    ";
 				}
-				cout << "x. -- Exit" << endl << endl;
+				stdOut << "x. -- Exit" << endl << endl;
 
 				for (int j = 0; j <= currentNodeName.count(); j++)
 				{
-					cout << "    ";
+					stdOut << "    ";
 				}
 
-				cout << "Enter you choice: ";
-				cout.flush();
-				cin >> strChoice;
-				cout << endl;
+				stdOut << "Enter you choice: ";
+				stdOut.flush();
+				stdIn >> strChoice;
+				stdOut << endl;
 				if ((strChoice.at(0) == 'b') || (strChoice.at(0) == 'B'))
 				{
 					// Back to previous menu.
@@ -349,7 +349,7 @@ int main(int argc, char **argv)
 					QFile f("nextCmd.sh");
 			        if(!f.open(QIODevice::WriteOnly | QIODevice::Text))  
 					{  
-			            cout << "Open failed." << endl;  
+			            stdOut << "Open failed." << endl;  
 						return -1;  
 					}  
     

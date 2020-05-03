@@ -15,7 +15,7 @@ echo $MY_DIR
 cd $MY_DIR
 
 if [ ! -f checkCmd ]; then
-	./setupEnv.sh
+	./setupEnv_qt4.sh
 fi
 
 export LD_LIBRARY_PATH=$MY_DIR:$LD_LIBRARY_PATH

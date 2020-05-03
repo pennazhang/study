@@ -40,8 +40,8 @@ int main(int argc, char **argv)
 	QString strCmd;
     QCoreApplication app(argc, argv);
 
-	QTextStream cout(stdout);
-	QTextStream cin(stdin);
+	QTextStream stdOut(stdout);
+	QTextStream stdIn(stdin);
 	
 #ifdef _LINUX_
 	QString result = executeLinuxScript("/git/temp/test.sh");
@@ -51,9 +51,9 @@ int main(int argc, char **argv)
 	QString result = executeWindowsScript("c:/temp/test.bat");
 #endif
 
-	cout << "Hello, world!\n";
-	cout << "Executing result:" << endl;
-	cout << result << endl;
+	stdOut << "Hello, world!\n";
+	stdOut << "Executing result:" << endl;
+	stdOut << result << endl;
 	return 0;	
 //	return g_pApp->exec();
 }

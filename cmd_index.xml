@@ -79,6 +79,19 @@ cd /git/junebox/software
 ./startDocker.sh</script>
 				</ITEM>
 			</GROUP>
+
+			<GROUP title="QT 5.11.1 for X86 Linux">
+				<ITEM title="build docker">
+					<script>cd /git/study/qt/x86_linux_platform/setupEnv_QT5.11.1/docker
+./buildDocker.sh</script>
+				</ITEM>
+				<ITEM title="start docker">
+					<script>cd /git/study/qt/x86_linux_platform/setupEnv_QT5.11.1/docker
+./startDocker.sh</script>
+				</ITEM>
+			</GROUP>
+			
+
 			<ITEM title="demoCmd">
 				<script>cd /git/study/qt/demoCmd/project
 rm -rf Makefile out
@@ -147,6 +160,14 @@ make
 ./out/bin/readXml</script>			
 				</ITEM>
 			</GROUP>
+
+			<ITEM title="translateGui">
+						<script>cd /git/study/qt/study/translateGui/project
+rm -rf Makefile out
+qmake
+make
+./out/bin/translateGui</script>			
+			</ITEM>
 		</GROUP>
 	</GROUP>
 	<GROUP title="Other Project">

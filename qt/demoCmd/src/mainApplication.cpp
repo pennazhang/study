@@ -29,11 +29,11 @@ void MainApplication::onTimer_CmdLoop()
 	static int index = 0;
 	index++;
 
-	*g_pCout << index << "... ";
-	g_pCout->flush();
+	g_stdOut << index << "... ";
+	g_stdOut.flush();
 	if (index == 10)
 	{
-		*g_pCout << endl;
+		g_stdOut << endl;
 		exit(0);
 	}
 }

@@ -31,7 +31,7 @@ void MainApplication::onReadStdout()
 	{
 	    while(m_process.canReadLine())
 		{
-	        *g_pCout << m_process.readLine() << endl;
+	        g_stdOut << m_process.readLine() << endl;
 	    }
 	}
 }
@@ -41,7 +41,7 @@ void MainApplication::onReadStderr()
 	if (m_process.state() == QProcess::Running)
 	{
 		QString strOutput = m_process.readAllStandardError();
-		*g_pCout << "stderr: " << strOutput;
+		g_stdOut << "stderr: " << strOutput;
 	}
 }
 
@@ -57,10 +57,10 @@ void MainApplication::onTimer_CmdLoop()
 	switch (index)
 	{
 	case 1:
-		*g_pCout << QString("This program will quit in %1 seconds...").arg(QUIT_TIME_IN_SECOND) << endl;
+		g_stdOut << QString("This program will quit in %1 seconds...").arg(QUIT_TIME_IN_SECOND) << endl;
 		break;
 	case 2:
-		*g_pCout << "Starting script..." << endl;
+		g_stdOut << "Starting script..." << endl;
 #ifdef _WINDOWS_
 		startWindowsScript("c:/temp/test.bat");
 #endif
@@ -96,10 +96,10 @@ void MainApplication::startLinuxScript(const QString &strScriptFile)
 
 void MainApplication::onProcesFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-	*g_pCout << "Recv the notification of Process, exitCode = " <<  exitCode  <<", exitStatus = " << exitStatus <<  endl;
+	g_stdOut << "Recv the notification of Process, exitCode = " <<  exitCode  <<", exitStatus = " << exitStatus <<  endl;
 	m_process.waitForFinished();
     QString strResult = m_process.readAllStandardOutput();
-	*g_pCout << "onProcesFinished:\n" << strResult << endl;
+	g_stdOut << "onProcesFinished:\n" << strResult << endl;
 
 //	exit(0);
 }

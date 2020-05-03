@@ -15,7 +15,7 @@ fi
 # The following PARMA is used to start docker images.
 #RUN_ENV="-e XDG_RUNTIME_DIR"
 HOST_NAME="-h qt4_8_7"
-DIR_MAP="-v $HOST_GIT_DIR:/git"
+DIR_MAP="-v $HOST_GIT_DIR:/git -v /usr/share/fonts:/usr/share/fonts"
 USER_ID=`id -u`
 GROUP_ID=`id -g`
 USER_LOGIN="--user $USER_ID:$GROUP_ID"
