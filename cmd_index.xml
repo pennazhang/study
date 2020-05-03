@@ -168,6 +168,14 @@ qmake
 make
 ./out/bin/translateGui</script>			
 			</ITEM>
+			<ITEM title="C++ Object Serialize">
+						<script>cd /git/study/qt/study/serialize/project
+rm -rf Makefile out
+qmake
+make
+./out/bin/serialize</script>			
+			</ITEM>
+
 		</GROUP>
 	</GROUP>
 	<GROUP title="Other Project">
