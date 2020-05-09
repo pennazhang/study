@@ -1,5 +1,52 @@
 #include "mainwindow.h"
 
+
+void setPosition(QWidget *pWidget, qreal x, qreal y, qreal w, qreal h)
+{
+	QWidget *pParentWidget = pWidget->parentWidget();
+
+	int parentWidth = pParentWidget->width();
+	int parentHeight = pParentWidget->height();
+
+	int xp, yp, wp, hp;
+	if ((x > 0) && (x < 1))
+	{
+		xp = x * parentWidth;
+	}
+	else
+	{
+		xp = x;
+	}
+
+	if ((y > 0) && (y < 1))
+	{
+		yp = y * parentHeight;
+	}
+	else
+	{
+		yp = y;
+	}
+
+	if ((w > 0) && (w < 1))
+	{
+		wp = w * parentWidth;
+	}
+	else
+	{
+		wp = w;
+	}
+
+	if ((h > 0) && (h < 1))
+	{
+		hp = h * parentHeight;
+	}
+	else
+	{
+		hp = h;
+	}
+	pWidget->setGeometry(xp, yp, wp, hp);
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -22,9 +69,8 @@ void MainWindow::resizeEvent(QResizeEvent* /* event */)
     int buttonWidth = width() / 5;
     if (buttonWidth < 140)
     {
-            buttonWidth = 140;
+        buttonWidth = 140;
     }
-    int buttonHeight = height() / 10;
 
-    m_pOutputSettingButton->setGeometry((width() - buttonWidth) / 2, (height() - buttonHeight) / 2, buttonWidth, buttonHeight);
+	setPosition(m_pOutputSettingButton, (width() - buttonWidth) / 2 , 0.45, buttonWidth, 0.1);
 }
