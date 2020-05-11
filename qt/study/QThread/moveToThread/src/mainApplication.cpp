@@ -42,6 +42,8 @@ MainApplication::MainApplication(int argc, char *argv[])
 
 MainApplication::~MainApplication()
 {
+	m_workerThread.exit();
+	m_workerThread.wait();
 }
 
 void MainApplication::onTimer_CmdLoop()
