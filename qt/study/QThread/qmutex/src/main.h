@@ -4,6 +4,7 @@
 
 #include <QThread>
 #include <QStringList>
+#include <QMutex>
 
 class LogList
 {
