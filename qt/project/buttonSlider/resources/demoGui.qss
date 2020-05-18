@@ -1,0 +1,52 @@
+
+#BackGround {
+	background: url(:/backGround.png);
+}
+
+/* --------------------------- Vertical Slider Button --------------------------- */
+#ButtonVerticalSlider {
+/*	border: 1px solid red; 
+*/
+}
+
+#ButtonVerticalSlider::groove:vertical {
+	border: 1px solid transparent; 
+	width: 25;
+}
+
+#ButtonVerticalSlider::handle {
+	 image: url(:/QSlider-button.png);
+ }
+
+#ButtonVerticalSlider::handle:focus {
+	 image: url(:/QSlider-button-selected.png); 
+ }
+
+#ButtonVerticalSlider::groove {
+	border: 1px solid green; 
+    position: absolute;
+	right: 20;  /* window width - 30*/
+}
+
+
+/* --------------------------- Horizontal Slider Button --------------------------- */
+#ButtonHorizontalSlider {
+	border: 1px solid red; 
+}
+
+#ButtonHorizontalSlider::groove:horizontal {
+	border: 1px solid transparent; 
+	height: 25;
+}
+
+#ButtonHorizontalSlider::handle {
+	 image: url(:/QSlider-horizontal-button.png);
+ }
+
+#ButtonHorizontalSlider::handle:focus {
+	 image: url(:/QSlider-horizontal-button-selected.png); 
+ }
+
+#ButtonHorizontalSlider::groove {
+    position: absolute;
+}

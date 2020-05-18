@@ -1,0 +1,12 @@
+<RCC>
+  <qresource>
+    <file>demoGui.qss</file>
+    <file>logo.png</file>
+    <file>backGround.png</file>
+    <file>demoGui.ico</file>
+    <file>QSlider-horizontal-button-selected.png</file>
+    <file>QSlider-horizontal-button.png</file>
+    <file>QSlider-button-selected.png</file>
+    <file>QSlider-button.png</file>    
+  </qresource>
+</RCC>

@@ -20,10 +20,12 @@ DEFINES += _CRT_SECURE_NO_WARNINGS
 # Header file
 HEADERS += \
     $$PWD/../headers/mainwindow.h \
+    $$PWD/../headers/buttonSlider.h \
 
 SOURCES += \
     $$PWD/../sources/main.cpp \
     $$PWD/../sources/mainwindow.cpp \
+    $$PWD/../sources/buttonSlider.cpp \
 
 win32 {
 	DEFINES += _WINDOWS_

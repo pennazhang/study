@@ -1,0 +1,10 @@
+<RCC>
+  <qresource>
+    <file>demoGui.qss</file>
+    <file>logo.png</file>
+    <file>backGround.png</file>
+    <file>demoGui.ico</file>
+    
+
+  </qresource>
+</RCC>

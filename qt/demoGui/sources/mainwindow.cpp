@@ -50,6 +50,8 @@ void setPosition(QWidget *pWidget, qreal x, qreal y, qreal w, qreal h)
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+	this->setObjectName("BackGround");
+    
     m_pOutputSettingButton = new QPushButton(tr("Output Setting"), this);
 //	m_pOutputSettingButton->setObjectName(QStringLiteral("tabButton"));
 //	connect(m_pOutputSettingButton, SIGNAL(clicked()), this, SLOT(onOutputSettingClicked()));
@@ -72,5 +74,5 @@ void MainWindow::resizeEvent(QResizeEvent* /* event */)
         buttonWidth = 140;
     }
 
-	setPosition(m_pOutputSettingButton, (width() - buttonWidth) / 2 , 0.45, buttonWidth, 0.1);
+	setPosition(m_pOutputSettingButton, width() - buttonWidth, 0 , buttonWidth, 0.1);
 }
