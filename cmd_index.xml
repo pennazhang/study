@@ -160,6 +160,15 @@ make
 ./out/bin/readXml</script>			
 				</ITEM>
 			</GROUP>
+           	<GROUP title="Widget">
+				<ITEM title="QSlider">
+						<script>cd /git/study/qt/project/buttonSlider/project
+rm -rf Makefile out
+qmake
+make
+./out/release/bin/buttonSlider</script>			
+				</ITEM>
+			</GROUP>
 
 			<ITEM title="translateGui">
 						<script>cd /git/study/qt/study/translateGui/project

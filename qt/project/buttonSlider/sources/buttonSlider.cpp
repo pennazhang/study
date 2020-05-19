@@ -1,4 +1,4 @@
-#include "ButtonSlider.h"
+#include "buttonSlider.h"
 #include <QStylePainter>
 #include <QKeyEvent>
 
@@ -20,11 +20,11 @@ ButtonSlider::ButtonSlider(QWidget *pParent, Qt::Orientation orientation)
 	m_textList<< "0 CM" << "25 CM" << "50 CM" << "75 CM" << "100 CM";
 	if (orientation == Qt::Vertical)
 	{
-	    setObjectName(QStringLiteral("ButtonVerticalSlider"));
+	    setObjectName("ButtonVerticalSlider");
 	}
 	else
 	{
-	    setObjectName(QStringLiteral("ButtonHorizontalSlider"));
+	    setObjectName("ButtonHorizontalSlider");
 	}
 
 	m_extraLongMarkCount = 0;

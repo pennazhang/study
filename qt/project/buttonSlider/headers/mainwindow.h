@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include "buttonSlider.h"
 #include <QDoubleSpinBox>
+#include <QLabel>
 
 class MainWindow : public QMainWindow
 {
@@ -28,7 +29,7 @@ private:
 	ButtonSlider *m_pButtonSlider1, *m_pButtonSlider2, *m_pButtonSlider3, *m_pButtonSlider4;
 	bool m_slotEnableFlag;
 	QDoubleSpinBox *m_pPEQCutSpin1;
-
+	QLabel *m_pPictureLabel;
 	double m_gain;
 };
 #endif // MAINWINDOW_H

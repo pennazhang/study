@@ -1,6 +1,6 @@
 
 #BackGround {
-	background: url(:/backGround.png);
+	border-image: url(:/backGround.png);
 }
 
 /* --------------------------- Vertical Slider Button --------------------------- */
@@ -42,3 +42,29 @@
 #ButtonHorizontalSlider::handle:focus {
 	 image: url(:/QSlider-horizontal-button-selected.png); 
  }
+ 
+/* --------------------------- m_pButtonSlider4 --------------------------- */
+#m_pButtonSlider4 {
+	border: 1px solid red; 
+	margin: 10px;
+}
+
+#m_pButtonSlider4::groove:horizontal {
+	border: 1px solid transparent; 
+	height: 25;
+    position: absolute;
+	top: 20
+}
+
+#m_pButtonSlider4::handle {
+	 image: url(:/QSlider-horizontal-button.png);
+ }
+
+#m_pButtonSlider4::handle:focus {
+	 image: url(:/QSlider-horizontal-button-selected.png); 
+ }
+
+#PictureLabel_pic1 {
+	border: 1px solid red; 
+	image: url(:/untitled.png); 
+}

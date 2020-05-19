@@ -50,7 +50,7 @@ void setPosition(QWidget *pWidget, qreal x, qreal y, qreal w, qreal h)
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-//	this->setObjectName("BackGround");
+	this->setObjectName("BackGround");
 
 	m_gain = 0.0;
 
@@ -146,15 +146,16 @@ MainWindow::MainWindow(QWidget *parent)
 
 	// ------------------------------m_pButtonSlider4--------------------------------------------------
 	m_pButtonSlider4 = new ButtonSlider(this, Qt::Horizontal);
+	m_pButtonSlider4->setObjectName("m_pButtonSlider4");
 	m_pButtonSlider4->setTextColor(QColor(0x10, 0x10, 0x10));
 	m_pButtonSlider4->setMarkColor(QColor(0x10, 0x10, 0x10));
 	analogStringList.clear();
 	analogStringList << "-12.6dB" << "-6.3dB" << "0dB";
 	m_pButtonSlider4->setMark(3, 4, analogStringList);
+	m_pButtonSlider4->setGrooveHeight(50);
 	m_pButtonSlider4->setMarkLength(5, 7);
 	m_pButtonSlider4->setMarkSide(true, true);
 	m_pButtonSlider4->setRange(-126, 0);
-	m_pButtonSlider4->setGrooveHeight(30);
 	m_pButtonSlider4->setSingleStep(1);
 	m_pButtonSlider4->setPageStep(1);
 	m_pButtonSlider4->setValue(0);
@@ -166,6 +167,9 @@ MainWindow::MainWindow(QWidget *parent)
 //	m_pOutputSettingButton->setObjectName(QStringLiteral("tabButton"));
 //	connect(m_pOutputSettingButton, SIGNAL(clicked()), this, SLOT(onOutputSettingClicked()));
     m_pOutputSettingButton->setCheckable(true);
+
+	m_pPictureLabel = new QLabel(this);
+	m_pPictureLabel->setObjectName("PictureLabel_pic1");
 
     setWindowTitle(tr("QT - GUI Demo"));
     setMinimumSize(400, 300);
@@ -289,12 +293,13 @@ void MainWindow::resizeEvent(QResizeEvent* /* event */)
 
 	
 	setPosition(m_pButtonSlider1, 0.1, 0.1 , 0.15, 0.5);
-	setPosition(m_pPEQCutSpin1, 0.1, 0.025 , 0.15, 0.07);
+	setPosition(m_pPEQCutSpin1, 0.1, 0.025 , 0.15, 0.06);
 
 	setPosition(m_pButtonSlider2, 0.3, 0.1 , 0.15, 0.5);
 
-	setPosition(m_pButtonSlider3, 0.1, 0.6 , 0.7, 0.15);
+	setPosition(m_pButtonSlider3, 0.1, 0.62 , 0.7, 0.15);
 	setPosition(m_pButtonSlider4, 0.1, 0.8 , 0.7, 0.15);
 
+	setPosition(m_pPictureLabel, 0.5, 0.2, 0.3, 0.3);
 
 }
