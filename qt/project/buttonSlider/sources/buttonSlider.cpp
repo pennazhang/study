@@ -9,6 +9,14 @@ ButtonSlider::ButtonSlider(QWidget *pParent, Qt::Orientation orientation)
 	m_lowerValue = 0;
 	m_longMarkCount = 0;
 	m_shotLongMarkRatio = 0;
+	if (orientation == Qt::Vertical)
+	{
+		m_centerOffset = -11;
+	}
+	else
+	{
+		m_centerOffset = 10;
+	}
 	m_textList<< "0 CM" << "25 CM" << "50 CM" << "75 CM" << "100 CM";
 	if (orientation == Qt::Vertical)
 	{
@@ -22,12 +30,12 @@ ButtonSlider::ButtonSlider(QWidget *pParent, Qt::Orientation orientation)
 	m_extraLongMarkCount = 0;
 	m_extraShortMarkCount = 0;
 
-	m_leftMark = false;
-	m_rightMark = true;
+	m_leftTopMark = false;
+	m_rightBottomMark = true;
 
-	m_shortMarkLength = 3; 
-	m_longMarkLength = 5;
-	m_GrooveHeight = 20;
+	m_shortMarkLength = 4; 
+	m_longMarkLength = 7;
+	m_GrooveHeight = 30;
 
 	m_markColor = QColor(0x10, 0x10, 0x10);
 	m_textColor = QColor(0x10, 0x10, 0x10);
@@ -56,8 +64,8 @@ void ButtonSlider::setMarkLength(int shortMarkLength, int longMarkLength)
 
 void ButtonSlider::setMarkSide(bool leftMark, bool rightMark)
 {
-	m_leftMark = leftMark;
-	m_rightMark = rightMark;
+	m_leftTopMark = leftMark;
+	m_rightBottomMark = rightMark;
 }
 
 /*
@@ -113,19 +121,26 @@ void ButtonSlider::paintEvent(QPaintEvent *event)
 
 void ButtonSlider::paintHorizontalEvent(QPaintEvent * /* event */)
 {
-	int left = 14;
-	int right = 20;
-	int top = height()/2; 
+	int leftMargin = m_GrooveHeight / 2 +  2;
+	int rightMargin = m_GrooveHeight / 2 + 2;
+	int centerPosition = height()/2 + m_centerOffset; 
 	QPainter painter(this);
 	painter.setPen(QPen(QColor(10, 10, 10), 2));
 
 //	painter.drawRect(0, 0, width(), height());
 
-	painter.drawLine(left, top, width() - right, top);
+	painter.drawLine(leftMargin, centerPosition, width() - rightMargin, centerPosition);
 
-	int longMarkTop = top - 16;
-	int shortMarkTop = top - 14;
-	int markBottom = top - 10;
+	/* Used for top mark */
+	int markBottom = centerPosition - 10;
+	int longMarkTop = markBottom - m_longMarkLength;
+	int shortMarkTop = markBottom - m_shortMarkLength;
+
+	/* Used for bottom mark */
+	int markTop = centerPosition + 10;
+	int longMarkBottom = markTop + m_longMarkLength;
+	int shortMarkBottom = markTop + m_shortMarkLength;
+
 
 	int textWidth = 60;
 	int textHeight = longMarkTop;
@@ -137,17 +152,32 @@ void ButtonSlider::paintHorizontalEvent(QPaintEvent * /* event */)
 		int unitCount = (m_longMarkCount - 1) * m_shotLongMarkRatio;
 		for (int i = 0; i <= unitCount ; i++)
 		{
-			int x = left + (width() - left - right) * i / unitCount;
+			int x = leftMargin + (width() - leftMargin - rightMargin) * i / unitCount;
 			if (( i % m_shotLongMarkRatio) == 0)
 			{
-				painter.drawLine(x, longMarkTop, x, markBottom);
+				if (m_leftTopMark  == true)
+				{
+					painter.drawLine(x, longMarkTop, x, markBottom);
+				}
+				if (m_rightBottomMark == true)
+				{
+					painter.drawLine(x, longMarkBottom, x, markTop);
+				}
+
 				QString text =  m_textList[i / m_shotLongMarkRatio];
 				painter.drawText(x - textWidth / 2, 0, textWidth, textHeight, Qt::AlignVCenter | Qt::AlignHCenter, text);
 //				painter.drawRect(x - textWidth / 2, 0, textWidth, textHeight);
 			}
 			else
 			{
-				painter.drawLine(x, shortMarkTop, x, markBottom);
+				if (m_leftTopMark == true)
+				{
+					painter.drawLine(x, shortMarkTop, x, markBottom);
+				}
+				if (m_rightBottomMark == true)
+				{
+					painter.drawLine(x, shortMarkBottom, x, markTop);
+				}
 			}
 		}
 	}
@@ -162,8 +192,15 @@ void ButtonSlider::paintHorizontalEvent(QPaintEvent * /* event */)
 		int value = m_extraLongMark[i].m_value;
 		if ((value >= minimum()) && (value <= maximum()))
 		{
-			int x = left + (width() - left - right) * (m_extraLongMark[i].m_value - minimum()) / (maximum() - minimum());
-			painter.drawLine(x, longMarkTop, x, markBottom);
+			int x = leftMargin + (width() - leftMargin - rightMargin) * (m_extraLongMark[i].m_value - minimum()) / (maximum() - minimum());
+			if (m_leftTopMark  == true)
+			{
+				painter.drawLine(x, longMarkTop, x, markBottom);
+			}
+			if (m_rightBottomMark  == true)
+			{
+				painter.drawLine(x, longMarkBottom, x, markTop);
+			}
 			if (m_extraLongMark[i].m_boldFlag == true)
 			{
 				painter.setFont(newFont);
@@ -182,8 +219,17 @@ void ButtonSlider::paintHorizontalEvent(QPaintEvent * /* event */)
 		int value = m_extraShortMark[i].m_value;
 		if ((value >= minimum()) && (value <= maximum()))
 		{
-			int x = left + (width() - left - right) * (m_extraShortMark[i].m_value - minimum()) / (maximum() - minimum());
-			painter.drawLine(x, shortMarkTop, x, markBottom);
+			int x = leftMargin + (width() - leftMargin - rightMargin) * (m_extraShortMark[i].m_value - minimum()) / (maximum() - minimum());
+						
+			if (m_leftTopMark  == true)
+			{
+				painter.drawLine(x, shortMarkTop, x, markBottom);
+			}
+			if (m_rightBottomMark  == true)
+			{
+				painter.drawLine(x, shortMarkBottom, x, markTop);			
+			}
+
 			if (m_extraShortMark[i].m_boldFlag == true)
 			{
 				painter.setFont(newFont);			
@@ -227,11 +273,11 @@ void ButtonSlider::setGrooveHeight(int grooveHeight)
 
 void ButtonSlider::paintVerticalEvent(QPaintEvent * /* event */)
 {
-	int left = width() / 2 - 1;
-	int top = m_GrooveHeight / 2;
-	int bottom = m_GrooveHeight / 2 + 1;
+	int centerPosition = width() / 2 - 1 + m_centerOffset;
+	int top = m_GrooveHeight / 2 + 2;
+	int bottom = m_GrooveHeight / 2 + 2;
 
-	int markLeft = left + 5;
+	int markLeft = centerPosition + 5;
 	int longMarkLength = m_longMarkLength;
 	int shortMarkLength = m_shortMarkLength;
 	int textLeft = 2;
@@ -240,10 +286,10 @@ void ButtonSlider::paintVerticalEvent(QPaintEvent * /* event */)
 //	if (width() / 25 > 1)
 	{
 		painter.setPen(QPen(m_markColor, 4));
-		painter.drawLine(left, 3, left, height() - 3);
+		painter.drawLine(centerPosition, 3, centerPosition, height() - 3);
 //		m_markColor.setAlpha(100);
 		painter.setPen(QPen(QColor(255, 255, 255), 1));
-		painter.drawLine(left + 1, 1, left + 1, height() - 1);
+		painter.drawLine(centerPosition + 1, 1, centerPosition + 1, height() - 1);
 	}
 
 	painter.setPen(QPen(m_markColor, 1));
@@ -266,13 +312,13 @@ void ButtonSlider::paintVerticalEvent(QPaintEvent * /* event */)
 			if ((( i % m_shotLongMarkRatio) == 0) && (m_longMarkCount >= 2))
 			{
 				painter.setPen(QPen(m_markColor, 1));
-				if (m_rightMark  == true)
+				if (m_rightBottomMark  == true)
 				{
 					painter.drawLine(markLeft, y, markLeft + longMarkLength, y);
 				}
-				if (m_leftMark  == true)
+				if (m_leftTopMark  == true)
 				{
-					painter.drawLine(left - 5 - longMarkLength, y, left - 5, y); 
+					painter.drawLine(centerPosition - 5 - longMarkLength, y, centerPosition - 5, y); 
 				}
 				QString text =  m_textList[i / m_shotLongMarkRatio];
 				painter.setPen(QPen(m_textColor, 1));
@@ -282,13 +328,13 @@ void ButtonSlider::paintVerticalEvent(QPaintEvent * /* event */)
 			else
 			{
 				painter.setPen(QPen(m_markColor, 1));
-				if (m_rightMark == true)
+				if (m_rightBottomMark == true)
 				{
 					painter.drawLine(markLeft + 1, y, markLeft + shortMarkLength, y);
 				}
-				if (m_leftMark  == true)
+				if (m_leftTopMark  == true)
 				{
-					painter.drawLine(left - 6 - shortMarkLength, y, left - 6, y); 			
+					painter.drawLine(centerPosition - 6 - shortMarkLength, y, centerPosition - 6, y); 			
 				}
 			}
 		}
@@ -314,13 +360,13 @@ void ButtonSlider::paintVerticalEvent(QPaintEvent * /* event */)
 			int y = height() - bottom - (height() - top - bottom) * (value - minimum()) / (maximum() - minimum()) - 1;
 
 			painter.setPen(QPen(m_extraLongMark[i].m_markColor, m_extraLongMark[i].m_markLineWidth));
-			if (m_rightMark  == true)
+			if (m_rightBottomMark  == true)
 			{
 				painter.drawLine(markLeft, y, markLeft + longMarkLength, y);
 			}
-			if (m_leftMark  == true)
+			if (m_leftTopMark  == true)
 			{
-				painter.drawLine(left - 5 - longMarkLength, y, left - 5, y); 
+				painter.drawLine(centerPosition - 5 - longMarkLength, y, centerPosition - 5, y); 
 			}
 
 
@@ -345,13 +391,13 @@ void ButtonSlider::paintVerticalEvent(QPaintEvent * /* event */)
 		{
 			painter.setPen(QPen(m_extraShortMark[i].m_markColor, m_extraShortMark[i].m_markLineWidth));
 			int y = height() - bottom - (height() - top - bottom) * (value - minimum()) / (maximum() - minimum()) - 1;
-			if (m_rightMark == true)
+			if (m_rightBottomMark == true)
 			{
 				painter.drawLine(markLeft + 1, y, markLeft + shortMarkLength, y);
 			}
-			if (m_leftMark  == true)
+			if (m_leftTopMark  == true)
 			{
-				painter.drawLine(left - 6 - shortMarkLength, y, left - 6, y); 			
+				painter.drawLine(centerPosition - 6 - shortMarkLength, y, centerPosition - 6, y); 			
 			}
 
 			painter.setPen(QPen(m_extraShortMark[i].m_textColor, 1));
