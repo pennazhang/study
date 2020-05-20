@@ -211,6 +211,13 @@ make -j8
 			</ITEM>
  
 		</GROUP>
+     
+        <ITEM title = "Wine Quartus">
+			<script>cd ~/.wine/drive_c/altera/91sp2/quartus/bin
+wine quartus.exe &amp;</script>
+		</ITEM>
+     
+        
 	</GROUP>
 
 </CATALOG>
