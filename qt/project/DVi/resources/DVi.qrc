@@ -1,0 +1,28 @@
+<RCC>
+  <qresource>
+    <file>binaries/FactoryPresets.db</file>
+    <file>DVi.qss</file>
+    <file>DVi_en.qm</file>
+    <file>DVi_zh.qm</file>
+    <file>lock.png</file>
+    <file>ActivityIndicator.png</file>
+    <file>QSlider-button.png</file>
+    <file>QSlider-button-selected.png</file>
+    <file>QSlider-horizontal-button.png</file>
+    <file>QSlider-horizontal-button-selected.png</file>
+    <file>input.png</file>
+    <file>output.png</file>
+    <file>level.png</file>
+    <file>reminder.png</file>
+    <file>inputMode.png</file>
+    <file>inputEQ.png</file>
+    <file>xover.png</file>
+    <file>outputEQ.png</file>
+    <file>delay.png</file>
+    <file>limiter.png</file>
+    <file>outputMode.png</file>
+    <file>light_green.png</file>
+    <file>light_red.png</file>
+    <file>light_off.png</file>
+  </qresource>
+</RCC>

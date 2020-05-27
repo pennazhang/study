@@ -1,0 +1,251 @@
+/*********************************************************************************** 
+	All the pixel should be wirtten with the following format: " 12px " or " 12px;"
+************************************************************************************/
+
+#m_pMainWidget {
+	border: none;
+	background-color: #0e5e7c;
+}
+
+/*
+#m_pTopFrame {
+	border-top: 1px solid #000000;
+	border-bottom: 1px solid #000000;
+	background-color: #0e5e7c;
+}
+*/
+
+#m_pPanelWidget {
+	border: 1px solid #000000;
+	background-color: #5a5a5a;
+}
+
+#m_pFrame1, #m_pFrame2, #m_pFrame3 {
+   background-color: #000000;
+   border-right: 1px solid #ffffff;
+}
+
+#m_pMenuBar {
+	background-color: transparent; 
+	spacing: 21px;
+	font: 12px;
+	color: #ff0000;
+}
+
+#m_pMenuBar::item {
+	color: #d0d0d0;
+	background: transparent;
+ }
+
+#m_pMenuBar::item:selected { 
+	color: #ffffff;
+    background: transparent;
+}
+
+#m_pConnectButton:hover { 
+	color: #FFFFFF; 
+}  
+
+#m_pConnectButton:pressed {	
+	color: #FFFFFF;     
+	padding-left: 2px;     
+	padding-top: 2px; 
+} 
+				
+
+#m_pConnectButton[markFlag=true]:enabled { 
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 
+				stop: 0 #ffffff, stop: 0.05 #ffffff, stop: 0.1 #a6bad9, 
+				stop: 0.15 #7597c4,
+				stop: 0.25 #007acc, stop: 0.85 #007acc, 
+				stop: 0.90 #7597c4, stop: 0.95 #ffffff, stop: 1 #ffffff); 
+	border: 1px solid #404040; 
+	font: 12px; 
+	border-radius: 2; 
+	color: #d0d0d0; 
+} 
+
+#m_pConnectButton[markFlag=false]:enabled { 
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, 
+				stop: 0 #ffffff, stop: 0.05 #e80000, 
+				stop: 0.1 #ab0000, stop: 0.15 #880000,  
+				stop: 0.2 #600000, stop: 0.9 #3f0000, 
+				stop: 0.95 #b80000, stop: 1 #ffffff); 
+	border: 1px solid #404040; 
+	border-radius: 2; 
+	font: 12px; 
+	color: #d0d0d0; 
+} 
+
+
+
+#ButtonVerticalSlider::groove:vertical {
+	border: 1px solid transparent; 
+}
+
+#ButtonVerticalSlider::handle {
+	 image: url(:/QSlider-button.png);
+ }
+
+#ButtonVerticalSlider::handle:focus {
+	 image: url(:/QSlider-button-selected.png); 
+ }
+
+#ButtonHorizontalSlider {
+	qproperty-textColor: #c0c0c0;
+}
+
+#ButtonHorizontalSlider::groove:horizontal {
+	border: 1px solid transparent; 
+	height: 25;
+}
+
+#ButtonHorizontalSlider::handle {
+	 image: url(:/QSlider-horizontal-button.png);
+ }
+
+#ButtonHorizontalSlider::handle:focus {
+	 image: url(:/QSlider-horizontal-button-selected.png); 
+ }
+/*
+#ButtonHorizontalSlider::groove {
+    position: absolute;
+	top: 20;  
+}
+*/
+
+#BlackFont14 {
+	font: 14px;
+	color: #ffffff;
+}
+
+/*
+#m_pInputWidget {
+	border-image: url(:/input.png);
+	border: 1px solid #ffffff; 
+}
+
+#m_pLevelWidget {
+	border-image: url(:/level.png);
+	border: 1px solid #ffffff; 
+}
+*/
+#m_pInputWidget {
+	border: 1px solid #ffffff; 
+}
+
+#m_pLevelWidget {
+	border-image: url(:/input.png);
+	border: 1px solid #ffffff; 
+}
+#m_pOutputWidget {
+	border-image: url(:/output.png);
+	border: 1px solid #ffffff; 
+}
+
+
+#m_pPresetFrame {
+	background-color: #282828; 
+}
+
+#m_pDSPFrame {
+	background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #c3c3c3, stop:0.4 #ffffff, stop:1 #626262);
+	border: 5px solid #000000;
+}
+
+#m_pReminderFrame {
+	background-color: #282828; 
+}
+
+#m_pCrownLabel {
+	image: url(:/reminder.png);
+}
+
+#m_pPresetName, #m_pReminderLabel {
+	border: 1px solid #ffffff;
+	color: #ffffff;
+	font: 12px;
+	padding-left: 2px; 
+}
+
+
+#m_pSignalGenButton, #m_pRecallButton, #m_pStoreButton, #m_pAmpButton {
+	border: 1px solid #e0e0e0; 
+	color: #e0e0e0;
+	background-color:qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #a0a0a0, stop:0.55 #606060, stop:0.6 #404040, stop:1 #101010);
+	font: 12px;
+	font: bold;
+}
+
+#m_pSignalGenButton:hover, #m_pRecallButton:hover, #m_pStoreButton:hover, #m_pAmpButton:hover {
+	color: #ffffff;
+	background-color:qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #d0d0d0, stop:0.55 #606060, stop:0.6 #404040, stop:1 #101010);
+	border: 1px solid #ffffff; 
+}
+
+#m_pInputModeButton {
+	border-image: url(:/inputMode.png);
+}
+
+#m_pInputModeButton:hover {
+	border-image: url(:/inputMode.png);
+    margin: 3px;
+}
+
+#m_pInputEQButton {
+	border-image: url(:/inputEQ.png);
+}
+
+#m_pInputEQButton:hover {
+	border-image: url(:/inputEQ.png);
+    margin: 3px;
+}
+
+#m_pXOverButton {
+	border-image: url(:/xover.png);
+}
+
+#m_pXOverButton:hover {
+	border-image: url(:/xover.png);
+    margin: 3px;
+}
+
+#m_pOutputEQButton {
+	border-image: url(:/outputEQ.png);
+}
+
+#m_pOutputEQButton:hover {
+	border-image: url(:/outputEQ.png);
+    margin: 3px;
+}
+
+#m_pDelayButton {
+	border-image: url(:/delay.png);
+}
+
+#m_pDelayButton:hover {
+	border-image: url(:/delay.png);
+    margin: 3px;
+}
+
+#m_pLimiterButton {
+	border-image: url(:/limiter.png);
+}
+
+#m_pLimiterButton:hover {
+	border-image: url(:/limiter.png);
+    margin: 3px;
+}
+
+#m_pOutputModeButton {
+	border-image: url(:/outputMode.png);
+}
+
+#m_pOutputModeButton:hover {
+	border-image: url(:/outputMode.png);
+    margin: 3px;
+}
+
+#m_pFocusFrame {
+	border: 2px solid #40d040;
+}
