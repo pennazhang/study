@@ -1,0 +1,521 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0067)http://www.51testing.com/?uid-238554-action-viewspace-itemid-111414 -->
+<HTML xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=gbk">
+<META content="学习,工作,测试,文章,Linux " name=keywords>
+<META 
+content="arm-linux学习笔记之minigui移植minigui-1.6.10在s3c2410平台的移植开发板：atmel9263CPU：at9263linux-2.6.26fs:nfsLCD:TFT320 X 240PC：ubuntu 8.10（一）准备工作下载软件包libminigui-1.6.10.tar.gzmg-sample. " 
+name=description><LINK title=笨杰的个人空间 
+href="http://www.51testing.com/?uid-238554-action-rss-type-blog" 
+type=application/rss+xml rel=alternate><LINK title=RSD 
+href="http://www.51testing.com/xmlrpc.php?rsd=238554" type=application/rsd+xml 
+rel=EditURI><LINK id=commonstyle 
+href="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/space.css" 
+type=text/css rel=stylesheet><LINK id=themestyle 
+href="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/css_238554.cache.css" 
+type=text/css rel=stylesheet>
+<SCRIPT type=text/javascript>
+var siteUrl = "http://www.51testing.com";
+</SCRIPT>
+
+<SCRIPT language=javascript 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/ajax.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT language=javascript 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/common.js" 
+type=text/javascript></SCRIPT>
+
+<META content="MSHTML 6.00.2900.5945" name=GENERATOR></HEAD>
+<BODY>
+<DIV id=wrap>
+<DIV id=header>
+<DIV id=spacename>
+<DIV id=xspace-spacename><STRONG>笨杰的个人空间</STRONG> 
+<P><A class=xspace-copyurl title=复制地址 
+onclick="javascript:setCopy('http://www.51testing.com/?238554');" 
+href="javascript:;">copy</A> <A class=xspace-add2fav title=加入收藏 
+onclick="javascript:addBookmark('笨杰的个人空间','http://www.51testing.com/?238554');return false;" 
+href="http://www.51testing.com/?238554">Bookmark</A> 
+http://www.51testing.com/?238554 </P></DIV></DIV>
+<DIV id=menu>
+<UL id=xspace-menu>
+  <LI class=xspace-active><A class=xspace-blog 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-type-blog">日志</A> 
+  </LI>
+  <LI><A class=xspace-image 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-type-image">相册</A> 
+  </LI>
+  <LI><A class=xspace-file 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-type-file">文件</A> 
+  </LI>
+  <LI><A class=xspace-link 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-type-link">书签</A> 
+  </LI>
+  <LI><A class=xspace-friend 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-type-friend">好友</A> 
+  </LI>
+  <LI><A class=xspace-mybbs 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-type-bbs">论坛</A> 
+  </LI>
+  <LI><A class=xspace-guestbook 
+  href="http://www.51testing.com/?uid-238554-action-viewpro">留言</A> 
+</LI></UL></DIV></DIV>
+<DIV class=xspace-layout1 id=content>
+<DIV class=mainarea-side id=mainarea>
+<DIV id=xspace-guide><A class=xspace-spacecp 
+href="http://www.51testing.com/batch.manage.php?uid=238554" 
+target=_blank>空间管理</A> 您的位置: <A href="http://www.51testing.com/" 
+target=_blank>51Testing软件测试网</A> &raquo; <A 
+href="http://www.51testing.com/?uid-238554">笨杰的个人空间</A> &raquo; <A 
+href="http://www.51testing.com/?uid-238554-action-spacelist-type-blog">日志</A> 
+</DIV>
+<DIV id=show>
+<H1 class=xspace-title>arm-linux学习笔记之minigui移植</H1>
+<P class=xspace-smalltxt><A 
+href="http://www.51testing.com/batch.common.php?action=viewspace&amp;op=up&amp;itemid=111414&amp;uid=238554">上一篇</A> 
+/ <A 
+href="http://www.51testing.com/batch.common.php?action=viewspace&amp;op=next&amp;itemid=111414&amp;uid=238554">下一篇</A> 
+&nbsp;2009-03-17 10:42:39 / 个人分类：<A 
+href="http://www.51testing.com/?uid-238554-action-spacelist-type-blog-itemtypeid-10216">MiniGUI</A> 
+</P>
+<DIV class=xspace-itemdata><A 
+href="http://www.51testing.com/?uid-238554-action-viewspace-itemid-111414#xspace-tracks">查看( 
+97 )</A> / <A 
+href="http://www.51testing.com/?uid-238554-action-viewspace-itemid-111414#xspace-itemreply">评论( 
+0 )</A> / <A 
+href="http://www.51testing.com/?uid-238554-action-viewspace-itemid-111414#xspace-itemform">评分( 
+<SPAN class=xspace-rategood title=好评>0</SPAN> / <SPAN class=xspace-ratebad 
+title=差评>0</SPAN> )</A> </DIV>
+<DIV class=xspace-itemmessage id=xspace-showmessage>
+<P><FONT size=4><FONT 
+face=黑体>arm-linux学习笔记之minigui移植<BR></FONT>minigui-1.6.10在s3c2410平台的移植</FONT></P>
+<P><FONT 
+size=4>开发板：atmel9263<BR>CPU：at9263<BR>linux-2.6.26<BR>fs:nfs<BR>LCD:TFT320 X 
+240</FONT></P>
+<P><FONT size=4>PC：ubuntu 8.10</FONT></P>
+<P><FONT size=4>（一）准备<A onclick="javascript:tagshow(event, '%B9%A4%D7%F7');" 
+href="javascript:;" 
+target=_self><U><STRONG>工作</STRONG></U></A><BR>下载软件包<BR>&nbsp;libminigui-1.6.10.tar.gz<BR>&nbsp;mg-samples-1.6.10.tar.gz<BR>&nbsp;minigui-res-1.6.10.tar.gz<BR>&nbsp;mg-samples-str-1.6.2.tar.gz<BR>在/home/arm/创建一个minigui的目录，然后把这些载在的软件包放在该目录下，在分别解压缩。再在/home/arm/minigui下创建一个miniguitmp的目录，用于安装编译以后的库文件。<BR>（二 
+）编译 
+libminigui<BR>首先修改configure文件，在文件的开头加入交叉编译的路径<BR>CC=arm-9tdmi-linux-gnu-gcc<BR>CPP=arm-9tdmi-linux-gnu-cpp<BR>LD=arm-9tdmi-linux-gnu-ld<BR>AR=arm-9tdmi-linux-gnu-ar<BR>RANLIB=arm-9tdmi-linux-gnu-ranlib<BR>STRIP=arm-9tdmi-linux-gnu-strip<BR>然后执行<BR>[root@localhost 
+libminigui-1.6.10]# ./configure --prefix=/home/arm/minigui/miniguitmp/ 
+\<BR>--build=x86_64-linux \<BR>--host=arm-unknown-linux 
+\<BR>--target=arm-unknown-linux<BR>[root@localhost libminigui-1.6.10]# 
+make<BR>[root@localhost libminigui-1.6.10]# make 
+install<BR>这个过程基本上不会有什么错误的<BR>执行make 
+install的时候会把编译以后的资源安装到/home/arm/minigui/miniguitmp中，在这之下会有etc&nbsp; 
+include&nbsp; lib&nbsp; 
+usr<BR>几个目录产生。<BR>￥＃％＃￥％说明：由于这是之后作的记录所以这一步产生的目录是include&nbsp; lib&nbsp; 
+usr这三个还是四个忘记了，网上一堆说明<BR>然后进入/home/arm/minigui/miniguitmp/lib，执行<BR>[root@localhost 
+lib]# ldconfig<BR>libminigui的交叉编译工作就算完成了。</FONT></P>
+<P><FONT 
+size=4>（三）安装minigui-res比较简单<BR>进入/home/arm/minigui/minigui-res-1.6.10目录<BR>修改config.liux文件的第11行<BR>TOPDIR=/home/arm/minigui/miniguitmp<BR>保存<BR>然后[root@localhost 
+minigui-res-1.6.10]# make 
+install<BR>资源文件被安装到/home/arm/minigui/miniguitmp/usr/local/lib/minigui/res下面有这几个东西<BR>bmp&nbsp; 
+cursor&nbsp; font&nbsp; icon&nbsp; 
+imetab<BR>（四）修改/home/arm/minigui/miniguitmp/etc/MiniGUI.cfg文件<BR>[system]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR># 
+GAL engine and default 
+options&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>gal_engine=fbcon&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>defaultmode=320x240-16bpp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR># 
+IAL 
+engine&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>#ial_engine=qvfb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>#mdev=/dev/input/mice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>ial_engine=console&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>mdev=/dev/mouse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>mtype=IMPS2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>[fbcon]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>defaultmode=320x240-16bpp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>[qvfb]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>defaultmode=320x240-16bpp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>display=0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT></P>
+<P><FONT 
+size=4>一般就上面几个地方要修改<BR>然后把MiniGUI.cfg下载到开发板的/etc/目录下<BR>（五）下载minigui的运行库</FONT></P>
+<P><FONT size=4>&nbsp;&nbsp;&nbsp; 
+把PC上/home/arm/minigui/miniguitmp/lib中所有的运行库下载到开发板上的/usr/lib目录下；<BR>在把PC上/home/arm/minigui/miniguitmp/usr/local/lib下的minigui目录整个下载到开发板的/usr/lib下面，到现在开发板上应该有这些东西了<BR>在开发板的/usr/lib下面有<BR>lib.tar.bz2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+libminigui-1.6.so.10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+libvcongui-1.6.so.10.0.0<BR>libmgext-1.6.so.10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+libminigui-1.6.so.10.0.0&nbsp; 
+libvcongui.a<BR>libmgext-1.6.so.10.0.0&nbsp;&nbsp;&nbsp; 
+libminigui.a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+libvcongui.la<BR>libmgext.a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+libminigui.la&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+libvcongui.so<BR>libmgext.la&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+libminigui.so&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+minigui<BR>libmgext.so&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+libvcongui-1.6.so.10<BR>其中minigui是目录<BR>在开发板的/etc下面应该有MiniGUI.cfg文件存在。<BR>现在准备工作已经已经完成，下面应该移植一些演示程序。<BR>（六）编译mg-samples-1.6.10或者mg-samples-str-1.6.2<BR>这两个东西编译的时候比较不好整，偶太菜，费劲半天才编译通过，事后作的记录可能遗漏。<BR>1、进入/home/arm/minigui/mg-samples-1.6.10<BR>修改configure.in第30行，这一步有没有用说不清楚，改成下面的样子<BR>AC_CHECK_HEADERS($prefix/include/minigui/common.h, 
+have_libminigui=no, 
+foo="bar")<BR>2、修改configure文件<BR>在文件的最前面加上交叉编译的工具<BR>CC=arm-9tdmi-linux-gnu-gcc<BR>CPP=arm-9tdmi-linux-gnu-cpp<BR>LD=arm-9tdmi-linux-gnu-ld<BR>AR=arm-9tdmi-linux-gnu-ar<BR>RANLIB=arm-9tdmi-linux-gnu-ranlib<BR>STRIP=arm-9tdmi-linux-gnu-strip<BR>3、运行configure进行配置<BR>[root@localhost 
+mg-samples-1.6.10]# ./configure --prefix=/home/arm/minigui/miniguitmp/ \<BR>&gt; 
+--build=x86_64-linux \<BR>&gt; --host=arm-unknown-linux \<BR>&gt; 
+--target=arm-unknown-linux<BR>……<BR>……<BR>最后还是有<BR>configure: 
+WARNING:<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MiniGUI is not properly 
+installed on the system. You need<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+MiniGUI Ver 2.0.0 or later for building this 
+package.<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Please configure and 
+install MiniGUI Ver 2.0.0 first.</FONT></P>
+<P><FONT size=4>这个提示，不管他。<BR>4、修改src/Makefile文件<BR>找到<BR>CC = 
+arm-9tdmi-linux-gnu-gcc<BR>改成<BR>CC = arm-9tdmi-linux-gnu-gcc 
+-I/home/arm/minigui/miniguitmp/include 
+-L/home/arm/minigui/miniguitmp/lib</FONT></P>
+<P><FONT size=4>CFLAGS = -g -O2 -`Wall -Wstrict-prototypes -pipe<BR>改成<BR>CFLAGS 
+=-O2</FONT></P>
+<P><FONT size=4>LIBOBJS =&nbsp;<BR>改成<BR>LIBOBJS = -lminigui -lmgext -lm&nbsp; 
+-lpthread</FONT></P>
+<P><FONT size=4>LIBS =&nbsp; -lminigui<BR>改成<BR>LIBS =&nbsp; -lminigui -lmgext 
+-lm&nbsp; -lpthread</FONT></P>
+<P><FONT size=4>COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) 
+$(AM_CPPFLAGS) \<BR>&nbsp;&nbsp;&nbsp; $(CPPFLAGS) $(AM_CFLAGS) 
+$(CFLAGS)<BR>改成<BR>COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) 
+$(AM_CPPFLAGS) \<BR>&nbsp;&nbsp;&nbsp; $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) 
+-lminigui -lmgext -lm&nbsp; -lpthread</FONT></P>
+<P><FONT size=4>（上面的有一步无用）￥％￥＃……％￥……％丫的。</FONT></P>
+<P><FONT 
+size=4>这样基本上可以了，mginit.c文件里面有地方修改后也可以编译完成的，但是有./configure生成的Makefile，已经把这个地方注销掉了。象这样，省得动手修改。<BR>am__EXEEXT_2 
+=<BR>#am__EXEEXT_3 = scrnsaver$(EXEEXT) 
+mginit$(EXEEXT)<BR>如果想要一起编译这个断，需要修改mginit.c源文件，暂时不说<BR>5、进入/home/arm/minigui/mg-samples-1.6.10/src<BR>运行make<BR>…………<BR>然后在res目录下会有很多可执行文件。</FONT></P>
+<P><FONT 
+size=4>（七）下载演示程序<BR>吧/home/arm/minigui/mg-samples-1.6.10/src下的所有文件和目录打包成一个mg.tar.bz2的文件<BR>下载到开发板的/usr/local/mg下面没有这个目录自己“贱”一个。<BR>然后解压缩<BR>在开发板上解压缩tar 
+-xvzf mg.tar.bz2<BR>然后删除*.c和Makefile文件<BR>rm 
+*.c<BR>现在可以运行minigui的演示程序了。</FONT></P>
+<P><BR><FONT size=4>（八）问题<BR>1、<BR>可能会有这个问题：<BR>GAL: Init GAL engine failure: 
+fbcon.<BR>GDI: Can not initialize graphics 
+engine!<BR>我也出现了，解决方法忘记了，网上查的，不是禁止newgal，就是修改源代码，还得上网查。</FONT></P>
+<P><FONT 
+size=4>2、tty0的问题<BR>保证tty0有效<BR>不行的话就自己创建一个tty0节点：<BR>crw-r--r--&nbsp;&nbsp;&nbsp; 
+1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+4,&nbsp;&nbsp; 0 Jan&nbsp; 1 00:02 tty0</FONT></P>
+<P><FONT size=4>3、鼠标的问题<BR>我的是usb鼠标。<BR>3.1要支持鼠标首先要在内核中加入驱动支持：<BR>#<BR># USB 
+Input 
+Devices<BR>#<BR>CONFIG_USB_HID=y<BR>CONFIG_USB_HIDINPUT_POWERBOOK=y<BR>CONFIG_HID_FF=y<BR>CONFIG_HID_PID=y<BR>CONFIG_LOGITECH_FF=y<BR>CONFIG_PANTHERLORD_FF=y<BR>CONFIG_THRUSTMASTER_FF=y<BR>CONFIG_ZEROPLUS_FF=y<BR>CONFIG_USB_HIDDEV=y<BR>CONFIG_USB_SUPPORT=y<BR>CONFIG_USB_ARCH_HAS_HCD=y<BR>CONFIG_USB_ARCH_HAS_OHCI=y<BR># 
+CONFIG_USB_ARCH_HAS_EHCI is not set<BR>CONFIG_USB=y<BR># CONFIG_USB_DEBUG is not 
+set<BR># CONFIG_USB_ANNOUNCE_NEW_DEVICES is not set<BR>大概这个样子</FONT></P>
+<P><FONT size=4>3.2 然后创建节点<BR>查看/proc/bus/input/devices文件<BR>＃cat 
+/proc/bus/input/devices<BR>I: Bus="0003" Vendor="15d9" Product="0a33" 
+Version="0110"<BR>N: Name="USB Mouse"<BR>P: Phys="usb-s3c24xx-1/input0"<BR>S: 
+Sysfs="/class/input/input0"<BR>U: Uniq=<BR>H: Handlers="mouse0"<BR>B: 
+EV="17"<BR>B: KEY="70000" 0 0 0 0 0 0 0 0<BR>B: REL="103"<BR>B: 
+MSC="10"<BR>确定已经鼠标已经连接上了<BR>然后查看/proc/bus/input/handler<BR># cat 
+/proc/bus/input/handler<BR>N: Number="0" Name="kbd"<BR>N: Number="1" 
+Name="mousedev" Minor="32"<BR>看到Number=1 Name="mousedev" 
+Minor="32这个东西了"</FONT></P>
+<P><FONT size=4># cat /proc/devices<BR>Character devices:<BR>&nbsp;10 
+misc<BR>&nbsp;13 input<BR>&nbsp;29 fb</FONT></P>
+<P><FONT size=4>到/dev下创建<BR>#mknod /dev/input/mouse c 13 32</FONT></P>
+<P><FONT size=4>crw-r--r--&nbsp;&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; 
+root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 13,&nbsp; 32 Jan&nbsp; 1 00:25 
+input/mouse<BR>其中13是设备号的高位 32低位上面的Minor=32和13 
+input定的，不小的是不是这么会事情，反正鼠标可以工作了.<BR>可以用下面的命令<A 
+onclick="javascript:tagshow(event, '%B2%E2%CA%D4');" href="javascript:;" 
+target=_self><U><STRONG>测试</STRONG></U></A>一下：<BR># cat 
+/dev/input/mouse<BR>??(?(?(?(8??8??8??8??8??8??8??8?<BR>?(<BR>这一堆乱码就是移动鼠标的时候输出的东西，说明鼠标可以工作了。<BR>创建一个符号连接:<BR>ln 
+-s /dev/input/mouse&nbsp; /dev/mouse</FONT></P>
+<P><FONT size=4>修改权限<BR>chmod go+r /dev/mouse<BR>chmod go+r 
+/dev/input/mouse.</FONT></P>
+<P><FONT size=4>这下运行minigui的时候有鼠标了。</FONT></P>
+<P><FONT size=4>还有遇到的问题:</FONT></P>
+<P><FONT size=4>如果鼠标无法使用。 可以修改如下<BR>&nbsp;25 [system]<BR>&nbsp;26 # GAL engine 
+and default options<BR>&nbsp;27 gal_engine=fbcon<BR>&nbsp;28 
+defaultmode=240x320-16bpp<BR>&nbsp;29<BR>&nbsp;30 # IAL engine<BR>&nbsp;31 
+ial_engine=console<BR>&nbsp;32 mdev=/dev/mouse0<BR>&nbsp;33 
+mtype=IMPS2<BR>这个配置一定可用. 还要注意库的使用</FONT></P>
+<P><A onclick="javascript:tagshow(event, '%CE%C4%D5%C2');" href="javascript:;" 
+target=_self><U><STRONG>文章</STRONG></U></A>出处：DIY部落(<A 
+href="http://www.diybl.com/course/6_system/linux/Linuxjs/20090314/161549.html">http://www.diybl.com/course/6_system/linux/Linuxjs/20090314/161549.html</A>)</P><BR>
+<DIV class=xspace-imginlog></DIV></DIV>
+<P class=xspace-itemlinks><A 
+href="http://bbs.51testing.com/post.php?action=import&amp;itemid=111414" 
+target=_blank>导入论坛</A> <A onclick=joinfavorite(111414); 
+href="javascript:;">收藏</A> <A 
+onclick="showajaxdiv('http://www.51testing.com/batch.common.php?action=emailfriend&amp;itemid=111414', 400);" 
+href="javascript:;">分享给好友</A> <A 
+href="http://www.51testing.com/batch.manage.php?itemid=111414" 
+target=_blank>管理</A> <A onclick=report(111414); href="javascript:;">举报</A> </P>
+<P class=xspace-itemtag>TAG: </P>
+<DIV id=xspace-itemreply>
+<DIV class=xspace-multipage id=xspace-multipage-div><A 
+onclick=javascript:showcomment(1); href="javascript:;">查看全部评论</A></DIV></DIV>
+<DIV id=xspace-itemform>
+<FORM id=xspace-commentform action=http://www.51testing.com/batch.comment.php 
+method=post target=xspace-phpframe>
+<FIELDSET id=xspace-rates>
+<DIV id=xspace-rates-bg>
+<DIV class=xspace-rates0 id=xspace-rates-star></DIV>
+<DIV id=xspace-rates-a><A onmouseover=rateHover(-5); 
+onclick="setRate('-5', '111414');" onmouseout=rateOut(); 
+href="javascript:;">-5</A> <A onmouseover=rateHover(-3); 
+onclick="setRate('-3', '111414');" onmouseout=rateOut(); 
+href="javascript:;">-3</A> <A onmouseover=rateHover(-1); 
+onclick="setRate('-1', '111414');" onmouseout=rateOut(); 
+href="javascript:;">-1</A> <A onmouseover=rateHover(0); 
+onclick="setRate('0', '111414');" onmouseout=rateOut(); 
+href="javascript:;">-</A> <A onmouseover=rateHover(1); 
+onclick="setRate('1', '111414');" onmouseout=rateOut(); 
+href="javascript:;">+1</A> <A onmouseover=rateHover(3); 
+onclick="setRate('3', '111414');" onmouseout=rateOut(); 
+href="javascript:;">+3</A> <A onmouseover=rateHover(5); 
+onclick="setRate('5', '111414');" onmouseout=rateOut(); 
+href="javascript:;">+5</A> </DIV><INPUT id=xspace-rates-value type=hidden 
+value=0 name=rates> </DIV>
+<P>评分：<SPAN id=xspace-rates-tip>0</SPAN></P></FIELDSET> 
+<FIELDSET><LEGEND>我来说两句</LEGEND>
+<P><SPAN class=xspace-moresmilies onclick=moresmilies();>显示全部</SPAN> </P>
+<DIV id=xspace-smilies><IMG id=smilie_0 onclick=insertSmilies(0) 
+alt=:loveliness: 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/loveliness.gif" 
+border=0> <IMG id=smilie_1 onclick=insertSmilies(1) alt=:handshake 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/handshake.gif" 
+border=0> <IMG id=smilie_2 onclick=insertSmilies(2) alt=:victory: 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/victory.gif" 
+border=0> <IMG id=smilie_3 onclick=insertSmilies(3) alt=:funk: 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/funk.gif" 
+border=0> <IMG id=smilie_4 onclick=insertSmilies(4) alt=:time: 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/time.gif" 
+border=0> <IMG id=smilie_5 onclick=insertSmilies(5) alt=:kiss: 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/kiss.gif" 
+border=0> <IMG id=smilie_6 onclick=insertSmilies(6) alt=:call: 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/call.gif" 
+border=0> <IMG id=smilie_7 onclick=insertSmilies(7) alt=:hug: 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/hug.gif" 
+border=0> <IMG id=smilie_8 onclick=insertSmilies(8) alt=:lol 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/lol.gif" 
+border=0> <IMG id=smilie_9 onclick=insertSmilies(9) alt=":'(" 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/cry.gif" 
+border=0> <IMG id=smilie_10 onclick=insertSmilies(10) alt=:Q 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/mad.gif" 
+border=0> <IMG id=smilie_11 onclick=insertSmilies(11) alt=:L 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/sweat.gif" 
+border=0> <IMG id=smilie_12 onclick=insertSmilies(12) alt=;P 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/titter.gif" 
+border=0> <IMG id=smilie_13 onclick=insertSmilies(13) alt=:$ 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/shy.gif" 
+border=0> <IMG id=smilie_14 onclick=insertSmilies(14) alt=:P 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/tongue.gif" 
+border=0> <IMG id=smilie_15 onclick=insertSmilies(15) alt=:o 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/shocked.gif" 
+border=0> <IMG id=smilie_16 onclick=insertSmilies(16) alt=:@ 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/huffy.gif" 
+border=0> <IMG id=smilie_17 onclick=insertSmilies(17) alt=:D 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/biggrin.gif" 
+border=0> <IMG id=smilie_18 onclick=insertSmilies(18) alt=:( 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/sad.gif" 
+border=0> <IMG id=smilie_19 onclick=insertSmilies(19) alt=:) 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/smile.gif" 
+border=0> </DIV>
+<P></P>
+<P><LABEL for=xspace-commentmsg>内容</LABEL> <TEXTAREA id=xspace-commentmsg name=message></TEXTAREA> </P>
+<P><LABEL for=xspace-nickname>昵称</LABEL> <INPUT id=xspace-nickname 
+name=nickname> </P>
+<P id=xspace-seccodeline><LABEL for=xspace-seccode>验证</LABEL> <INPUT 
+id=xspace-seccode size=10 name=seccode> <LABEL for=xspace-seccode><IMG 
+id=xspace-imgseccode title=看不清？点击换一个 onclick=javascript:newseccode(this); 
+alt=seccode 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/batch.seccode.png"></LABEL> 
+</P>
+<P><INPUT type=hidden value=111414 name=itemid><BUTTON id=xspace-btncomment 
+name=submitcomment type=submit value="true">提交评论</BUTTON> </P></FIELDSET> 
+</FORM></DIV>
+<SCRIPT language=javascript type=text/javascript>
+<!--
+function showcomment(page) {
+var x = new Ajax('statusid', 'XML');
+x.get('http://www.51testing.com/batch.comment.php?action=view&itemid=111414&page='+page, function(s) {
+getbyid("xspace-itemreply").innerHTML = s.lastChild.firstChild.nodeValue;
+});
+}
+function deletecomment(cid) {
+var x = new Ajax('statusid', 'XML');
+x.get('http://www.51testing.com/batch.comment.php?action=delete&cid='+cid, function(s) {
+alert(s.lastChild.firstChild.nodeValue);
+});
+}
+
+function moresmilies() {
+var smilies = document.getElementById('xspace-smilies');
+if (smilies.style.height=='auto') {
+smilies.style.height = '';
+} else {
+smilies.style.height = 'auto';
+}
+}
+addImgLink("xspace-showmessage");
+addMediaAction('xspace-showmessage');
+//-->
+</SCRIPT>
+<IFRAME id=xspace-phpframe name=xspace-phpframe marginWidth=0 src="about:blank" 
+frameBorder=0 width=0 height=0></IFRAME></DIV></DIV>
+<DIV class=sidearea id=sideleft>
+<DIV class=xspace-sideblock id=avatar>
+<DIV id=xspace-avatar><IMG class=xspace-imgstyle alt=judejie82 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/photo_238554.jpg">
+<P><A 
+href="http://www.51testing.com/?uid-238554-action-viewpro-showpro-1">judejie82</A></P>
+<P class=xspace-selfintro></P></DIV></DIV>
+<DIV class=xspace-sideblock id=action>
+<H3 class=xspace-blocktitle>用户菜单</H3>
+<UL id=xspace-action>
+  <LI><A class=xspace-message 
+  href="http://www.51testing.com/?uid-238554-action-viewpro">给我留言</A> </LI>
+  <LI><A class=xspace-addfriend onclick="javascript:joinfriend('238554');" 
+  href="javascript:;">加入好友</A> </LI>
+  <LI><A class=xspace-sendpm 
+  href="http://bbs.51testing.com/pm.php?action=send&amp;uid=238554" 
+  target=_blank>发短消息</A> </LI>
+  <LI><A class=xspace-profile 
+  href="http://www.51testing.com/?uid-238554-action-viewpro-showpro-1">我的介绍</A> 
+  </LI>
+  <LI><A class=xspace-profile 
+  href="http://bbs.51testing.com/viewpro.php?uid=238554">论坛资料</A> </LI>
+  <LI><A class=xspace-ctrlpannel 
+  href="http://www.51testing.com/batch.manage.php?uid=238554">空间管理</A> 
+</LI></UL></DIV>
+<DIV class=xspace-sideblock id=itemtype>
+<H3 class=xspace-blocktitle>我的栏目</H3>
+<UL class=xspace-list>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-type-blog-itemtypeid-9612" 
+  target=_blank>个人日志</A>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-type-blog-itemtypeid-9613" 
+  target=_blank>Linux系统(无QT)</A>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-type-blog-itemtypeid-9614" 
+  target=_blank>WMware</A>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-type-blog-itemtypeid-9615" 
+  target=_blank>Linux驱动</A>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-type-blog-itemtypeid-9617" 
+  target=_blank>Linux(含QT）</A>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-type-blog-itemtypeid-10216" 
+  target=_blank>MiniGUI</A>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-type-blog-itemtypeid-10688" 
+  target=_blank>视频采集</A>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-type-blog-itemtypeid-11177" 
+  target=_blank>VC</A>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-type-blog-itemtypeid-11270" 
+  target=_blank>芯片介绍</A></LI></UL></DIV>
+<DIV class=xspace-sideblock id=search>
+<H3 class=xspace-blocktitle>标题搜索</H3>
+<FORM id=xspace-search 
+action=http://www.51testing.com/index.php?uid/238554/action/spacelist/php/1 
+method=post><INPUT id=xspace-searchkey name=searchkey> <INPUT type=hidden 
+value=yes name=searchsubmit> <INPUT id=xspace-dosearch type=submit value=搜索 name=xspace-dosearch> 
+</FORM></DIV>
+<DIV class=xspace-sideblock id=calendar>
+<H3 class=xspace-blocktitle>日历</H3>
+<TABLE id=xspace-calendar cellSpacing=2 cellPadding=2 width="100%" 
+summary=xspace-Calendar border=0>
+  <TBODY>
+  <TR>
+    <TD align=middle colSpan=7>
+      <TABLE class=xspace-datenav cellSpacing=3 cellPadding=3 
+      summary="xspace-Date nav">
+        <TBODY>
+        <TR>
+          <TD align=middle><A 
+            href="http://www.51testing.com/?action-spacelist-uid-238554-type-blog-itemtypeid-10216-starttime-1267372800-endtime-1270051200">&laquo;</A></TD>
+          <TD noWrap align=middle><A 
+            href="http://www.51testing.com/?action-spacelist-uid-238554-type-blog-itemtypeid-10216-starttime-1270051200-endtime-1272643200">2010-04-29</A></TD>
+          <TD align=middle>&nbsp;</TD></TR></TBODY></TABLE></TD></TR>
+  <TR class=xspace-week align=middle>
+    <TD>日</TD>
+    <TD>一</TD>
+    <TD>二</TD>
+    <TD>三</TD>
+    <TD>四</TD>
+    <TD>五</TD>
+    <TD>六</TD></TR>
+  <TR align=middle>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>&nbsp;</TD>
+    <TD>1</TD>
+    <TD>2</TD>
+    <TD>3</TD></TR>
+  <TR align=middle>
+    <TD>4</TD>
+    <TD>5</TD>
+    <TD>6</TD>
+    <TD>7</TD>
+    <TD>8</TD>
+    <TD>9</TD>
+    <TD>10</TD></TR>
+  <TR align=middle>
+    <TD>11</TD>
+    <TD>12</TD>
+    <TD>13</TD>
+    <TD>14</TD>
+    <TD>15</TD>
+    <TD>16</TD>
+    <TD>17</TD></TR>
+  <TR align=middle>
+    <TD>18</TD>
+    <TD>19</TD>
+    <TD>20</TD>
+    <TD>21</TD>
+    <TD>22</TD>
+    <TD>23</TD>
+    <TD>24</TD></TR>
+  <TR align=middle>
+    <TD>25</TD>
+    <TD>26</TD>
+    <TD>27</TD>
+    <TD>28</TD>
+    <TD>29</TD>
+    <TD>30</TD>
+    <TD>&nbsp;</TD></TR></TBODY></TABLE></DIV>
+<DIV class=xspace-sideblock id=archive>
+<H3 class=xspace-blocktitle>我的存档</H3>
+<UL class=xspace-list>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-starttime-1254326400-endtime-1257004800">2009年10月</A>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-starttime-1251734400-endtime-1254326400">2009年09月</A>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-starttime-1249056000-endtime-1251734400">2009年08月</A>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-starttime-1246377600-endtime-1249056000">2009年07月</A>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-starttime-1243785600-endtime-1246377600">2009年06月</A>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-starttime-1241107200-endtime-1243785600">2009年05月</A>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-starttime-1238515200-endtime-1241107200">2009年04月</A>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-starttime-1235836800-endtime-1238515200">2009年03月</A>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-starttime-1233417600-endtime-1235836800">2009年02月</A>
+  <LI><A 
+  href="http://www.51testing.com/?uid-238554-action-spacelist-starttime-1230739200-endtime-1233417600">2009年01月</A></LI></UL></DIV>
+<DIV class=xspace-sideblock id=infomation>
+<H3 class=xspace-blocktitle>数据统计</H3>
+<UL class=xspace-list>
+  <LI>访问量: 2297
+  <LI>日志数: 39
+  <LI>图片数: 1
+  <LI>建立时间: 2009-01-07 
+  <LI>更新时间: 2009-10-22 </LI></UL></DIV>
+<DIV class=xspace-sideblock id=rss>
+<H3 class=xspace-blocktitle>RSS订阅</H3>
+<UL class=xspace-list>
+  <LI class=xspace-logo><A 
+  href="http://www.51testing.com/?uid-238554-action-rss-type-blog"><IMG 
+  alt=RSS订阅 
+  src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/rss.gif" 
+  border=0></A> </LI></UL></DIV></DIV></DIV></DIV>
+<DIV id=xspace-footer>
+<P id=xspace-footer-ad></P>
+<P id=xspace-footer_menu><A 
+href="http://www.51testing.com/batch.login.php?action=logout">清空Cookie</A> - <A 
+href="mailto:webmaster@51testing.com">联系我们</A> - <A 
+href="http://www.51testing.com/" target=_blank>51Testing软件测试网</A> - <A 
+href="http://bbs.51testing.com/" target=_blank>交流论坛</A> - <A 
+href="http://www.51testing.com/?action/spaces">空间列表</A> - <A 
+href="http://www.51testing.com/archiver/" target=_blank>站点存档</A> - <A 
+href="http://www.51testing.com/?action/register" target=_blank>升级自己的空间</A> </P>
+<P id=xspace-copyright>Powered by <A href="http://www.supesite.com/" 
+target=_blank><STRONG>X-Space</STRONG></A> <EM>4.0Final</EM> &copy; 2001-2008 <A 
+href="http://www.comsenz.com/" target=_blank>Comsenz Inc.</A> <BR><A 
+href="http://www.miibeian.gov.cn/" 
+target=_blank>沪ICP备05003035号</A><BR></P></DIV>
+<DIV id=toolbarshowbtn><A onmouseover=showtoolbar(); href="javascript:;">Open 
+Toolbar</A></DIV>
+<DIV id=toolbarframe><IFRAME 
+src="arm-linux学习笔记之minigui移植 - 笨杰的个人空间 - 51Testing软件测试网 - Powered by X-Space_files/batch.toolbar.html" 
+frameBorder=0 width="100%" scrolling=no></IFRAME></DIV></BODY></HTML>

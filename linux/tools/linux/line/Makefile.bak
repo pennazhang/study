@@ -1,0 +1,39 @@
+# Makefile - makefile for GPU Application
+#
+# Copyright 1988-2001 HuaWei Co.,Ltd.
+#
+# modification history
+# --------------------
+#
+# DESCRIPTION
+# This file contains rules for building Application for the
+# Huawei 3G MUX Application Development Support Board with a PowerPC 8260
+#
+# INCLUDES
+#     makeTarget
+#
+
+LD               = gcc
+CC               = gcc
+CFLAGS           += -g -Wall \
+-I/usr/local/include/directfb
+
+
+LOADCFLAGS += -Map cygwin.map
+
+HELLO_OBJ = line.o
+
+
+hello:   $(HELLO_OBJ)
+	$(CC) -o $@ $(HELLO_OBJ)  -ldirectfb
+
+
+line.o: line.c
+	$(CC) $(CFLAGS) -c line.c
+
+
+clean:
+	rm -f *.o hello
+	
+
+

@@ -1,0 +1,98 @@
+#
+# Emerson ECC P2020 build - 01/28/2010 Percy
+#
+#debug=0
+
+SHELL           ?= /bin/sh
+
+TOPDIR		?= $(shell pwd)
+CURRENTDIR	=  $(shell pwd)
+HOSTCC  	?= 'ccache /usr/bin/gcc -B/usr/bin/'
+HOSTSTRIP	?= /usr/bin/strip
+OPTFLAGS	?= -Os
+DATE 		?= $(shell date)
+USER 		?= $(shell whoami)
+HOST		?= $(shell hostname)
+OUTPUTDIR       ?= $(TOPDIR)
+#config_p2020rdb = 1
+
+#for blackadder compiled at blackadder
+#KERNEL_VERSION  :=  $(shell uname -r)
+#KERNEL_SRC      ?=  /lib/modules/$(KERNEL_VERSION)/build
+#ARCH            ?= powerpc
+
+#for blackadder compiled at host compiled with corss-compiler
+#KERNEL_SRC      ?= /home/percy/work/p2020/freescale/linux/kernel/current
+#ARCH            ?= powerpc
+
+#for Red Hat - 32bit
+KERNEL_VERSION  :=  $(shell uname -r)
+KERNEL_SRC      ?=  /lib/modules/$(KERNEL_VERSION)/build
+ARCH            ?= i386
+
+CC              := $(CROSS_COMPILE)gcc
+
+ifeq ($(MAKELEVEL),0)
+  PATH := $(PATH):$(PPC_TOOL_PATH)
+endif
+
+obj-m           := sysdev.o
+sysdev-objs     := moduleFrame.o Common.o diagLib.o FuncReg.o pciConfigLib.o
+
+#
+# make sure other makes get our env
+#
+export 
+
+.PHONY: message printver endmessage dirs all u-boot linux nexthop endmessage
+#
+# initial target
+#
+message:
+	@echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+	@echo " "
+	@echo " Emerson Sysdev Module Build "
+	@echo " "
+	@echo " If you are creating a new release, the appropriate"
+	@echo " version numbers must be updated in the following files:"
+	@echo "    versions"
+	@echo " "
+	@echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+	@echo " Normal Usage Targets:"
+	@echo "  all..................... rebuild sysdev.ko again"
+	@echo "  sysdev.ko................ build sysdev.ko"
+	@echo "  clean................... clean the result"
+	@echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+	@echo "  current output dir = $(OUTPUTDIR)/."
+	@echo "  you can set the output dir by modify the variable: OUTPUTDIR "
+	@echo "      For example: export OUTPUTDIR=/tftpboot "
+	@echo " "
+
+help: message
+
+
+debug:
+	@echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+	@echo "    $(DATE)"
+	@echo "    $(USER)@$(HOST)"
+	@echo "    version:"
+	@echo "       `cat version.txt`"
+	@echo "    CROSS_COMPILE: $(CROSS_COMPILE)"
+	@echo "    PATH         : $(PATH)"
+	@echo "    PPC_TOOL_PATH: $(PPC_TOOL_PATH)"
+	@echo "    KERNEL_SRC   : $(KERNEL_SRC)"
+	@echo "    TOPDIR       : $(TOPDIR)"
+	@echo "    CURRENTDIR   : $(CURRENTDIR)"
+	@echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+
+
+all: clean sysdev.ko
+
+sysdev.ko:
+	-rm -f Makefile
+	ln -s Makefile-x86 Makefile
+	echo "#define CONFIG_X86" > $(CURRENTDIR)/define.h
+	$(MAKE) -C $(KERNEL_SRC) SUBDIRS=$(CURRENTDIR) modules  ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE)
+
+clean: 
+	$(RM) *.o *.bak *.ko *.cmd $(TOPDIR)/Module.markers $(TOPDIR)/Module.symvers sysdev.mod.c Makefile define.h

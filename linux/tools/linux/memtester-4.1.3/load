@@ -1,0 +1,7 @@
+#!/bin/sh
+# WARNING: This file was auto-generated. Do not edit!
+set -x
+echo CC=$CC
+CC=/git/junebox/software/cross_compiler/host/usr/bin/arm-linux-gcc
+main="$1"; shift
+exec $CC -o "$main" "$main".o ${1+"$@"}

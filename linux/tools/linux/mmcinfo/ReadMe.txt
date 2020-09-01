@@ -1,0 +1,1 @@
+这个例子用于读取MMC卡的CID前3个字节，即Vendor ID和Application ID.

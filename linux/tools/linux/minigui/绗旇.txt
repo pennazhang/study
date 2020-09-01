@@ -1,0 +1,186 @@
+
+
+***************************1
+安装libminigui-1.6.10
+./configure文件加入：
+CC=/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/powerpc-none-linux-gnuspe-gcc
+CPP=/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/powerpc-none-linux-gnuspe-cpp
+LD=/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/powerpc-none-linux-gnuspe-ld
+AR=/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/powerpc-none-linux-gnuspe-ar
+RANLIB=/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/powerpc-none-linux-gnuspe-ranlib
+STRIP=/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/powerpc-none-linux-gnuspe-strip
+
+建/home/ec8025/mingui/lib_release/目录必须用绝对路径
+
+执行
+./configure --prefix=/home/ec8025/mingui/lib_release/ --build=x86_64-linux --host=ppc-unknown-linux --target=ppc-unknown-linux 2>&1 | tee logfile
+
+make
+make install
+***************************2
+安装minigui-res
+进入/home/arm/minigui/minigui-res-1.6.10目录
+修改config.liux文件的第11行
+TOPDIR=/home/ec8025/mingui/lib_release/
+
+后make install
+**********************************3
+到 /home/ec8025/mingui/lib_release/etc修改MiniGUI.cfg
+[system]                                                                    
+# GAL engine and default options                                            
+gal_engine=fbcon                                                            
+defaultmode=800x600-16bpp                                                   
+                                                                            
+# IAL engine                                                                
+#ial_engine=qvfb                                                            
+#mdev=/dev/input/mice                                                       
+#ial_engine=console                                                          
+#mdev=/dev/mouse                                                             
+#mtype=IMPS2                                                                 
+ial_engine=console
+mdev=none
+mtype=none
+                                                                            
+[fbcon]                                                                     
+defaultmode=800x600-16bpp                                                   
+                                                                            
+[qvfb]                                                                      
+defaultmode=800x600-16bpp                                                   
+display=0            
+
+一般就上面几个地方要修改
+
+
+
+
+
+**********************************4
+编译示例
+1、进入/home/arm/minigui/mg-samples-1.6.10
+修改configure.in第30行，这一步有没有用说不清楚，改成下面的样子
+AC_CHECK_HEADERS($prefix/include/minigui/common.h, have_libminigui=no, foo="bar")
+这里和上一行都改成yes
+
+2、修改configure文件
+在文件的最前面加上交叉编译的工具
+CC=/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/powerpc-none-linux-gnuspe-gcc
+CPP=/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/powerpc-none-linux-gnuspe-cpp
+LD=/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/powerpc-none-linux-gnuspe-ld
+AR=/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/powerpc-none-linux-gnuspe-ar
+RANLIB=/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/powerpc-none-linux-gnuspe-ranlib
+STRIP=/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/powerpc-none-linux-gnuspe-strip
+
+执行
+./configure --prefix=/home/ec8025/mingui/lib_release/  --build=x86_64-linux --host=ppc-unknown-linux --target=ppc-unknown-linux  2>&1 | tee logfile
+
+4、修改src/Makefile文件
+找到
+CC = /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/powerpc-none-linux-gnuspe-gcc
+CPP=
+改成
+CC = /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/powerpc-none-linux-gnuspe-gcc -I/home/ec8025/mingui/lib_release/include -L/home/ec8025/mingui/lib_release/lib
+CPP = /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/powerpc-none-linux-gnuspe-cpp -I/home/ec8025/mingui/lib_release/include -L/home/ec8025/mingui/lib_release/lib
+
+
+
+CFLAGS = -g -O2 -`Wall -Wstrict-prototypes -pipe
+改成
+CFLAGS =-O2
+
+LIBOBJS = 
+改成
+LIBOBJS = -lminigui -lmgext -lm  -lpthread
+
+LIBS =  -lminigui
+改成
+LIBS =  -lminigui -lmgext -lm  -lpthread
+
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+    $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+改成
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+    $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -lminigui -lmgext -lm  -lpthread
+这个找不到
+
+am__EXEEXT_2 =
+#am__EXEEXT_3 = scrnsaver$(EXEEXT) mginit$(EXEEXT)
+
+到/src执行make
+
+
+**********************************5
+下载minigui的运行库
+把/home/ec8025/mingui/lib_release/etc/MiniGUI.cfg下载到开发板的/etc/目录下
+
+    把PC上 /home/ec8025/mingui/lib_release/lib中所有的运行库下载到开发板上的/usr/lib目录下；
+在把PC上 /home/ec8025/mingui/lib_release/usr/local/lib下的minigui目录整个下载到开发板的/usr/local/lib下面，到现在开发板上应该有这些东西了
+在开发板的/usr/lib下面有
+lib.tar.bz2               libminigui-1.6.so.10      libvcongui-1.6.so.10.0.0
+libmgext-1.6.so.10        libminigui-1.6.so.10.0.0  libvcongui.a
+libmgext-1.6.so.10.0.0    libminigui.a              libvcongui.la
+libmgext.a                libminigui.la             libvcongui.so
+libmgext.la               libminigui.so             minigui
+libmgext.so               libvcongui-1.6.so.10
+其中minigui是目录
+
+tar -zcvf src.tar.gz /home/ec8025/mingui/mg-samples-1.6.10/src
+下载到开发板的/usr/local/mg下面没有这个目录自己建一个。然后解压缩
+
+运行./helloworld输出
+XGIfb: Unsupported rate 60 for 320x240   这个把MiniGUI.cfg中的320x240改为800x600就好了
+GDI: Error in loading raw bitmap fonts!		这个是MiniGUI.cfg中指定的字体路径错误
+GDI: Can not initialize raw bitmap fonts!
+
+IAL Native Engine: Can not init mouse!	
+IAL: Init IAL engine failure.
+以上两个和IAL engine有关，现在注释掉
+
+InitGUI: Low level event initialization failure!
+InitGUI failure when using /etc/MiniGUI.cfg as cfg file.
+
+创建节点
+查看/proc/bus/input/devices文件
+＃cat /proc/bus/input/devices
+I: Bus="0003" Vendor="15d9" Product="0a33" Version="0110"
+N: Name="USB Mouse"
+P: Phys="usb-s3c24xx-1/input0"
+S: Sysfs="/class/input/input0"
+U: Uniq=
+H: Handlers="mouse0"
+B: EV="17"
+B: KEY="70000" 0 0 0 0 0 0 0 0
+B: REL="103"
+B: MSC="10"
+确定已经鼠标已经连接上了
+然后查看/proc/bus/input/handler
+////////////# cat /proc/bus/input/handler
+N: Number="0" Name="kbd"
+N: Number="1" Name="mousedev" Minor="32"
+看到Number=1 Name="mousedev" Minor="32这个东西了"
+
+# cat /proc/devices
+Character devices:
+ 10 misc
+ 13 input
+ 29 fb
+
+到/dev下创建
+#mknod /dev/input/mouse c 13 32
+
+crw-r--r--    1 root     root      13,  32 Jan  1 00:25 input/mouse
+其中13是设备号的高位 32低位上面的Minor=32和13 input定的，不小的是不是这么会事情，反正鼠标可以工作了.
+可以用下面的命令测试一下：
+# cat /dev/input/mouse
+??(?(?(?(8??8??8??8??8??8??8??8?
+?(
+这一堆乱码就是移动鼠标的时候输出的东西，说明鼠标可以工作了。
+创建一个符号连接:
+ln -s /dev/input/mouse  /dev/mouse
+
+修改权限
+chmod go+r /dev/mouse
+chmod go+r /dev/input/mouse
+
+这下运行minigui的时候有鼠标了。
+
+

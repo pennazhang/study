@@ -1,0 +1,189 @@
+fbneomagic.lo: fbneomagic.c \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/stdio.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/features.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/predefs.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/sys/cdefs.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/wordsize.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/gnu/stubs.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/gnu/stubs-32.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../lib/gcc/powerpc-none-linux-gnuspe/4.3.2/include/stddef.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/types.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/typesizes.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/libio.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/_G_config.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/wchar.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../lib/gcc/powerpc-none-linux-gnuspe/4.3.2/include/stdarg.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/stdio_lim.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/sys_errlist.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/stdio.h \
+  ../../../include/common.h ../../../include/../mgconfig.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../lib/gcc/powerpc-none-linux-gnuspe/4.3.2/include-fixed/limits.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../lib/gcc/powerpc-none-linux-gnuspe/4.3.2/include-fixed/syslimits.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/limits.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/posix1_lim.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/local_lim.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/linux/limits.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/posix2_lim.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/alloca.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/pthread.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/endian.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/endian.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/sched.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/time.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/sched.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/time.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/signal.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/sigset.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/pthreadtypes.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/setjmp.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/semaphore.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/sys/types.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/sys/select.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/select.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/sys/sysmacros.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/semaphore.h \
+  ../../include/newgal.h ../../../include/gdi.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/stdlib.h \
+  ../../../include/endianrw.h ../blit.h ../blit_A.h fbvideo.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/termios.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/termios.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/sys/ttydefaults.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/linux/fb.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/asm/types.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/asm-generic/int-ll64.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/linux/i2c.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/linux/types.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/linux/posix_types.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/linux/stddef.h \
+  /opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/asm/posix_types.h \
+  ../sysvideo.h fbneomagic.h neomagic_mmio.h
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/stdio.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/features.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/predefs.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/sys/cdefs.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/wordsize.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/gnu/stubs.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/gnu/stubs-32.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../lib/gcc/powerpc-none-linux-gnuspe/4.3.2/include/stddef.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/types.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/typesizes.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/libio.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/_G_config.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/wchar.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../lib/gcc/powerpc-none-linux-gnuspe/4.3.2/include/stdarg.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/stdio_lim.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/sys_errlist.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/stdio.h:
+
+../../../include/common.h:
+
+../../../include/../mgconfig.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../lib/gcc/powerpc-none-linux-gnuspe/4.3.2/include-fixed/limits.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../lib/gcc/powerpc-none-linux-gnuspe/4.3.2/include-fixed/syslimits.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/limits.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/posix1_lim.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/local_lim.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/linux/limits.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/posix2_lim.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/alloca.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/pthread.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/endian.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/endian.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/sched.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/time.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/sched.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/time.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/signal.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/sigset.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/pthreadtypes.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/setjmp.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/semaphore.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/sys/types.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/sys/select.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/select.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/sys/sysmacros.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/semaphore.h:
+
+../../include/newgal.h:
+
+../../../include/gdi.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/stdlib.h:
+
+../../../include/endianrw.h:
+
+../blit.h:
+
+../blit_A.h:
+
+fbvideo.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/termios.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/bits/termios.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/sys/ttydefaults.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/linux/fb.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/asm/types.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/asm-generic/int-ll64.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/linux/i2c.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/linux/types.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/linux/posix_types.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/linux/stddef.h:
+
+/opt/freescale-p2020/usr/local/gcc-4.3.74-eglibc-2.8.74-dp-2/powerpc-none-linux-gnuspe/bin/../powerpc-none-linux-gnuspe/libc/usr/include/asm/posix_types.h:
+
+../sysvideo.h:
+
+fbneomagic.h:
+
+neomagic_mmio.h:

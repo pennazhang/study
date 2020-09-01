@@ -1,0 +1,2 @@
+CC=/git/junebox/software/cross_compiler/host/usr/bin/arm-linux-gcc
+linux-5.4.0-40-generic-:-:-:x86_64-:-

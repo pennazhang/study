@@ -1,0 +1,33 @@
+#!/bin/sh
+help_message()
+{
+	echo "usage:"
+	echo "$0 a : test /mnt/sda1"
+	echo "$0 b : test /mnt/sdb1"
+	echo "$0 c : test /mnt/sdc1"
+	echo "$0 d : test /mnt/sdd1"
+}
+
+if [ $# != 1 ]; then
+	help_message
+fi
+exit 1
+
+rm -rf /mnt/sdb1/bonnie_test
+mkdir -p /mnt/sdb
+i=1
+while [ $i -ge 0 ]
+#while [ $i -lt 1000000000 ]
+do
+        echo "*********************************************"
+        echo "Test Number: $i"
+        date
+        echo -n "Current Temperature:"
+        /usr/sbin/i2cget -y -f 1 0x48 0
+        echo "*********************************************"
+        tar zxvf 
+        echo 
+        echo ""
+        echo ""
+        i=$(($i+1))
+done
