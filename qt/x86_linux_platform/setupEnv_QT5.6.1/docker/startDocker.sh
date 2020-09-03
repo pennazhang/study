@@ -28,7 +28,7 @@ DNS_Map=
 # Here we expose the TCP Port: 5023 for testing 
 #PORT_MAP="-p 5023:5023"
 
-imageExistFlag="$(docker images $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION | grep $DOCKER_IMAGE_NAME)"
+imageExistFlag="$(docker images $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION | grep $DOCKER_IMAGE_NAME)" || true
 if [ -z "$imageExistFlag" ];then
     echo dokcer image: $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION not exist, please build it first!
     exit -1

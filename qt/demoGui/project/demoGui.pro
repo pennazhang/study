@@ -50,3 +50,5 @@ linux-arm-g++ {
 linux-g++*{
 	DEFINES += _LINUX_
 }
+
+TRANSLATIONS = $$PWD/../resources/demoGui_en.ts $$PWD/../resources/demoGui_zh.ts
