@@ -1,10 +1,10 @@
 
 CROSS_COMPILE 	?= 
 
-CC             	:= $(CROSS_COMPILE)gcc
-CXX 			:= $(CROSS_COMPILE)g++
-LD 				:= $(CROSS_COMPILE)ld
-AR 				:= $(CROSS_COMPILE)
+CC             	?= $(CROSS_COMPILE)gcc 
+CXX 			?= $(CROSS_COMPILE)g++
+LD 				?= $(CROSS_COMPILE)ld
+AR 				?= $(CROSS_COMPILE)
 
 
 CPPFLAGS			+= -DRUN_SYSTEM_WHEN_POSSIBLE 
@@ -24,7 +24,7 @@ all: clean hello
 SYSDEBUG_OBJ = hello.o
 
 %.o:%.cpp
-	$(CXX) -c $(CFLAGS) $(CPPFLAGS) $< -o $@ 
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@ 
 	
 hello:  $(SYSDEBUG_OBJ)
 	$(CC) -o $@ $(SYSDEBUG_OBJ) -L. $(LDFLAGS) 
