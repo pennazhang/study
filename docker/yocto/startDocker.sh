@@ -13,7 +13,7 @@ if [ ! -d $HOST_GIT_DIR ]; then
 fi
 
 # The following PARMA is used to start docker images.
-RUN_ENV="-e XDG_RUNTIME_DIR"
+RUN_ENV="-e XDG_RUNTIME_DIR -e LC_ALL=en_US.UTF-8 -e LANG=en_US.UTF-8 -e LANGUAGE=en_US.UTF-8"
 HOST_NAME="-h yocto"
 DIR_MAP="-v $HOST_GIT_DIR:/git -v $XDG_RUNTIME_DIR:$XDG_RUNTIME_DIR"
 USER_ID=`id -u`
