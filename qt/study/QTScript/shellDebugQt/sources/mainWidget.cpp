@@ -100,6 +100,11 @@ MainWidget::MainWidget(QWidget *parent)
 	m_pLabel_14pt->setAlignment(Qt::AlignCenter);
 	m_pLabel_14pt->setWordWrap(true);
 
+	m_pReminder = new QLabel(tr("Please telnet this host with port = 5023, password = '1234'"), this);
+    m_pReminder->setObjectName("Black_Font_10pt");
+	m_pReminder->setAlignment(Qt::AlignCenter);
+	m_pReminder->setWordWrap(true);
+
     resize(400, 300);
 }
 
@@ -117,6 +122,7 @@ void MainWidget::resizeEvent(QResizeEvent * /* event */)
 	setPosition(m_pLabel_10pt, 0.5, 0.3, 0.4, 0.2);
 	setPosition(m_pLabel_12pt, 0.5, 0.5, 0.4, 0.2);
 	setPosition(m_pLabel_14pt, 0.5, 0.7, 0.4, 0.2);
+	setPosition(m_pReminder, 0.1, 0.1, 0.8, 0.2);
 }
 
 void MainWidget::setSize(int width, int height)

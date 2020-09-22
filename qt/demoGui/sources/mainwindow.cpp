@@ -74,9 +74,16 @@ MainWindow::MainWindow(QWidget *parent)
     m_pOutputSettingButton->setCheckable(true);
 
 
-    setWindowTitle(tr("QT - GUI Demo"));
+    setWindowTitle(tr("QT - GUI Demo") + QString(", Default Font:") + qApp->font().toString());
     setMinimumSize(400, 300);
     resize(600, 450);
+
+	qDebug() << qApp->font().rawName();
+	qDebug() << qApp->font().family();
+	qDebug() << qApp->font().defaultFamily();
+	qDebug() << qApp->font().styleName();
+	qDebug() << qApp->font().toString();
+	qDebug() << qApp->font().key();
 }
 
 MainWindow::~MainWindow()
@@ -137,5 +144,5 @@ void MainWindow::retranslateUi()
 	m_pOutputSettingButton->setText(tr("Output Setting"));
 	m_pChineseButton->setText(tr("Chinese"));
 	m_pEnglishButton->setText(tr("English"));
-    setWindowTitle(tr("QT - GUI Demo"));
+    setWindowTitle(tr("QT - GUI Demo") + QString(", Default Font:") + qApp->font().toString());
 }

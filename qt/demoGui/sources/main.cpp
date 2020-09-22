@@ -16,6 +16,10 @@ int main(int argc, char *argv[])
     qss.close();
     app.setWindowIcon(QIcon(":/logo.png"));
 
+//	QFont font;
+//	font.setFamily("MS Shell Dlg 2"); // Tahoma 
+//	qApp->setFont(font);
+
     MainWindow w;
     w.show();
     return app.exec();
