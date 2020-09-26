@@ -24,7 +24,7 @@ all: clean hello
 SYSDEBUG_OBJ = hello.o
 
 %.o:%.cpp
-	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@ 
+	$(CXX) -c $(CFLAGS) $(CPPFLAGS) $< -o $@ 
 	
 hello:  $(SYSDEBUG_OBJ)
 	$(CC) -o $@ $(SYSDEBUG_OBJ) -L. $(LDFLAGS) 
