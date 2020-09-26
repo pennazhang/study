@@ -1,10 +1,8 @@
 #!/bin/bash
 
-# we can use the option "set -x" to do some debug.
-#set -x
 set -e
 
-DOCKER_IMAGE_NAME=yocto
+DOCKER_IMAGE_NAME=bitbake
 DOCKER_IMAGE_VERSION=0.2
 
 HOST_GIT_DIR=/git
@@ -16,7 +14,7 @@ fi
 
 # The following PARMA is used to start docker images.
 RUN_ENV="-e XDG_RUNTIME_DIR -e LC_ALL=en_US.UTF-8 -e LANG=en_US.UTF-8 -e LANGUAGE=en_US.UTF-8"
-HOST_NAME="-h yocto"
+HOST_NAME="-h bitbake"
 DIR_MAP="-v $HOST_GIT_DIR:/git -v $XDG_RUNTIME_DIR:$XDG_RUNTIME_DIR"
 USER_ID=`id -u`
 GROUP_ID=`id -g`
@@ -26,7 +24,7 @@ USER_LOGIN="--user $USER_ID:$GROUP_ID"
 #dnsMap="--dns 192.168.0.1"
 DNS_Map=
 
-imageExistFlag="$(docker images $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION | grep $DOCKER_IMAGE_NAME)" || true
+imageExistFlag="$(docker images $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION | grep $DOCKER_IMAGE_NAME)"
 if [ -z "$imageExistFlag" ];then
     echo dokcer image: $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION not exist, please build it first!
     exit -1
