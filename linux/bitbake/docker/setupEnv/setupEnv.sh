@@ -18,3 +18,11 @@ echo "CROSS_COMPILE=$CROSS_COMPILE"
 cd $MYDIR
 sudo bash -e "$MYDIR/setupEnv_root.sh" "$1"
 
+cd ~
+wget https://github.com/openembedded/bitbake/archive/master.zip
+unzip master
+mv bitbake-master bitbake
+
+echo "" >>~/.bashrc
+echo "export PATH=~/bitbake/bin:$PATH" >>~/.bashrc
+echo "export PYTHONPATH=~/bitbake/lib:$PYTHONPATH" >>~/.bashrc
