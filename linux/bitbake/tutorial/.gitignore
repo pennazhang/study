@@ -6,5 +6,6 @@
 # Normal rules
 #
 
-temp/
+tmp/
 bitbake-cookerdaemon.log
+bitbake.lock
