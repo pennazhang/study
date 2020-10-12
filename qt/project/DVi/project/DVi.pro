@@ -32,15 +32,15 @@ DEFINES += _CRT_SECURE_NO_WARNINGS
 
 # Header file
 HEADERS +=  $$PWD/../headers/Types.h \
-            $$PWD/../headers/mainWidget.h \
-            $$PWD/../headers/mainApplication.h \
-            $$PWD/../headers/commonLib.h \
+            $$PWD/../headers/MainWidget.h \
+            $$PWD/../headers/MainApplication.h \
+            $$PWD/../headers/CommonLib.h \
 			$$PWD/../headers/IniSetting.h \
 			$$PWD/../headers/DeviceSocket.h \
-			$$PWD/../headers/simpleQtLogger.h \
-			$$PWD/../headers/backgroundWidget.h \
-			$$PWD/../headers/broadcastCommunication.h \
-			$$PWD/../headers/deviceSearchingDialog.h \
+			$$PWD/../headers/SimpleQtLogger.h \
+			$$PWD/../headers/BackgroundWidget.h \
+			$$PWD/../headers/BroadcastCommunication.h \
+			$$PWD/../headers/DeviceSearchingDialog.h \
 			$$PWD/../headers/MarkButton.h \				
 			$$PWD/../headers/ButtonSlider.h \
 			$$PWD/../headers/UpgradeDialog.h \
@@ -55,18 +55,18 @@ HEADERS +=  $$PWD/../headers/Types.h \
 			$$PWD/../headers/InputEQEditor.h \	
 			$$PWD/../headers/EQWidget.h \	
 			$$PWD/../headers/FormatOutput.h \	
-			$$PWD/../headers/plotBiquad.h \	
+			$$PWD/../headers/PlotBiquad.h \	
 			
-SOURCES +=  $$PWD/../sources/main.cpp \
-			$$PWD/../sources/mainWidget.cpp \
-			$$PWD/../sources/mainApplication.cpp \
-            $$PWD/../sources/commonLib.cpp \
+SOURCES +=  $$PWD/../sources/Main.cpp \
+			$$PWD/../sources/MainWidget.cpp \
+			$$PWD/../sources/MainApplication.cpp \
+            $$PWD/../sources/CommonLib.cpp \
 			$$PWD/../sources/IniSetting.cpp \
 			$$PWD/../sources/DeviceSocket.cpp \
-			$$PWD/../sources/simpleQtLogger.cpp \
-			$$PWD/../sources/backgroundWidget.cpp \
-			$$PWD/../sources/broadcastCommunication.cpp \
-			$$PWD/../sources/deviceSearchingDialog.cpp \
+			$$PWD/../sources/SimpleQtLogger.cpp \
+			$$PWD/../sources/BackgroundWidget.cpp \
+			$$PWD/../sources/BroadcastCommunication.cpp \
+			$$PWD/../sources/DeviceSearchingDialog.cpp \
 			$$PWD/../sources/MarkButton.cpp \
 			$$PWD/../sources/ButtonSlider.cpp \
 			$$PWD/../sources/UpgradeDialog.cpp \
@@ -81,7 +81,7 @@ SOURCES +=  $$PWD/../sources/main.cpp \
 			$$PWD/../sources/InputEQEditor.cpp \	
 			$$PWD/../sources/EQWidget.cpp \	
 			$$PWD/../sources/FormatOutput.cpp \	
-			$$PWD/../sources/plotBiquad.cpp \	
+			$$PWD/../sources/PlotBiquad.cpp \	
 			
 TRANSLATIONS = $$PWD/../resources/DVi_en.ts $$PWD/../resources/DVi_zh.ts
 
