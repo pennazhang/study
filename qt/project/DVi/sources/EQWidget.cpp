@@ -456,7 +456,8 @@ void EQWidget::updatePixmap4(QPixmap *pixmap)
 	}
 	
 	/* Then, we can draw the total curve */
-	drawTotalEQCurve(&painter, QPen(QColor(Qt::white), 2), pTotalCurveY);
+	QPen pen(QColor(Qt::white), 2);
+	drawTotalEQCurve(&painter, pen, pTotalCurveY);
 
 	/* draw the non-main control point */
 	int controlPoint = pCurrentEQ->getControlPointCount();

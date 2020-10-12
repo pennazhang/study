@@ -4,7 +4,7 @@
 
 const double PI = 3.14159265358979323846264338327950288419716939937510582;
 const double FS = 48000.f;
-const double M_SQRT2 = 1.41421356237309504880; //sqrt(2)
+const double SQRT2 = 1.41421356237309504880; //sqrt(2)
 
 class plotBiquad
 {

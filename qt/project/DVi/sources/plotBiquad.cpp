@@ -156,7 +156,7 @@ void plotBiquad::setParameter(bool enable, int ftype, double f0, double dBgain,d
 		double G = powf(10.0f, dBgain*0.05);
 		double Gc = 0.0;
 		if (dBgain >= 6.0)
-			Gc = (G / M_SQRT2)*Qc;	// Gdb-3db
+			Gc = (G / SQRT2)*Qc;	// Gdb-3db
 		else if (dBgain > 0.0)
 			Gc = sqrt(G)*Qc;		// Geometric mean = sqrt(G)
 		else if (dBgain == 0.0)
@@ -164,7 +164,7 @@ void plotBiquad::setParameter(bool enable, int ftype, double f0, double dBgain,d
 		else if (dBgain > -6.0)
 			Gc = sqrt(G) / Qc;	    // Geometric mean = sqrt(G)
 		else
-			Gc = G*M_SQRT2 / Qc;		// Gdb-3db
+			Gc = G*SQRT2 / Qc;		// Gdb-3db
 
 		double G0 = G - (Gc*(G - 1.0));	// Adjusts to make 3db point at Fc - Where does this come from?
 
@@ -201,7 +201,7 @@ void plotBiquad::setParameter(bool enable, int ftype, double f0, double dBgain,d
 		double G = powf(10.0f, dBgain*0.05);
 		double Gc = 0.0;
 		if (dBgain >= 6.0)
-			Gc = (G / M_SQRT2)*Qc;	// Gdb-3db
+			Gc = (G / SQRT2)*Qc;	// Gdb-3db
 		else if (dBgain > 0.0)
 			Gc = sqrt(G)*Qc;		// Geometric mean = sqrt(G)
 		else if (dBgain == 0.0)
@@ -209,7 +209,7 @@ void plotBiquad::setParameter(bool enable, int ftype, double f0, double dBgain,d
 		else if (dBgain > -6.0)
 			Gc = sqrt(G) / Qc;	    // Geometric mean = sqrt(G)
 		else
-			Gc = G*M_SQRT2 / Qc;		// Gdb-3db
+			Gc = G*SQRT2 / Qc;		// Gdb-3db
 
 		double G0 = G - (Gc*(G - 1.0));	// Adjusts to make 3db point at Fc - Where does this come from?
 
