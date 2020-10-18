@@ -6,7 +6,6 @@ DOCKER_IMAGE_NAME=littlevgl
 DOCKER_IMAGE_VERSION=0.2
 
 HOST_GIT_DIR=/git
-DOCKER_GIT_DIR=/git
 
 if [ ! -d $HOST_GIT_DIR ]; then
     echo "$HOST_GIT_DIR not Exist."
@@ -14,9 +13,9 @@ if [ ! -d $HOST_GIT_DIR ]; then
 fi
 
 # The following PARMA is used to start docker images.
-#RUN_ENV="-e QT_SELECT=qt5"
+RUN_ENV="-e XDG_RUNTIME_DIR"
 HOST_NAME="-h little_vgl"
-DIR_MAP="-v $HOST_GIT_DIR:/$DOCKER_GIT_DIR"
+DIR_MAP="-v $HOST_GIT_DIR:/git -v $XDG_RUNTIME_DIR:$XDG_RUNTIME_DIR"
 USER_ID=`id -u`
 GROUP_ID=`id -g`
 USER_LOGIN="--user $USER_ID:$GROUP_ID"
@@ -31,12 +30,22 @@ if [ -z "$imageExistFlag" ];then
     exit -1
 fi
 
-xhost
+# disable X-Windows server access control, clients can connect from any host
+xhost +
 export XSOCK=/tmp/.X11-unix
 export XAUTH=/tmp/.docker.xauth
-sudo rm -rf /tmp/.docker.xauth
+touch /tmp/.docker.xauth
 xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $XAUTH nmerge -
-X11_OPTION="-v $XSOCK -v $XAUTH -e XAUTHORITY=$XAUTH -e DISPLAY --net=host"
+
+if [[ $DISPLAY =~ "localhost" ]]; then 
+    echo "Please startDocker from Host terminal, not SSH shell."
+    exit -1
+else
+    X11_OPTION="-v $XSOCK:$XSOCK -v $XAUTH:$XAUTH -e XAUTHORITY=$XAUTH -e DISPLAY"
+fi	
+
+
+#X11_OPTION="-v $XSOCK -v $XAUTH -e XAUTHORITY=$XAUTH -e DISPLAY --net=host"
 #echo "X11_OPTION=$X11_OPTION"
 #echo "DIR_MAP=$DIR_MAP"
 
@@ -50,9 +59,10 @@ X11_OPTION="-v $XSOCK -v $XAUTH -e XAUTHORITY=$XAUTH -e DISPLAY --net=host"
 #echo "    ./demo"
 
 if [ $# -eq 0 ]; then
-docker run -it --rm $X11_OPTION $DIR_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION bash
+	echo docker run -it --rm $X11_OPTION $DIR_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION bash
+	docker run -it --rm $X11_OPTION $DIR_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION bash
 else
+	echo docker run -it --rm $X11_OPTION $DIR_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION sh -c \'\'"$1"\'\'
 	docker run -it --rm $X11_OPTION $DIR_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION sh -c \'\'"$1"\'\'
 fi
-#docker run    --rm $X11_OPTION $DIR_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION sh -c "cd /git/pc_simulator_sdl_eclipse && make clean && make && ./demo"
 
