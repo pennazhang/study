@@ -24,7 +24,7 @@ USER_LOGIN="--user $USER_ID:$GROUP_ID"
 #dnsMap="--dns 192.168.0.1"
 DNS_Map=
 
-imageExistFlag="$(docker images $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION | grep $DOCKER_IMAGE_NAME)"
+imageExistFlag="$(docker images $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION | grep $DOCKER_IMAGE_NAME)" || true
 if [ -z "$imageExistFlag" ];then
     echo dokcer image: $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION not exist, please build it first!
     exit -1
@@ -38,7 +38,7 @@ touch /tmp/.docker.xauth
 xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $XAUTH nmerge -
 
 if [[ $DISPLAY =~ "localhost" ]]; then 
-	echo DISPLAY=$DISPLAY
+    echo DISPLAY=$DISPLAY
     echo "Please startDocker from Host terminal, not SSH shell."
     X11_OPTION=""
 else
