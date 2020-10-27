@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# we can use the option "set -x" to do some debug.
+#set -x
 set -e
 
 DOCKER_IMAGE_NAME=littlevgl
@@ -24,22 +26,26 @@ USER_LOGIN="--user $USER_ID:$GROUP_ID"
 #dnsMap="--dns 192.168.0.1"
 DNS_Map=
 
-imageExistFlag="$(docker images $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION | grep $DOCKER_IMAGE_NAME)"
+#Check if the image is already exist.
+imageExistFlag="$(docker images $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION | grep $DOCKER_IMAGE_NAME)" || true
 if [ -z "$imageExistFlag" ];then
-    echo dokcer image: $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION not exist, please build it first!
+    echo ------------------------------------------------------------------------------
+    echo warning --  dokcer image: $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION not exist, please build it first!
+    echo ------------------------------------------------------------------------------
     exit -1
 fi
 
 # disable X-Windows server access control, clients can connect from any host
-xhost +
+xhost + || true
 export XSOCK=/tmp/.X11-unix
 export XAUTH=/tmp/.docker.xauth
 touch /tmp/.docker.xauth
 xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $XAUTH nmerge -
 
 if [[ $DISPLAY =~ "localhost" ]]; then 
+    echo DISPLAY=$DISPLAY
     echo "Please startDocker from Host terminal, not SSH shell."
-    exit -1
+    X11_OPTION=""
 else
     X11_OPTION="-v $XSOCK:$XSOCK -v $XAUTH:$XAUTH -e XAUTHORITY=$XAUTH -e DISPLAY"
 fi	

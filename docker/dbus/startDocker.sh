@@ -4,7 +4,7 @@
 #set -x
 set -e
 
-DOCKER_IMAGE_NAME=yocto
+DOCKER_IMAGE_NAME=dbus
 DOCKER_IMAGE_VERSION=0.2
 
 HOST_GIT_DIR=/git
@@ -15,8 +15,8 @@ if [ ! -d $HOST_GIT_DIR ]; then
 fi
 
 # The following PARMA is used to start docker images.
-RUN_ENV="-e XDG_RUNTIME_DIR"
-HOST_NAME="-h yocto"
+RUN_ENV="-e XDG_RUNTIME_DIR -e CPLUS_INCLUDE_PATH=/usr/include/dbus-1.0:/usr/lib/x86_64-linux-gnu/dbus-1.0/include"
+HOST_NAME="-h dbus"
 DIR_MAP="-v $HOST_GIT_DIR:/git -v $XDG_RUNTIME_DIR:$XDG_RUNTIME_DIR"
 USER_ID=`id -u`
 GROUP_ID=`id -g`

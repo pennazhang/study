@@ -2,8 +2,8 @@
 
 set -e
 
-DOCKER_IMAGE_NAME=littlevgl
-LINUX_VERSION=ubuntu:18.04
+DOCKER_IMAGE_NAME=tetris
+LINUX_VERSION=ubuntu:14.04
 DEBUG_FLAG=0
 
 CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`

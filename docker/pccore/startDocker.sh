@@ -1,24 +1,23 @@
 #!/bin/bash
 
+# we can use the option "set -x" to do some debug.
+#set -x
 set -e
 
-DOCKER_IMAGE_NAME=qt5.3.2
+DOCKER_IMAGE_NAME=pccore
 DOCKER_IMAGE_VERSION=0.2
 
-CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
-SETUP_ENV_DIR=`cd $CURRENT_DIR/..; pwd`
-PROJECT_DIR=`cd $CURRENT_DIR/../..; pwd`
-PROJECT_NAME=${PROJECT_DIR##*/}
-HOST_GIT_DIR=/git 
+HOST_GIT_DIR=/git
 
-echo "CURRENT_DIR = $CURRENT_DIR"
-echo "PROJECT_NAME = $PROJECT_NAME"
-echo "HOST_GIT_DIR = $HOST_GIT_DIR"
+if [ ! -d $HOST_GIT_DIR ]; then
+    echo "$HOST_GIT_DIR not Exist."
+    exit -1
+fi
 
 # The following PARMA is used to start docker images.
-RUN_ENV="-e QT_SELECT=x86_qt5.3.2 -e LD_LIBRARY_PATH=/opt/qt5.3.2/lib -e QT_XKB_CONFIG_ROOT=/usr/share/X11/xkb"
-HOST_NAME="-h qt5_3_2"
-DIR_MAP="-v $HOST_GIT_DIR:/git"
+RUN_ENV="-e XDG_RUNTIME_DIR -e LC_ALL=en_US.UTF-8 -e LANG=en_US.UTF-8 -e LANGUAGE=en_US.UTF-8"
+HOST_NAME="-h pccore"
+DIR_MAP="-v $HOST_GIT_DIR:/git -v $XDG_RUNTIME_DIR:$XDG_RUNTIME_DIR"
 USER_ID=`id -u`
 GROUP_ID=`id -g`
 USER_LOGIN="--user $USER_ID:$GROUP_ID"
@@ -27,25 +26,41 @@ USER_LOGIN="--user $USER_ID:$GROUP_ID"
 #dnsMap="--dns 192.168.0.1"
 DNS_Map=
 
-imageExistFlag="$(docker images $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION | grep $DOCKER_IMAGE_NAME)"
+imageExistFlag="$(docker images $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION | grep $DOCKER_IMAGE_NAME)" || true
 if [ -z "$imageExistFlag" ];then
     echo dokcer image: $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION not exist, please build it first!
     exit -1
 fi
 
 # disable X-Windows server access control, clients can connect from any host
-xhost +
-
+xhost + || true
 export XSOCK=/tmp/.X11-unix
 export XAUTH=/tmp/.docker.xauth
-sudo rm -rf /tmp/.docker.xauth
+touch /tmp/.docker.xauth
 xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $XAUTH nmerge -
-X11_OPTION="-v $XSOCK:$XSOCK -v $XAUTH:$XAUTH -e XAUTHORITY=$XAUTH -e DISPLAY --net=host --env QT_X11_NO_MITSHM=1 "
-#echo "X11_OPTION=$X11_OPTION"
 
-#echo "To build demoGui, run the following commands:"
-#echo "    cd /git/demoGui/src"
-#echo "    qmake && make"
+if [[ $DISPLAY =~ "localhost" ]]; then 
+	echo DISPLAY=$DISPLAY
+    echo "Please startDocker from Host terminal, not SSH shell."
+    X11_OPTION=""
+else
+    X11_OPTION="-v $XSOCK:$XSOCK -v $XAUTH:$XAUTH -e XAUTHORITY=$XAUTH -e DISPLAY"
+fi	
+
+
+#X11_OPTION="-v $XSOCK -v $XAUTH -e XAUTHORITY=$XAUTH -e DISPLAY --net=host"
+#echo "X11_OPTION=$X11_OPTION"
+#echo "DIR_MAP=$DIR_MAP"
+
+#echo "Folder map : $DIR_MAP" 
+#echo "---------------------------------------------------------------------------"
+#echo "To build littlevgl, run the following commands:"
+#echo "    cd /git"
+#echo "    git clone --recursive https://github.com/littlevgl/pc_simulator_sdl_eclipse.git"
+#echo "    cd pc_simulator_sdl_eclipse"
+#echo "    make clean && make"
+#echo "    ./demo"
+
 if [ $# -eq 0 ]; then
 	echo docker run -it --rm $X11_OPTION $DIR_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION bash
 	docker run -it --rm $X11_OPTION $DIR_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION bash
@@ -53,6 +68,4 @@ else
 	echo docker run -it --rm $X11_OPTION $DIR_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION sh -c \'\'"$1"\'\'
 	docker run -it --rm $X11_OPTION $DIR_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION sh -c \'\'"$1"\'\'
 fi
-#docker run --rm $X11_OPTION $DIR_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION sh -c "cd /git/study/qt/demoCmd/project && qmake && make && ./out/bin/demoCmd"
-
 

@@ -2,7 +2,7 @@
 
 set -e
 
-DOCKER_IMAGE_NAME=littlevgl
+DOCKER_IMAGE_NAME=dbus
 LINUX_VERSION=ubuntu:18.04
 DEBUG_FLAG=0
 
@@ -71,7 +71,7 @@ fi
 # install package on host
 #-----------------------------------------------------------------------------
 sudo apt update || true
-sudo apt install -y x11-utils
+sudo apt install -y x11-utils || true
 
 #-----------------------------------------------------------------------------
 # create docker_image:0.1

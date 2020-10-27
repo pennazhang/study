@@ -4,20 +4,23 @@
 #set -x
 set -e
 
-DOCKER_IMAGE_NAME=yocto
+DOCKER_IMAGE_NAME=qt5.3.2
 DOCKER_IMAGE_VERSION=0.2
 
-HOST_GIT_DIR=/git
+CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
+SETUP_ENV_DIR=`cd $CURRENT_DIR/..; pwd`
+PROJECT_DIR=`cd $CURRENT_DIR/../..; pwd`
+PROJECT_NAME=${PROJECT_DIR##*/}
+HOST_GIT_DIR=/git 
 
-if [ ! -d $HOST_GIT_DIR ]; then
-    echo "$HOST_GIT_DIR not Exist."
-    exit -1
-fi
+echo "CURRENT_DIR = $CURRENT_DIR"
+echo "PROJECT_NAME = $PROJECT_NAME"
+echo "HOST_GIT_DIR = $HOST_GIT_DIR"
 
 # The following PARMA is used to start docker images.
-RUN_ENV="-e XDG_RUNTIME_DIR"
-HOST_NAME="-h yocto"
-DIR_MAP="-v $HOST_GIT_DIR:/git -v $XDG_RUNTIME_DIR:$XDG_RUNTIME_DIR"
+RUN_ENV="-e QT_SELECT=x86_qt5.3.2 -e LD_LIBRARY_PATH=/opt/qt5.3.2/lib -e QT_XKB_CONFIG_ROOT=/usr/share/X11/xkb"
+HOST_NAME="-h qt5_3_2"
+DIR_MAP="-v $HOST_GIT_DIR:/git"
 USER_ID=`id -u`
 GROUP_ID=`id -g`
 USER_LOGIN="--user $USER_ID:$GROUP_ID"

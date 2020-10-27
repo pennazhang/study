@@ -4,6 +4,7 @@ set -e
 
 DOCKER_IMAGE_NAME=yocto
 LINUX_VERSION=ubuntu:18.04
+DEBUG_FLAG=0
 
 CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
 PROJECT_DIR=$CURRENT_DIR
@@ -48,10 +49,6 @@ if [ -z $AUTO_START_DIR ] || [ -z $AUTO_START_SCRIPT ];then
     exit -1
 fi
 
-echo "We need to install x11-utils, please provide sudo password."
-sudo apt update || true
-sudo apt install -y x11-utils || true
-
 # install docker
 DOCKER_VERSION="$(docker --version | grep $Docker version)"
 if [ -z "$DOCKER_VERSION" ];then
@@ -71,6 +68,12 @@ fi
 #    echo "Please download the code from: $GIT_REPO!"
 #    exit -1
 #fi
+
+#-----------------------------------------------------------------------------
+# install package on host
+#-----------------------------------------------------------------------------
+sudo apt update || true
+sudo apt install -y x11-utils
 
 #-----------------------------------------------------------------------------
 # create docker_image:0.1
@@ -120,15 +123,13 @@ if [ -z "$imageExistFlag" ];then
     echo ------------------------------------------------------------------------------
     echo "auto run in Docker: cd $AUTO_START_DIR && ./$AUTO_START_SCRIPT\n"
 
-#   docker run -it ${FOLDER_MAP} --name "${TEMP_CONTAINER_NAME}" ${DOCKER_IMAGE_NAME}:0.1 bash
-    docker run ${FOLDER_MAP} --name "${TEMP_CONTAINER_NAME}" ${DOCKER_IMAGE_NAME}:0.1 sh -c "cd $AUTO_START_DIR && ./$AUTO_START_SCRIPT"
-    docker commit -m "build ${DOCKER_IMAGE_NAME}:0.2" ${TEMP_CONTAINER_NAME} $DOCKER_IMAGE_NAME:0.2
-    docker rm ${TEMP_CONTAINER_NAME}
-
-    if [ ! -z $DOCKER_DST_DIR ];then
-        rm -rf $HOST_GIT_DIR/$PROJECT_NAME/${DOCKER_DST_DIR}
+    if [ $DEBUG_FLAG == 1 ]; then
+         docker run -it ${FOLDER_MAP} --name "${TEMP_CONTAINER_NAME}" ${DOCKER_IMAGE_NAME}:0.1 bash
+    else
+        docker run ${FOLDER_MAP} --name "${TEMP_CONTAINER_NAME}" ${DOCKER_IMAGE_NAME}:0.1 sh -c "cd $AUTO_START_DIR && ./$AUTO_START_SCRIPT"
+        docker commit -m "build ${DOCKER_IMAGE_NAME}:0.2" ${TEMP_CONTAINER_NAME} $DOCKER_IMAGE_NAME:0.2
+        docker rm ${TEMP_CONTAINER_NAME}
+        echo build $DOCKER_IMAGE_NAME:0.2 OK!
     fi
-    
-    echo build $DOCKER_IMAGE_NAME:0.2 OK!
 fi
 

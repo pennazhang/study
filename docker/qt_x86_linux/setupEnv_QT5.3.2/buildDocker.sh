@@ -2,9 +2,11 @@
 
 set -e
 
-DOCKER_IMAGE_NAME=littlevgl
-LINUX_VERSION=ubuntu:18.04
+DOCKER_IMAGE_NAME=qt5.3.2
+LINUX_VERSION=ubuntu:16.04
 DEBUG_FLAG=0
+#we will download qt or other software to $HOST_CACHE_DIR just once.
+HOST_CACHE_DIR=/git/cacheData
 
 CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
 PROJECT_DIR=$CURRENT_DIR
@@ -109,7 +111,7 @@ fi
 #-----------------------------------------------------------------------------
 # create docker_image:0.2
 #-----------------------------------------------------------------------------
-FOLDER_MAP="-v $HOST_GIT_DIR:/git"
+FOLDER_MAP="-v $HOST_GIT_DIR:/git -v $HOST_CACHE_DIR:/home/$USER_NAME/cacheData"
 TEMP_CONTAINER_NAME="$(date +%s)"
 echo "FOLDER_MAP = $FOLDER_MAP"
 

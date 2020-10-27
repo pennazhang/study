@@ -2,37 +2,60 @@
 
 set -e
 
-DOCKER_IMAGE_NAME=qt5.3.2
-LINUX_VERSION=ubuntu:16.04
-DEBUG_FLAG=0
-#we will download qt or other software to $HOST_CACHE_DIR just once.
-HOST_CACHE_DIR=/git/cacheData
+DOCKER_IMAGE_NAME=pccore
+LINUX_VERSION=debian:jessie
 
 CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
-SETUP_ENV_DIR=`cd $CURRENT_DIR/..; pwd`
-SETUP_ENV_NAME=${SETUP_ENV_DIR##*/}
-PROJECT_DIR=`cd $CURRENT_DIR/../..; pwd`
+PROJECT_DIR=$CURRENT_DIR
 PROJECT_NAME=${PROJECT_DIR##*/}
-HOST_GIT_DIR=`cd $CURRENT_DIR/../../..; pwd`; 
+HOST_GIT_DIR=`cd $PROJECT_DIR/..; pwd`; 
 
-echo "CURRENT_DIR = $CURRENT_DIR"
-echo "SETUP_ENV_DIR = $SETUP_ENV_DIR"
-echo "PROJECT_DIR = $PROJECT_DIR"
-echo "PROJECT_NAME = $PROJECT_NAME"
-echo "HOST_GIT_DIR = $HOST_GIT_DIR"
-echo "HOST_CACHE_DIR = $HOST_CACHE_DIR"
-
-
-if [ ! -d $HOST_CACHE_DIR ];then
-#    mkdir -p $HOST_CACHE_DIR
-    echo "Can not find HOST_CACHE_DIR: $HOST_CACHE_DIR, please create it first!"
-    exit 0
+# Just to install some other software
+HOST_EXTRA_DIR1=/git/infinity-linux-kernel/4.9.40-3/packages
+EXTRA_DIR1=/infinity_kernel
+EXTRA_MAP=" -v $HOST_EXTRA_DIR1:$EXTRA_DIR1"
+if [ ! -f $HOST_EXTRA_DIR1/linux-headers-4.9.40-3-rt30_1.2.studer.infinity_amd64.deb ];then
+	echo "Can't find the infinity kernel packege: $HOST_EXTRA_DIR1/linux-headers-4.9.40-3-rt30_1.2.studer.infinity_amd64.deb"
+	exit -1
 fi
 
+if [ ! -f $HOST_EXTRA_DIR1/linux-image-4.9.40-3-rt30_1.2.studer.infinity_amd64.deb ];then
+	echo "Can't find the infinity kernel packege: $HOST_EXTRA_DIR1/linux-image-4.9.40-3-rt30_1.2.studer.infinity_amd64.deb"
+	exit -1
+fi
+
+# The source code from $GIT_REPO must be put into $HOST_GIT_DIR/$PROJECT_NAME
+#HOST_GIT_DIR=/home/share/pzhang/git
+#HOST_CACHE_DIR=$HOME/cacheData
+#echo "CURRENT_DIR = $CURRENT_DIR"
+echo "PROJECT_NAME = $PROJECT_NAME"
+#echo "HOST_GIT_DIR = $HOST_GIT_DIR"
+#echo "HOST_CACHE_DIR = $HOST_CACHE_DIR"
+
+
+#if [ ! -d $HOST_CACHE_DIR ];then
+#    mkdir -p $HOST_CACHE_DIR
+#fi
+
+#cp -a $HOST_SRC_DIR to /$HOST_GIT_DIR/$PROJECT_NAME/$DOCKER_DST_DIR
+HOST_SRC_DIR=
+DOCKER_DST_DIR=
+
 #Auto run script in Docker to build environment
-AUTO_START_DIR=/git/$PROJECT_NAME/$SETUP_ENV_NAME
+AUTO_START_DIR=/git/$PROJECT_NAME/setupEnv
 AUTO_START_SCRIPT=setupEnv.sh
 echo "auto run in Docker: cd $AUTO_START_DIR && ./$AUTO_START_SCRIPT"
+
+if [ -d "$CURRENT_DIR/${HOST_SRC_DIR}" ] && [ ! -z $DOCKER_DST_DIR ];then
+    rm -rf $HOST_GIT_DIR/$PROJECT_NAME/${DOCKER_DST_DIR}
+    cp -a $CURRENT_DIR/${HOST_SRC_DIR} $HOST_GIT_DIR/$PROJECT_NAME/${DOCKER_DST_DIR}
+else
+    if [ ! -z $HOST_SRC_DIR ] || [ ! -z $DOCKER_DST_DIR ];then
+        echo "Error : Please check the definition of HOST_SRC_DIR=$HOST_SRC_DIR and DOCKER_DST_DIR=$DOCKER_DST_DIR"
+        exit -1
+    fi
+fi
+
 
 if [ -z $AUTO_START_DIR ] || [ -z $AUTO_START_SCRIPT ];then
     echo "Error : Please define AUTO_START_DIR and AUTO_START_SCRIPT to setup the building environment"
@@ -46,17 +69,24 @@ if [ -z "$DOCKER_VERSION" ];then
     exit -1
 fi
 
-if [ ! -d $HOST_GIT_DIR/$PROJECT_NAME ];then
-    echo "No souce code was found in $HOST_GIT_DIR/$PROJECT_NAME"
-    echo "Please download the code from: $GIT_REPO!"
-    exit -1
-fi
+# Get the source code from git repo
+#if [ ! -d $HOST_GIT_DIR/$PROJECT_NAME ];then
+#    cd $HOST_GIT_DIR
+#    git clone --recursive $GIT_REPO
+#    cd $CURRENT_DIR
+#fi
 
+#if [ ! -d $HOST_GIT_DIR/$PROJECT_NAME ];then
+#    echo "No souce code was found in $HOST_GIT_DIR/$PROJECT_NAME"
+#    echo "Please download the code from: $GIT_REPO!"
+#    exit -1
+#fi
 
 #-----------------------------------------------------------------------------
 # install package on host
 #-----------------------------------------------------------------------------
-sudo apt install -y x11-utils
+sudo apt update || true
+sudo apt install -y x11-utils || true
 
 #-----------------------------------------------------------------------------
 # create docker_image:0.1
@@ -94,7 +124,8 @@ fi
 #-----------------------------------------------------------------------------
 # create docker_image:0.2
 #-----------------------------------------------------------------------------
-FOLDER_MAP="-v $HOST_GIT_DIR:/git -v $HOST_CACHE_DIR:/home/$USER_NAME/cacheData"
+FOLDER_MAP=" -v $HOST_GIT_DIR:/git"
+FOLDER_MAP+=$EXTRA_MAP
 TEMP_CONTAINER_NAME="$(date +%s)"
 echo "FOLDER_MAP = $FOLDER_MAP"
 
