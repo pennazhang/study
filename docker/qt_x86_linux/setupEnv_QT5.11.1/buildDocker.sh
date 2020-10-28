@@ -9,18 +9,17 @@ DEBUG_FLAG=0
 HOST_CACHE_DIR=/git/cacheData
 
 CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
-SETUP_ENV_DIR=`cd $CURRENT_DIR/..; pwd`
-SETUP_ENV_NAME=${SETUP_ENV_DIR##*/}
-PROJECT_DIR=`cd $CURRENT_DIR/../..; pwd`
+PROJECT_DIR=$CURRENT_DIR
 PROJECT_NAME=${PROJECT_DIR##*/}
-HOST_GIT_DIR=`cd $CURRENT_DIR/../../..; pwd`; 
+HOST_GIT_DIR=`cd $PROJECT_DIR/..; pwd`; 
 
-echo "CURRENT_DIR = $CURRENT_DIR"
-echo "SETUP_ENV_DIR = $SETUP_ENV_DIR"
-echo "PROJECT_DIR = $PROJECT_DIR"
+# The source code from $GIT_REPO must be put into $HOST_GIT_DIR/$PROJECT_NAME
+#HOST_GIT_DIR=/home/share/pzhang/git
+#HOST_CACHE_DIR=$HOME/cacheData
+#echo "CURRENT_DIR = $CURRENT_DIR"
 echo "PROJECT_NAME = $PROJECT_NAME"
-echo "HOST_GIT_DIR = $HOST_GIT_DIR"
-echo "HOST_CACHE_DIR = $HOST_CACHE_DIR"
+#echo "HOST_GIT_DIR = $HOST_GIT_DIR"
+#echo "HOST_CACHE_DIR = $HOST_CACHE_DIR"
 
 
 if [ ! -d $HOST_CACHE_DIR ];then
@@ -30,9 +29,20 @@ if [ ! -d $HOST_CACHE_DIR ];then
 fi
 
 #Auto run script in Docker to build environment
-AUTO_START_DIR=/git/$PROJECT_NAME/$SETUP_ENV_NAME
+AUTO_START_DIR=/git/$PROJECT_NAME/setupEnv
 AUTO_START_SCRIPT=setupEnv.sh
 echo "auto run in Docker: cd $AUTO_START_DIR && ./$AUTO_START_SCRIPT"
+
+if [ -d "$CURRENT_DIR/${HOST_SRC_DIR}" ] && [ ! -z $DOCKER_DST_DIR ];then
+    rm -rf $HOST_GIT_DIR/$PROJECT_NAME/${DOCKER_DST_DIR}
+    cp -a $CURRENT_DIR/${HOST_SRC_DIR} $HOST_GIT_DIR/$PROJECT_NAME/${DOCKER_DST_DIR}
+else
+    if [ ! -z $HOST_SRC_DIR ] || [ ! -z $DOCKER_DST_DIR ];then
+        echo "Error : Please check the definition of HOST_SRC_DIR=$HOST_SRC_DIR and DOCKER_DST_DIR=$DOCKER_DST_DIR"
+        exit -1
+    fi
+fi
+
 
 if [ -z $AUTO_START_DIR ] || [ -z $AUTO_START_SCRIPT ];then
     echo "Error : Please define AUTO_START_DIR and AUTO_START_SCRIPT to setup the building environment"
@@ -46,16 +56,23 @@ if [ -z "$DOCKER_VERSION" ];then
     exit -1
 fi
 
-if [ ! -d $HOST_GIT_DIR/$PROJECT_NAME ];then
-    echo "No souce code was found in $HOST_GIT_DIR/$PROJECT_NAME"
-    echo "Please download the code from: $GIT_REPO!"
-    exit -1
-fi
+# Get the source code from git repo
+#if [ ! -d $HOST_GIT_DIR/$PROJECT_NAME ];then
+#    cd $HOST_GIT_DIR
+#    git clone --recursive $GIT_REPO
+#    cd $CURRENT_DIR
+#fi
 
+#if [ ! -d $HOST_GIT_DIR/$PROJECT_NAME ];then
+#    echo "No souce code was found in $HOST_GIT_DIR/$PROJECT_NAME"
+#    echo "Please download the code from: $GIT_REPO!"
+#    exit -1
+#fi
 
 #-----------------------------------------------------------------------------
 # install package on host
 #-----------------------------------------------------------------------------
+sudo apt update || true
 sudo apt install -y x11-utils
 
 #-----------------------------------------------------------------------------
