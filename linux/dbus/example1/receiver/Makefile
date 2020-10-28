@@ -19,16 +19,16 @@ endif
 #
 export 
 
-all: clean sender
+all: clean receiver
 
-SYSDEBUG_OBJ = sender.o
+SYSDEBUG_OBJ = receiver.o
 
 %.o:%.cpp
 	$(CXX) -c $(CFLAGS) $(CPPFLAGS) $< -o $@ 
 	
-sender:  $(SYSDEBUG_OBJ)
+receiver:  $(SYSDEBUG_OBJ)
 	$(CC) -o $@ $(SYSDEBUG_OBJ) -L. $(LDFLAGS) 
 
 clean:
-	$(RM) *.o *.exe *.bak *.pre sender
+	$(RM) *.o *.exe *.bak *.pre receiver
 		

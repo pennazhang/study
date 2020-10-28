@@ -43,7 +43,7 @@ void listen_signal()
 #endif		
 
 	/* 3. Notify the D-Bus daemon to listen to the signal: test.signal.Type:  */
-	msg = dbus_bus_add_match(connection, "type='signal', interface='test.signal.Type'", &err);
+	dbus_bus_add_match(connection, "type='signal', interface='test.signal.Type'", &err);
 	dbus_connection_flush(connection);
 	
 	if (dbus_error_is_set(&err))
@@ -56,7 +56,7 @@ void listen_signal()
 	while (1)
 	{
 		dbus_connection_read_write(connection, 0);
-		msg = dbus_connection_pop_message(connectin);
+		msg = dbus_connection_pop_message(connection);
 		if (msg == NULL)
 		{
 			sleep(1);
@@ -67,11 +67,11 @@ void listen_signal()
 		{
 			if (!dbus_message_iter_init(msg, &arg))
 			{
-				fprintf(stdeer, "Message has no param!");
+				fprintf(stderr, "Message has no param!");
 			}
 			else if (dbus_message_iter_get_arg_type(&arg) != DBUS_TYPE_STRING)
 			{
-				fprintf(stdeer, "Param is not string");
+				fprintf(stderr, "Param is not string");
 			}
 			else
 			{
