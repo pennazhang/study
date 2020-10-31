@@ -8,9 +8,9 @@ MYDIR=`dirname "$0"`; MYDIR=`realpath "$MYDIR"`; export MYDIR
 cd "$MYDIR"
 
 # install dependencies
-if [ ! -f /tmp/.qt5.3.2_apt_done ]; then
+if [ ! -f /tmp/.qt5.6.1_apt_done ]; then
     apt update || true
 
     apt install -y qtchooser
-    touch /tmp/.qt5.3.2_apt_done
+    touch /tmp/.qt5.6.1_apt_done
 fi

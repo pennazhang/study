@@ -55,12 +55,12 @@ MainWindow::MainWindow(QWidget *parent)
 	this->setObjectName("BackGround");
     
     m_pChineseButton = new QPushButton(tr("Chinese"), this);
-	m_pChineseButton->setObjectName(QStringLiteral("tabButton"));
+	m_pChineseButton->setObjectName("tabButton");
 	connect(m_pChineseButton, SIGNAL(clicked()), this, SLOT(onClickChinese()));
     m_pChineseButton->setCheckable(true);
 
 	m_pEnglishButton = new QPushButton(tr("English"), this);
-	m_pEnglishButton->setObjectName(QStringLiteral("tabButton"));
+	m_pEnglishButton->setObjectName("tabButton");
 	connect(m_pEnglishButton, SIGNAL(clicked()), this, SLOT(onClickEnglish()));
     m_pEnglishButton->setCheckable(true);
 
@@ -69,7 +69,7 @@ MainWindow::MainWindow(QWidget *parent)
 	m_pLanguageButtonGroup->addButton(m_pChineseButton);
 
 	m_pOutputSettingButton = new QPushButton(tr("Output Setting"), this);
-//	m_pOutputSettingButton->setObjectName(QStringLiteral("tabButton"));
+//	m_pOutputSettingButton->setObjectName("tabButton");
 //	connect(m_pOutputSettingButton, SIGNAL(clicked()), this, SLOT(onOutputSettingClicked()));
     m_pOutputSettingButton->setCheckable(true);
 

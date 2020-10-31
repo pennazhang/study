@@ -1,12 +1,10 @@
 #!/bin/bash
 
-# we can use the option "set -x" to do some debug.
-#set -x
 set -e
 
-DOCKER_IMAGE_NAME=qt5.11.1
+DOCKER_IMAGE_NAME=qt4.8.7
 DOCKER_IMAGE_VERSION=0.2
-HOST_NAME=" -h qt5_11_1 "
+HOST_NAME=" -h qt4_8_7 "
 
 CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
 SETUP_ENV_DIR=`cd $CURRENT_DIR/..; pwd`

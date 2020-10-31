@@ -4,9 +4,9 @@
 #set -x
 set -e
 
-DOCKER_IMAGE_NAME=qt5.11.1
+DOCKER_IMAGE_NAME=qt5.6.1
 DOCKER_IMAGE_VERSION=0.2
-HOST_NAME=" -h qt5_11_1 "
+HOST_NAME=" -h qt5_6_1 "
 
 CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
 SETUP_ENV_DIR=`cd $CURRENT_DIR/..; pwd`
@@ -23,6 +23,9 @@ DIR_MAP+=" -v $XDG_RUNTIME_DIR:$XDG_RUNTIME_DIR "
 
 # Add environment parameter for Display.
 RUN_ENV=" -e XDG_RUNTIME_DIR "
+
+# Add environment parameter for QT.
+RUN_ENV="-e QT_SELECT=x86_qt5.6.1 -e LD_LIBRARY_PATH=/opt/qt5.6.1/lib -e QT_XKB_CONFIG_ROOT=/usr/share/X11/xkb"
 
 #Add Fond map
 DIR_MAP+=" -v /usr/share/fonts:/usr/share/fonts"

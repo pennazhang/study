@@ -2,13 +2,13 @@
 
 set -e
 
-DOCKER_IMAGE_NAME=qt5.11.1
+DOCKER_IMAGE_NAME=jetstream
 LINUX_VERSION=ubuntu:18.04
 
 #If you don't want to run setupEnv.sh automatically, you need to set DEBUG_FLAG=1
-DEBUG_FLAG=0
+DEBUG_FLAG=1
 #HOST_NAME is host name in the building container,  only available when DEBUG_FLAG=1
-HOST_NAME=" -h qt5_11_1_debug "
+HOST_NAME=" -h jetstream_debug "
 
 #For some software that need to be mapped into docker container, we can use "-v HOST_CACHE_DIR:/cacheData"
 #HOST_CACHE_DIR=`cd ~/workspace/cacheData; pwd`
