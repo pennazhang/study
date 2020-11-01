@@ -2,60 +2,38 @@
 
 set -e
 
-DOCKER_IMAGE_NAME=pccore
-LINUX_VERSION=debian:jessie
+CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
+USER_NAME=`whoami`
+HOME_DIR=/home/$USER_NAME
+
+source docker.conf
+FOLDER_MAP+=$BUILD_DOCKER_FOLDER_MAP
+echo DOCKER_CACHE_DIR = $DOCKER_CACHE_DIR
+
+#HOST_NAME is host name in the building container,  only available when DEBUG_FLAG=1
+HOST_NAME=" -h ${DOCKER_BUILD_NAME} "
+
+#For some software that need to be mapped into docker container, we can use "-v HOST_CACHE_DIR:/${DOCKER_CACHE_DIR}"
+if [ ! -z $HOST_CACHE_DIR ];then 
+    if [ ! -d $HOST_CACHE_DIR ];then
+	echo "Can not find HOST_CACHE_DIR: $HOST_CACHE_DIR, please check it first!"
+	exit 0
+    else 
+        FOLDER_MAP=" -v ${HOST_CACHE_DIR}:${DOCKER_CACHE_DIR} "
+    fi
+fi
 
 CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
 PROJECT_DIR=$CURRENT_DIR
 PROJECT_NAME=${PROJECT_DIR##*/}
 HOST_GIT_DIR=`cd $PROJECT_DIR/..; pwd`; 
 
-# Just to install some other software
-HOST_EXTRA_DIR1=/git/infinity-linux-kernel/4.9.40-3/packages
-EXTRA_DIR1=/infinity_kernel
-EXTRA_MAP=" -v $HOST_EXTRA_DIR1:$EXTRA_DIR1"
-if [ ! -f $HOST_EXTRA_DIR1/linux-headers-4.9.40-3-rt30_1.2.studer.infinity_amd64.deb ];then
-	echo "Can't find the infinity kernel packege: $HOST_EXTRA_DIR1/linux-headers-4.9.40-3-rt30_1.2.studer.infinity_amd64.deb"
-	exit -1
-fi
-
-if [ ! -f $HOST_EXTRA_DIR1/linux-image-4.9.40-3-rt30_1.2.studer.infinity_amd64.deb ];then
-	echo "Can't find the infinity kernel packege: $HOST_EXTRA_DIR1/linux-image-4.9.40-3-rt30_1.2.studer.infinity_amd64.deb"
-	exit -1
-fi
-
-# The source code from $GIT_REPO must be put into $HOST_GIT_DIR/$PROJECT_NAME
-#HOST_GIT_DIR=/home/share/pzhang/git
-#HOST_CACHE_DIR=$HOME/cacheData
-#echo "CURRENT_DIR = $CURRENT_DIR"
 echo "PROJECT_NAME = $PROJECT_NAME"
-#echo "HOST_GIT_DIR = $HOST_GIT_DIR"
-#echo "HOST_CACHE_DIR = $HOST_CACHE_DIR"
-
-
-#if [ ! -d $HOST_CACHE_DIR ];then
-#    mkdir -p $HOST_CACHE_DIR
-#fi
-
-#cp -a $HOST_SRC_DIR to /$HOST_GIT_DIR/$PROJECT_NAME/$DOCKER_DST_DIR
-HOST_SRC_DIR=
-DOCKER_DST_DIR=
 
 #Auto run script in Docker to build environment
-AUTO_START_DIR=/git/$PROJECT_NAME/setupEnv
+AUTO_START_DIR=/git/$PROJECT_NAME
 AUTO_START_SCRIPT=setupEnv.sh
 echo "auto run in Docker: cd $AUTO_START_DIR && ./$AUTO_START_SCRIPT"
-
-if [ -d "$CURRENT_DIR/${HOST_SRC_DIR}" ] && [ ! -z $DOCKER_DST_DIR ];then
-    rm -rf $HOST_GIT_DIR/$PROJECT_NAME/${DOCKER_DST_DIR}
-    cp -a $CURRENT_DIR/${HOST_SRC_DIR} $HOST_GIT_DIR/$PROJECT_NAME/${DOCKER_DST_DIR}
-else
-    if [ ! -z $HOST_SRC_DIR ] || [ ! -z $DOCKER_DST_DIR ];then
-        echo "Error : Please check the definition of HOST_SRC_DIR=$HOST_SRC_DIR and DOCKER_DST_DIR=$DOCKER_DST_DIR"
-        exit -1
-    fi
-fi
-
 
 if [ -z $AUTO_START_DIR ] || [ -z $AUTO_START_SCRIPT ];then
     echo "Error : Please define AUTO_START_DIR and AUTO_START_SCRIPT to setup the building environment"
@@ -69,30 +47,24 @@ if [ -z "$DOCKER_VERSION" ];then
     exit -1
 fi
 
-# Get the source code from git repo
-#if [ ! -d $HOST_GIT_DIR/$PROJECT_NAME ];then
-#    cd $HOST_GIT_DIR
-#    git clone --recursive $GIT_REPO
-#    cd $CURRENT_DIR
-#fi
-
-#if [ ! -d $HOST_GIT_DIR/$PROJECT_NAME ];then
-#    echo "No souce code was found in $HOST_GIT_DIR/$PROJECT_NAME"
-#    echo "Please download the code from: $GIT_REPO!"
-#    exit -1
-#fi
-
-#-----------------------------------------------------------------------------
-# install package on host
-#-----------------------------------------------------------------------------
 sudo apt update || true
-sudo apt install -y x11-utils || true
+#-----------------------------------------------------------------------------
+# install package on host if needed.
+#-----------------------------------------------------------------------------
+preBuildFunc || ret=$?
+if [ ! $ret == 0 ]; then 
+    echo "Fatal error: preBuildFunc called failed! ret = $ret"
+    exit 0
+fi
+
+if [ ! $USE_GUI_IN_DOCKER == 0 ]; then
+    sudo apt install -y x11-utils
+fi
 
 #-----------------------------------------------------------------------------
 # create docker_image:0.1
 #-----------------------------------------------------------------------------
 # We will create a user in the docker with the following param:
-USER_NAME=`whoami`
 USER_ID=`id -u`
 GROUP_ID=`id -g`
 PASSWORD="12345678"
@@ -124,26 +96,33 @@ fi
 #-----------------------------------------------------------------------------
 # create docker_image:0.2
 #-----------------------------------------------------------------------------
-FOLDER_MAP=" -v $HOST_GIT_DIR:/git"
-FOLDER_MAP+=$EXTRA_MAP
+FOLDER_MAP+=" -v $HOME_DIR:$HOME_DIR -v $HOST_GIT_DIR:/git "
 TEMP_CONTAINER_NAME="$(date +%s)"
 echo "FOLDER_MAP = $FOLDER_MAP"
 
 #Check if the image is already exist.
 imageExistFlag="$(docker images $DOCKER_IMAGE_NAME:0.2 | grep $DOCKER_IMAGE_NAME)" || true
-if [ -z "$imageExistFlag" ];then
-    echo ------------------------------------------------------------------------------
-    echo --  building $DOCKER_IMAGE_NAME:0.2                                   --
-    echo ------------------------------------------------------------------------------
-    echo "auto run in Docker: cd $AUTO_START_DIR && ./$AUTO_START_SCRIPT\n"
-
-    if [ $DEBUG_FLAG == 1 ]; then
-         docker run -it ${FOLDER_MAP} --name "${TEMP_CONTAINER_NAME}" ${DOCKER_IMAGE_NAME}:0.1 bash
-    else
-        docker run ${FOLDER_MAP} --name "${TEMP_CONTAINER_NAME}" ${DOCKER_IMAGE_NAME}:0.1 sh -c "cd $AUTO_START_DIR && ./$AUTO_START_SCRIPT"
-        docker commit -m "build ${DOCKER_IMAGE_NAME}:0.2" ${TEMP_CONTAINER_NAME} $DOCKER_IMAGE_NAME:0.2
-        docker rm ${TEMP_CONTAINER_NAME}
-        echo build $DOCKER_IMAGE_NAME:0.2 OK!
-    fi
+if [ ! -z "$imageExistFlag" ]; then
+    echo "$DOCKER_IMAGE_NAME:0.2 already exist!"
+    exit 1
 fi
+
+echo ------------------------------------------------------------------------------
+echo --  building $DOCKER_IMAGE_NAME:0.2                                   --
+echo ------------------------------------------------------------------------------
+echo "auto run in Docker: cd $AUTO_START_DIR && ./$AUTO_START_SCRIPT"
+echo ""
+
+if [ $BUILD_DEBUG_FLAG == 1 ]; then
+    echo docker run -it ${FOLDER_MAP} $HOST_NAME --name "${TEMP_CONTAINER_NAME}" ${DOCKER_IMAGE_NAME}:0.1 bash
+    docker run -it ${FOLDER_MAP} $HOST_NAME --name "${TEMP_CONTAINER_NAME}" ${DOCKER_IMAGE_NAME}:0.1 bash
+    exit 0
+else
+    docker run -it ${FOLDER_MAP} --name "${TEMP_CONTAINER_NAME}" ${DOCKER_IMAGE_NAME}:0.1 sh -c "cd $AUTO_START_DIR && ./$AUTO_START_SCRIPT"
+fi
+    
+#Save the container to docker image and delete the container.
+docker commit -m "build ${DOCKER_IMAGE_NAME}:0.2" ${TEMP_CONTAINER_NAME} $DOCKER_IMAGE_NAME:0.2
+docker rm ${TEMP_CONTAINER_NAME}
+echo build $DOCKER_IMAGE_NAME:0.2 OK!
 

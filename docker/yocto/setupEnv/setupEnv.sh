@@ -4,11 +4,9 @@ set -e
 
 MYDIR=`dirname "$0"`; MYDIR=`realpath "$MYDIR"`; export MYDIR
 PROJ_DIR=`cd $MYDIR/..; pwd`; export PROJ_DIR
-export CACHE_DATA_DIR=$HOME/cacheData
 
-if [ ! -d $CACHE_DATA_DIR ]; then
-	mkdir -p $CACHE_DATA_DIR
-fi
+# If we define the HOST_CACHE_DIR,  then it will be mapped to CACHE_DATA_DIR
+export CACHE_DATA_DIR=/cacheData
 
 echo MYDIR=$MYDIR
 echo PROJ_DIR=$PROJ_DIR

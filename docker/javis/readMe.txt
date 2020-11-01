@@ -25,7 +25,6 @@ Start Docker:
 	/usr/share/fonts => /usr/share/fonts (it is mapped only for fonts. You can delete it if you don't want to display Chinese in docker")
 
 Other issue:
-	Before building docker, we should download the qt-everywhere-opensource-src-5.6.1.tar.gz into ${HOME_DIR}/workspace/cacheData 
-	cd /home/pzhang/workspace/cacheData 
-        wget https://download.qt.io/archive/qt/5.6/5.6.1/single/qt-everywhere-opensource-src-5.6.1.tar.gz
-	
+	When building and running the docker, you must input the P4 password.
+	Normally the P4 Password is the same as the windows domain login password.
+	Also you must input "no" when you are asked to input your choice for the command: dpkg-reconfigure dash. 

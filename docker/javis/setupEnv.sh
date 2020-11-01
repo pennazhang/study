@@ -5,19 +5,30 @@ set -e
 MYDIR=`dirname "$0"`; MYDIR=`realpath "$MYDIR"`; export MYDIR
 PROJ_DIR=`cd $MYDIR/..; pwd`; export PROJ_DIR
 
-# If we define the HOST_CACHE_DIR,  then it will be mapped to CACHE_DATA_DIR
-export CACHE_DATA_DIR=/cacheData
+# We need to get DOCKER_CACHE_DIR from docker.conf.
+source docker.conf
 
 echo MYDIR=$MYDIR
 echo PROJ_DIR=$PROJ_DIR
-echo CACHE_DATA_DIR=$CACHE_DATA_DIR
-echo "CROSS_COMPILE=$CROSS_COMPILE"
+echo DOCKER_CACHE_DIR=$DOCKER_CACHE_DIR
+
+# DOCKER_CACHE_DIR must not be NULL in this project.
+#if [ ! -d $DOCKER_CACHE_DIR ];then 
+#	echo "can't find the DOCKER_CACHE_DIR:$DOCKER_CACHE_DIR "
+#	exit -1
+#fi
+
+cd $MYDIR
+sudo apt update
+#sudo bash -e "$MYDIR/setupEnv_root.sh" "$1"
 
 if [ ! -f /tmp/.jetstream_p4_done ]; then
     wget -qO - https://package.perforce.com/perforce.pubkey | sudo apt-key add -
     echo 'deb http://package.perforce.com/apt/ubuntu xenial release' | sudo tee --append /etc/apt/sources.list.d/additional-repositories.list > /dev/null
-
+    
+    #we need to update apt source since we add an new source.
     sudo apt update
+    
     #install P4V
     sudo apt install -y helix-cli helix-cli-base
 
@@ -48,26 +59,27 @@ if [ ! -f /tmp/.jetstream_java_done ]; then
     touch /tmp/.jetstream_java_done
 fi
 
-mkdir -p ${HOME}/workspace/gclient || true
-cd ${HOME}/workspace/gclient
-if [ ! -d depot-tools ];then
-    git clone ssh://git@stash1.harman.com:7999/int_oss/depot-tools.git
-fi
+#mkdir -p ${HOME}/workspace/gclient || true
+#cd ${HOME}/workspace/gclient
+#if [ ! -d depot-tools ];then
+#    git clone ssh://git@stash1.harman.com:7999/int_oss/depot-tools.git
+#fi
 
-if [ ! -f /tmp/.jetstream_setpath_done ]; then 
-    export PATH=${HOME}/workspace/gclient/depot-tools:"$PATH"
-    export DEPOT_TOOLS_UPDATE=0
-    touch /tmp/.jetstream_setpath_done
-fi
+#if [ ! -f /tmp/.jetstream_setpath_done ]; then 
+#    export PATH=${HOME}/workspace/gclient/depot-tools:"$PATH"
+#    export DEPOT_TOOLS_UPDATE=0
+#    touch /tmp/.jetstream_setpath_done
+#fi
 
-cd ${HOME}/workspace/gclient
-if [ ! -d va-gclient ];then
-    git clone ssh://git@bitbucket.harman.com:7999/vid/va-gclient.git
-fi
+#cd ${HOME}/workspace/gclient
+#if [ ! -d va-gclient ];then
+#    git clone ssh://git@bitbucket.harman.com:7999/vid/va-gclient.git
+#fi
 
-cd va-gclient/
-./scripts/imx6/build_6ul.sh -t va-basic-tcfg
+#cd va-gclient/
+#./scripts/imx6/build_6ul.sh -t va-basic-tcfg
 
-cd $MYDIR
+#cd $MYDIR
 #sudo bash -e "$MYDIR/setupEnv_root.sh" "$1"
 
+echo "setupEnv.sh is called successfully!"
