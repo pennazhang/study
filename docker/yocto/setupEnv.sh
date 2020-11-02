@@ -22,17 +22,14 @@ cd $MYDIR
 sudo apt update
 #sudo bash -e "$MYDIR/setupEnv_root.sh" "$1"
 
-if [ ! -f /tmp/.qt5.11.1_apt_done ]; then
-    #install gcc for X86
-    sudo apt install -y build-essential libsdl2-dev
+if [ ! -f /tmp/.yocto_apt_done ]; then
 
-    #install qt5
-    sudo apt install -y qt5-default libqt5charts5 libqt5charts5-dev
-    
-    # gnome-calculator can be used to check the GUI in docker.
-    sudo apt install -y gnome-calculator
-    
-    touch /tmp/.qt5.11.1_apt_done
+    #install gcc for X86
+    sudo apt install -y build-essential libsdl2-dev cmake autogen autoconf libtool m4 pkg-config bc device-tree-compiler gnupg2 libc6-i386 lib32stdc++6 lib32z1 
+
+    #install other tools
+    sudo apt install -y python  repo
+    touch /tmp/.yocto_apt_done
 fi
 
 echo "setupEnv.sh is called successfully!"
