@@ -63,8 +63,8 @@ fi
 RUN_ENV+=$ADDITIONAL_ENV
 
 if [ $# -eq 0 ]; then
-    echo docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 bash
-    docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 bash
+    echo docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 bash -c 'export PATH=${HOME}/bin:$PATH; bash'
+    docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 bash -c 'export PATH=${HOME}/bin:$PATH; bash'
 else
     echo docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 sh -c \'\'"$1"\'\'
     docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 sh -c \'\'"$1"\'\'

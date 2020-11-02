@@ -26,10 +26,16 @@ if [ ! -f /tmp/.yocto_apt_done ]; then
 
     #install gcc for X86
     sudo apt install -y build-essential libsdl2-dev cmake autogen autoconf libtool m4 pkg-config bc device-tree-compiler gnupg2 libc6-i386 lib32stdc++6 lib32z1 
-
+    sudo apt install -y  gawk wget diffstat unzip texinfo gcc-multilib 
+    sudo apt install -y build-essential chrpath socat cpio python python3 python3-pip python3-pexpect 
+    sudo apt install -y xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev xterm
     #install other tools
-    sudo apt install -y python  repo
+    sudo apt install -y python repo curl
     touch /tmp/.yocto_apt_done
 fi
+
+mkdir ~/bin || true
+curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+chmod a+x ~/bin/repo
 
 echo "setupEnv.sh is called successfully!"
