@@ -14,25 +14,21 @@ echo PROJ_DIR=$PROJ_DIR
 
 # DOCKER_CACHE_DIR must not be NULL in this project.
 #if [ ! -d $DOCKER_CACHE_DIR ];then 
-#    echo "can't find the DOCKER_CACHE_DIR:$DOCKER_CACHE_DIR "
-#    exit -1
+#	echo "can't find the DOCKER_CACHE_DIR:$DOCKER_CACHE_DIR "
+#	exit -1
 #fi
 
 cd $MYDIR
 sudo apt update
 #sudo bash -e "$MYDIR/setupEnv_root.sh" "$1"
 
-if [ ! -f /tmp/.qt5.11.1_apt_done ]; then
-    #install gcc for X86
-    sudo apt install -y build-essential libsdl2-dev
-
-    #install qt5
-    sudo apt install -y qt5-default libqt5charts5 libqt5charts5-dev
+sudo apt-get install -y git build-essential cmake autogen autoconf libtool m4 pkg-config bc device-tree-compiler python3.8 wget cpio unzip rsync gnupg2 libc6-i386 lib32stdc++6 lib32z1 dos2unix iputils-ping net-tools iproute2
+sudo apt-get install -y gawk wget git-core diffstat unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev
+sudo apt-get install -y repo
     
-    # gnome-calculator can be used to check the GUI in docker.
-    sudo apt install -y gnome-calculator
-    
-    touch /tmp/.qt5.11.1_apt_done
-fi
+cd /tmp
+wget https://github.com/openembedded/bitbake/archive/master.zip
+unzip master
+sudo mv bitbake-master /usr/bin/bitbake
 
 echo "setupEnv.sh is called successfully!"

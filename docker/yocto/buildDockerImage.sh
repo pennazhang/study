@@ -47,18 +47,29 @@ if [ -z "$DOCKER_VERSION" ];then
     exit -1
 fi
 
-sudo apt update || true
-#-----------------------------------------------------------------------------
-# install package on host if needed.
-#-----------------------------------------------------------------------------
-preBuildFunc || ret=$?
-if [ ! $ret == 0 ]; then 
-    echo "Fatal error: preBuildFunc called failed! ret = $ret"
-    exit 0
+#Check if the image is already exist.
+imageExistFlag="$(docker images $DOCKER_IMAGE_NAME:0.2 | grep $DOCKER_IMAGE_NAME)" || true
+if [ ! -z "$imageExistFlag" ]; then
+    echo "$DOCKER_IMAGE_NAME:0.2 already exist!"
+    exit 1
 fi
 
-if [ ! $USE_GUI_IN_DOCKER == 0 ]; then
-    sudo apt install -y x11-utils
+if [ ! -f /etc/.x11_apt_done ]; then
+    sudo apt update || true
+    #-----------------------------------------------------------------------------
+    # install package on host if needed.
+    #-----------------------------------------------------------------------------
+    preBuildFunc || ret=$?
+    if [ ! $ret == 0 ]; then 
+        echo "Fatal error: preBuildFunc called failed! ret = $ret"
+        exit 0
+    fi
+
+    if [ ! $USE_GUI_IN_DOCKER == 0 ]; then
+        sudo apt install -y x11-utils
+    fi
+    
+    sudo touch /etc/.x11_apt_done
 fi
 
 #-----------------------------------------------------------------------------
@@ -99,13 +110,6 @@ fi
 FOLDER_MAP+=" -v $HOME_DIR:$HOME_DIR -v $HOST_GIT_DIR:/git "
 TEMP_CONTAINER_NAME="$(date +%s)"
 echo "FOLDER_MAP = $FOLDER_MAP"
-
-#Check if the image is already exist.
-imageExistFlag="$(docker images $DOCKER_IMAGE_NAME:0.2 | grep $DOCKER_IMAGE_NAME)" || true
-if [ ! -z "$imageExistFlag" ]; then
-    echo "$DOCKER_IMAGE_NAME:0.2 already exist!"
-    exit 1
-fi
 
 echo ------------------------------------------------------------------------------
 echo --  building $DOCKER_IMAGE_NAME:0.2                                   --
