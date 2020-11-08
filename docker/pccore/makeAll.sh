@@ -2,7 +2,7 @@
 
 export DBUILD_NUMBER=5
 
-export GIT_DIR=/git/pccore
+export GIT_DIR=~/workspace/pccore
 export WORKSPACE=/tmp
 ln -s $GIT_DIR $WORKSPACE/source_tree || true
 
