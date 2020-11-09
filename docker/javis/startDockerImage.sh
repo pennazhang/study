@@ -6,6 +6,22 @@ CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
 USER_NAME=`whoami`
 HOME_DIR=/home/$USER_NAME
 
+# if there is only one parameter, that must be the script file name.
+if [ $# -eq 1 ]; then
+    if [ ! -f ${CURRENT_DIR}/$1 ]; then
+    	echo "File: ${CURRENT_DIR}/$1 doesn't exist!"
+	exit -1
+    fi
+fi
+
+# It must be wrong when the parameter number is more than one.
+if [ $# -gt 1 ]; then
+    echo "Invalid parameter number."
+    echo "    Usage: ./startDockerImage autoRunScript.sh"
+    exit -2
+fi
+
+FOLDER_MAP="-v ${CURRENT_DIR}:/bin/docker "
 source docker.conf
 FOLDER_MAP+=$START_DOCKER_FOLDER_MAP
 HOST_NAME=" -h ${DOCKER_RUN_NAME} "
@@ -63,10 +79,10 @@ fi
 RUN_ENV+=$ADDITIONAL_ENV
 
 if [ $# -eq 0 ]; then
-    echo docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 bash -c 'export PATH=${HOME}/workspace/gclient/depot-tools:$PATH; bash'
-    docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 bash -c 'export PATH=${HOME}/workspace/gclient/depot-tools:$PATH; bash'
+    echo docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 bash -c 'source /bin/docker/autoRunInDocker.sh; bash'
+    docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 bash -c 'source /bin/docker/autoRunInDocker.sh; bash'
 else
-    echo docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 sh -c \'\'"$1"\'\'
-    docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 sh -c \'\'"$1"\'\'
+    echo docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 bash -c "source /bin/docker/autoRunInDocker.sh; source /bin/docker/$1; bash"
+    docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 bash -c "source /bin/docker/autoRunInDocker.sh && source /bin/docker/$1; bash"
 fi
 
