@@ -28,7 +28,8 @@ if [ ! -f /tmp/.yocto_apt_done ]; then
     sudo apt install -y  gawk wget diffstat unzip texinfo gcc-multilib 
     sudo apt install -y build-essential chrpath socat cpio python python3 python3-pip python3-pexpect chrpath gawk texinfo libsdl1.2-dev whiptail diffstat cpio libssl-dev
     sudo apt install -y xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev xterm
-    sudo apt install -y python repo curl libncurses5-dev libncursesw5-dev
+    sudo apt install -y python repo curl 
+    sudo apt install -y libncurses5-dev libncursesw5-dev bison flex bc pv jq tmux
     touch /tmp/.yocto_apt_done
 fi
 

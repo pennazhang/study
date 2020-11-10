@@ -56,7 +56,7 @@ if [ ! -f /tmp/.jetstream_java_done ]; then
     sudo apt-get update
     sudo apt-get install -y openjdk-8-jdk
     sudo apt-get install -y libtool libterm-readkey-perl
-    sudo apt install -y libncurses5-dev libncursesw5-dev bison flex bc
+    sudo apt install -y libncurses5-dev libncursesw5-dev bison flex bc pv jq tmux
     touch /tmp/.jetstream_java_done
 fi
 
