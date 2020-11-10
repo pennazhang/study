@@ -3,7 +3,11 @@ export P4PORT=10.90.66.25:3501
 export DEPOT_TOOLS_UPDATE=0
 export PATH=$PATH:${HOME}/workspace/gclient/depot-tools
 
-cd ~/workspace/jetstream    
+export dbg='-D'
+export cache='-S http://provideo-build.ad.harman.com/files/mirror/jarvis/ish/sstate'
+
+cd ~/workspace/jetstream/js-gclient/elina-distro
+. bld.imx8mmddr3lval-cdl.log
 
 # The following commands are added after the docker image was built.
 #cd ~/workspace/imx-yocto-bsp
