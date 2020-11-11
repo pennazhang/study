@@ -1,42 +1,10 @@
-#
-# Emerson ECC P2020 build - 01/28/2010 Percy
-#
-#debug=0
 
-SHELL           ?= /bin/sh
-
-TOPDIR		?= $(shell pwd)
-CURRENTDIR	=  $(shell pwd)
-#ARCH            ?= powerpc
-HOSTCC  	?= 'ccache /usr/bin/gcc -B/usr/bin/'
-HOSTSTRIP	?= /usr/bin/strip
-OPTFLAGS	?= -Os
-DATE 		?= $(shell date)
-USER 		?= $(shell whoami)
-HOST		?= $(shell hostname)
-OUTPUTDIR       ?= $(TOPDIR)
-
-#for UIMixer
-#CROSS_COMPILE   ?= /usr/lib/ccache/arm-linux-gnueabihf-
-#ARCH            ?= arm
-
-# for DVI
-#CROSS_COMPILE   ?= /git/dvi/software/Atmel/buildroot-at91/output/host/usr/bin/arm-linux-
-#ARCH            ?= arm
-
-#for RHEL5.3 - 64bit
 CROSS_COMPILE 	?= 
-ARCH            ?= i686
 
-
-#for RHEL4.8 - 32bit
-#CROSS_COMPILE 	?= 
-#ARCH            ?= i386
-
-CC             	:= $(CROSS_COMPILE)gcc
-CXX 			:= $(CROSS_COMPILE)g++
-LD 				:= $(CROSS_COMPILE)ld
-AR 				:= $(CROSS_COMPILE)ar
+CC             	?= $(CROSS_COMPILE)gcc 
+CXX 		?= $(CROSS_COMPILE)g++
+LD 		?= $(CROSS_COMPILE)ld
+AR 		?= $(CROSS_COMPILE)
 
 CPPFLAGS			+= -DRUN_SYSTEM_WHEN_POSSIBLE
 LDFLAGS            += -g -Wall -lpthread -lstdc++
@@ -84,6 +52,7 @@ debug:
 	@echo "    PPC_TOOL_PATH: $(PPC_TOOL_PATH)"
 	@echo "    KERNEL_SRC   : $(KERNEL_SRC)"
 	@echo "    CC           : $(CC)"
+	@echo "    CPPFLAGS     : $(CPPFLAGS)"
 	@echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
 all: clean shellDebug
