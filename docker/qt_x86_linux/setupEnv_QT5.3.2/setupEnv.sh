@@ -47,12 +47,6 @@ if [ ! -f /tmp/.x86_qt5.3.2_done ]; then
 
     make -j8
     sudo make install
-    sudo apt install -y qtchooser
-    qtchooser -install x86_qt5.3.2 /opt/qt5.3.2/bin/qmake || true
-    export QT_SELECT=x86_qt5.3.2
-
-    # gnome-calculator can be used to check the GUI in docker.
-    sudo apt install -y gnome-calculator
 	
     touch /tmp/.x86_qt5.3.2_done
 fi

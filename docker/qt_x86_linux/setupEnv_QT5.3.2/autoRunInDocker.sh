@@ -1,2 +1,2 @@
-export QT_SELECT=x86_qt5.3.2
+export PATH=/opt/qt5.3.2/bin:$PATH
 cd ~/workspace/study/qt

@@ -49,14 +49,11 @@ if [ ! -f /tmp/.x86_qt5.6.1_done ]; then
 
     make -j8
     sudo make install
-    sudo apt install -y qtchooser
-    qtchooser -install x86_qt5.6.1 /opt/qt5.6.1/bin/qmake || true
-    export QT_SELECT=x86_qt5.6.1
-
-    # gnome-calculator can be used to check the GUI in docker.
-    sudo apt install -y gnome-calculator
 	
     touch /tmp/.x86_qt5.6.1_done
 fi
+
+
+
 
 echo "setupEnv.sh is called successfully!"
