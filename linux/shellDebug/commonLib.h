@@ -57,6 +57,14 @@ bool isFdReadable(int fd, int timeout_in_us = 10);
 
 bool isThreadAlive(pthread_t pid);
 
+UINT32 readPhyAddr(UINT32 *pulAddr);
+UINT32 writePhyAddr(UINT32 *pulAddr, UINT32 writeval);
+
+
+
+void explainUART();
+
+
 #endif
 
 

@@ -54,16 +54,20 @@ static FUNC_MAP s_theFuncList[] =
         {"GetTickCount", 	GetTickCount,		"UINT32 GetTickCount()" 	},
         {"crc", 			crc,				"UINT16 crc(UINT8 *ptr,  int nLen)" 	},
 #endif        
-		{"malloc",			(void *)malloc,				"void *malloc(int nSize)"							},	
-		{"free",			(void *)free,				"void free(void *ptr);"							},	
+//		{"malloc",			(void *)malloc,				"void *malloc(int nSize)"							},	
+//		{"free",			(void *)free,				"void free(void *ptr);"							},	
 		{"help", 			(void *)help,				"void help(char *lpszFuncName)"								},
-		{"lkup", 			(void *)lkup,		        "void lkup(char *lpszFuncName))"						},
+//		{"lkup", 			(void *)lkup,		        "void lkup(char *lpszFuncName))"						},
 
-		{"readHexString",	(void *)readHexString,		"int readHexString(const char *lpszBuffer, UINT8 *pucData, int nLen)"	},
+//		{"readHexString",	(void *)readHexString,		"int readHexString(const char *lpszBuffer, UINT8 *pucData, int nLen)"	},
 #if 0		
 		{"sp", 				sp,		            "HANDLE sp(pFuncPtr pFunc, int nData1, int nData2, int nData3, int nData4, int nData5, int nData6, int nData7, int nData8, int nData9, int nData10)"						},		
 #endif		
-		{"d", 				(void *)d,					"void d(void *pAddr, int nByteCount, int nWidth, int nDisplayOffset))"						},
+//		{"d", 				(void *)d,					"void d(void *pAddr, int nByteCount, int nWidth, int nDisplayOffset"						},
+		{"readPhyAddr",		(void *)readPhyAddr,		"UINT32 readPhyAddr(UINT32 *pulAddr);"			},
+//		{"writePhyAddr", 	(void *)writePhyAddr,		"UINT32 writePhyAddr(UINT32 *pulAddr, UINT32 writeval);"			},
+		{"explainUART",	(void *)explainUART,		"void explainUART();"			},
+
 #if 0		
 		{"ShowRegArray", 	ShowRegArray,		"SYSWORD ShowRegArray(char *lpszArray)"						},
 		{"ShowRegData", 	ShowRegData,		"void ShowRegData()"						},
@@ -85,7 +89,8 @@ static FUNC_MAP s_theFuncList[] =
 		{"sync",			sync,				"int sync(void)"							},	
 		{"write",			write,				"ssize_t write (int fd,const void * buf,size_t count);"							},	
 #endif		 
-		
+
+#if 0		
 		{"memset",			(void *)memset,				"void *memset( void *dest, UINT8 ucData, size_t count );"	},
 		{"memcpy",			(void *)memcpy,				"void *memcpy(void *dest, void *src, int nCount)"	},
 		{"memcmp",			(void *)memcmp,				"int memcmp (const void *s1,const void *s2,size_t n);"	},
@@ -98,6 +103,7 @@ static FUNC_MAP s_theFuncList[] =
 		
 		{"printf", 			(void *)printf,				"int printf(const char *, ...)" 		},
 		{"sprintf", 		(void *)sprintf,			"int sprintf( char *str,const char * format,.........);" 		},
+#endif
 #if 0
 		{"cp", 				cp,					"VOS_STATUS cp(char *lpszOldFileName, char *lpszDstFileName, int nCopyUnit, int nStartAddr, int nEndAddr )" 		},
 		{"mSleep", 			mSleep,			"void mSleep(int nMs)" 		},

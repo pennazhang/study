@@ -1,0 +1,115 @@
+dvi_inputdrv ： dvi上的GPIO 3个按键和2个旋钮在Linux上的驱动及应用。
+
+======================================================================================================
+Submodule		:	inputdrv.ko
+Version			:	0.0.0.1
+Release Time    : 	05-13-2019
+Modification    :
+    1. first release.
+	
+======================================================================================================
+Submodule		:	inputEventTest
+Version			:	0.0.0.1
+Release Time    : 	05-13-2019
+Modification    :
+    1. first release.
+
+======================================================================================================
+Submodule		:	gpiotest
+Version			:	0.0.0.1
+Release Time    : 	05-13-2019
+Modification    :
+    1. first release.
+
+	
+
+======================================================================================================
+DVI gpio管脚分配图：
+======================================================================================================	
+	GPIO管脚	方向	功能描述
+A28	输出	0：绿灯灭 ； 1： 绿灯亮
+A29	输出	0：红灯灭；1： 红灯亮
+C25	输入	NEXT按键；SW3
+C26	输入	ENTER按键；SW2
+C27	输入	PREV按键；SW1
+C20	输入	旋钮0
+C21	输入	旋钮0
+C22	输入	旋钮1
+C23	输入	旋钮1
+
+
+	
+======================================================================================================
+build TestApp and linux kernel module in virtual machine
+======================================================================================================
+build inputEventTest:
+# cd dvi_inputdrv/app/inputEventTest
+# make inputEventTest CROSS_COMPILE=/git/dvi/software/Atmel/buildroot-2017.02.5/output/host/usr/bin/arm-linux- ARCH=arm
+
+build linux kernel module:
+# cd dvi_inputdrv/inputdrv
+# make inputdrv.ko CROSS_COMPILE=/git/dvi/software/Atmel/buildroot-2017.02.5/output/host/usr/bin/arm-linux- KERNEL_SRC=/git/dvi/software/Atmel/linux-at91 ARCH=arm
+
+======================================================================================================
+Test inputdrv.ko and inputEventTest in DVI
+======================================================================================================
+# scp pzhang@192.168.0.108:/git/temp/dvi_inputdrv/inputdrv/inputdrv.ko .
+# scp pzhang@192.168.0.108:/git/temp/dvi_inputdrv/app/inputEventTest/inputEventTest .
+# insmod inputdrv.ko
+# ./inputEventTest
+Please select device:
+        0. KeyBoard
+        1. Mouse
+        2. TouchScreen
+        3. TouchPancel
+        4. Others
+ : 4
+
+Please check /proc/bus/input/devices and enter eventID :  0
+  type: EV_KEY (1), event = 1, value = 1
+  type: EV_KEY (1), event = 1, value = 0
+  type: EV_KEY (1), event = 2, value = 1
+  type: EV_KEY (1), event = 2, value = 0
+  type: EV_KEY (1), event = 3, value = 1
+  type: EV_KEY (1), event = 3, value = 0
+  type: EV_MSC (4), event = 3, value = 8
+  type: EV_MSC (4), event = 3, value = 7
+  type: EV_MSC (4), event = 3, value = 8
+  type: EV_MSC (4), event = 3, value = 7
+  type: EV_MSC (4), event = 3, value = 10
+  type: EV_MSC (4), event = 3, value = 9
+  type: EV_MSC (4), event = 3, value = 10
+  type: EV_MSC (4), event = 3, value = 9
+  
+
+
+
+======================================================================================================
+build gpioPolltest in virtual machine
+======================================================================================================
+$ cd /git/temp/dvi_inputdrv/app/gpioPolltest
+$ make  CROSS_COMPILE=/git/dvi/software/Atmel/buildroot-2017.02.5/output/host/usr/bin/arm-linux- ARCH=arm
+
+======================================================================================================
+run gpiotest in dvi
+======================================================================================================
+$ scp pzhang@192.168.0.108:/git/temp/dvi_inputdrv/app/gpioPolltest/gpiotest .
+$ ./gpiotest 
+Current GPIO: pioC25 = 1
+Current GPIO: pioC26 = 1
+Current GPIO: pioC27 = 1
+Current GPIO: pioC20 = 1
+Current GPIO: pioC21 = 0
+Current GPIO: pioC22 = 1
+Current GPIO: pioC23 = 0
+Current GPIO: pioC22 = 0
+Current GPIO: pioC23 = 1
+Current GPIO: pioC22 = 1
+Current GPIO: pioC23 = 0
+Current GPIO: pioC23 = 1
+Current GPIO: pioC23 = 0
+Current GPIO: pioC23 = 1
+Current GPIO: pioC23 = 0
+Current GPIO: pioC22 = 0
+Current GPIO: pioC22 = 1
+
