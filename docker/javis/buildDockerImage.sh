@@ -13,14 +13,12 @@ echo DOCKER_CACHE_DIR = $DOCKER_CACHE_DIR
 #HOST_NAME is host name in the building container,  only available when DEBUG_FLAG=1
 HOST_NAME=" -h ${DOCKER_BUILD_NAME} "
 
+#Let's check is something file is missing here...
+preCheck
+
 #For some software that need to be mapped into docker container, we can use "-v HOST_CACHE_DIR:/${DOCKER_CACHE_DIR}"
 if [ ! -z $HOST_CACHE_DIR ];then 
-    if [ ! -d $HOST_CACHE_DIR ];then
-	echo "Can not find HOST_CACHE_DIR: $HOST_CACHE_DIR, please check it first!"
-	exit 0
-    else 
-        FOLDER_MAP=" -v ${HOST_CACHE_DIR}:${DOCKER_CACHE_DIR} "
-    fi
+    FOLDER_MAP=" -v ${HOST_CACHE_DIR}:${DOCKER_CACHE_DIR} "
 fi
 
 CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
@@ -54,22 +52,13 @@ if [ ! -z "$imageExistFlag" ]; then
     exit 1
 fi
 
-if [ ! -f /etc/.x11_apt_done ]; then
-    sudo apt update || true
-    #-----------------------------------------------------------------------------
-    # install package on host if needed.
-    #-----------------------------------------------------------------------------
-    preBuildFunc || ret=$?
-    if [ ! $ret == 0 ]; then 
-        echo "Fatal error: preBuildFunc called failed! ret = $ret"
-        exit 0
-    fi
-
-    if [ ! $USE_GUI_IN_DOCKER == 0 ]; then
+if [ ! $USE_GUI_IN_DOCKER == 0 ]; then
+    if [ ! -f /etc/.x11_apt_done ]; then
+        sudo apt update || true
         sudo apt install -y x11-utils
+        sudo touch /etc/.x11_apt_done
     fi
     
-    sudo touch /etc/.x11_apt_done
 fi
 
 #-----------------------------------------------------------------------------
