@@ -262,7 +262,7 @@ void d(void *pAddr, int nByteCount, int nWidth, int nDisplayOffset)
 #define MAP_SIZE 4096UL
 #define MAP_MASK (MAP_SIZE - 1)
 
-UINT32 readPhyAddr(UINT32 *pulAddr)
+UINT32 getPhy32(UINT32 *pulAddr)
 {
 	int fd = -1;
 	off_t target = (off_t)pulAddr;
@@ -323,24 +323,113 @@ END:
 	return (ulValue);	
 }
 
-UINT32 writePhyAddr(UINT32 *pulAddr, UINT32 writeval)
+UINT32 setPhy32(UINT32 *pulAddr, UINT32 writeval)
 {
 	int fd = -1;
 	off_t target = (off_t)pulAddr;
 	void *map_base = (void *)-1, *virt_addr; 
 	UINT32 ulValue = -1;
 
-#if 0	
-	if ((byteLength == 1) || (byteLength ==2) || (byteLength == 4))
-	{
+
+    if((fd = open("/dev/mem", O_RDWR | O_SYNC)) == -1)
+    {
+		printf("Failed to open /dev/mem!\n");
+		ulValue = -1;
+		goto END;
 	}
-	else
+//    printf("/dev/mem opened\n"); 
+
+    /* Map one page */
+    map_base = mmap(0, MAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, target & ~(off_t)MAP_MASK);
+    if(map_base == (void *) -1)
+    {
+		printf("memory map failed!\n");
+		ulValue = -1;
+		goto END;
+    }
+//    printf("Memory mapped at address %p.n", map_base); 
+
+    virt_addr = (UINT8 *)map_base + (target & MAP_MASK);
+
+    ulValue = *((UINT32*) virt_addr);
+	*((UINT32 *) virt_addr) = writeval;
+	ulValue = *((UINT32 *) virt_addr);
+	
+    printf("Value at address 0x%X (%p): write: 0x%X, read: 0x%X\n", (UINT32)target, virt_addr, writeval, ulValue); 
+	
+END:
+	if (map_base != (void *)-1)
 	{
-		printf("Invalid byteLength: %d\n", byteLength);
-		return false;
+    	munmap(map_base, MAP_SIZE);
 	}
-	printf("pulAddr = 0x%x, byteLength = %d", pulAddr, byteLength);
-#endif	
+
+	if (fd != -1)
+	{
+	    close(fd);
+	}
+
+	return (ulValue);	
+}
+
+
+UINT64 setPhy64(UINT64 *pulAddr, UINT64 writeval)
+{
+	int fd = -1;
+	off_t target = (off_t)pulAddr;
+	void *map_base = (void *)-1, *virt_addr; 
+	UINT64 ulValue = -1;
+
+    if((fd = open("/dev/mem", O_RDWR | O_SYNC)) == -1)
+    {
+		printf("Failed to open /dev/mem!\n");
+		ulValue = -1;
+		goto END;
+	}
+
+    /* Map one page */
+    map_base = mmap(0, MAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, target & ~(off_t)MAP_MASK);
+    if(map_base == (void *) -1)
+    {
+		printf("memory map failed!\n");
+		ulValue = -1;
+		goto END;
+    }
+//    printf("Memory mapped at address %p.n", map_base); 
+
+    virt_addr = (UINT8 *)map_base + (target & MAP_MASK);
+
+    ulValue = *((UINT64*) virt_addr);
+	*((UINT64 *) virt_addr) = writeval;
+	ulValue = *((UINT64 *) virt_addr);
+	
+    printf("Value at address 0x%X (%p): write: 0x%lX, read: 0x%lX\n", (UINT32)target, virt_addr, writeval, ulValue); 
+	
+END:
+	if (map_base != (void *)-1)
+	{
+    	munmap(map_base, MAP_SIZE);
+	}
+
+	if (fd != -1)
+	{
+	    close(fd);
+	}
+
+	return (ulValue);	
+}
+
+
+UINT64 getPhy64(UINT64 *pulAddr)
+{
+	int fd = -1;
+	off_t target = (off_t)pulAddr;
+	void *map_base = (void *)-1, *virt_addr; 
+	UINT64 ulValue = -1;
+
+	if (pulAddr == NULL)
+	{
+		return (0);
+	}
 
     if((fd = open("/dev/mem", O_RDWR | O_SYNC)) == -1)
     {
@@ -362,11 +451,8 @@ UINT32 writePhyAddr(UINT32 *pulAddr, UINT32 writeval)
 
     virt_addr = (UINT8 *)map_base + (target & MAP_MASK);
 
-    ulValue = *((UINT32*) virt_addr);
-	*((unsigned long *) virt_addr) = writeval;
-	ulValue = *((unsigned long *) virt_addr);
-	
-    printf("Value at address 0x%X (%p): write: 0x%X, read: 0x%Xn", (UINT32)target, virt_addr, writeval, ulValue); 
+    ulValue = *((UINT64*) virt_addr);
+ //   printf("Value at address 0x%X (%p): 0x%Xn", target, virt_addr, ulValue); 
 	
 END:
 	if (map_base != (void *)-1)
@@ -381,7 +467,6 @@ END:
 
 	return (ulValue);	
 }
-	
 
 void set32(UINT32 *pulAddr, UINT32 ulData)
 {
@@ -485,7 +570,7 @@ DESCRIPTION_ITEM_TYPE g_UCRDescription[] =
 void explainUCR1(SYSWORD ulPhyAddr, const char *lpszRegDescription)
 {
 	const char *regDescription = "UART Control Register 1";
-	UINT32 ulValue = readPhyAddr((UINT32 *)ulPhyAddr);
+	UINT32 ulValue = getPhy32((UINT32 *)ulPhyAddr);
 	printf("    0x%lx - %s (%s)= 0x%x\n", ulPhyAddr, lpszRegDescription, regDescription, ulValue);
 	explainField("        bit 0 - UART Enable", (ulValue >> 0) & 1, sizeof(g_UCRDescription), g_UCRDescription); 
 }
@@ -499,7 +584,7 @@ DESCRIPTION_ITEM_TYPE g_uartEnableDescription[] =
 void explainUSR1(SYSWORD ulPhyAddr, const char *lpszRegDescription)
 {
 	const char *regDescription = "UART Status Register 1";
-	UINT32 ulValue = readPhyAddr((UINT32 *)ulPhyAddr);
+	UINT32 ulValue = getPhy32((UINT32 *)ulPhyAddr);
 	printf("    0x%lx - %s (%s)= 0x%x\n", ulPhyAddr, lpszRegDescription, regDescription, ulValue);
 	printf("\t bit2-bit 0 - Reserved\n");
 	explainField("\t bit3 ", (ulValue >> 3) & 1, sizeof(g_uartEnableDescription), g_uartEnableDescription); 

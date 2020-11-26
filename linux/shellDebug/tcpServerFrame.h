@@ -1,6 +1,8 @@
 #ifndef _TCP_SERVER_FRAME_H_
 #define _TCP_SERVER_FRAME_H_
 
+#include "typedef.h"
+
 typedef struct
 {
 	const char *m_lpszName;

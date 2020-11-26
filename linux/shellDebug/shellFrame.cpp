@@ -75,16 +75,18 @@ static FuncMapType s_theFuncList[] =
 #endif        
 //		{"malloc",			(void *)malloc,				"void *malloc(int nSize)"							},	
 //		{"free",			(void *)free,				"void free(void *ptr);"							},	
-//		{"help", 			(void *)help,				"void help(char *lpszFuncName)"								},
-//		{"lkup", 			(void *)lkup,		        "void lkup(char *lpszFuncName))"						},
+		{"help", 			(void *)help,				"void help(char *lpszFuncName)"								},
+		{"lkup", 			(void *)lkup,		        "void lkup(char *lpszFuncName))"						},
 
 //		{"readHexString",	(void *)readHexString,		"int readHexString(const char *lpszBuffer, UINT8 *pucData, int nLen)"	},
 #if 0		
 		{"sp", 				sp,		            "HANDLE sp(pFuncPtr pFunc, int nData1, int nData2, int nData3, int nData4, int nData5, int nData6, int nData7, int nData8, int nData9, int nData10)"						},		
 #endif		
 //		{"d", 				(void *)d,					"void d(void *pAddr, int nByteCount, int nWidth, int nDisplayOffset"						},
-//		{"readPhyAddr",		(void *)readPhyAddr,		"UINT32 readPhyAddr(UINT32 *pulAddr);"			},
-//		{"writePhyAddr", 	(void *)writePhyAddr,		"UINT32 writePhyAddr(UINT32 *pulAddr, UINT32 writeval);"			},
+		{"getPhy32",		(void *)getPhy32,		"UINT32 getPhy32(UINT32 *pulAddr);"			},
+		{"getPhy64",		(void *)getPhy64,		"UINT64 getPhy64(UINT64 *pulAddr);"			},
+		{"setPhy32", 		(void *)setPhy32,		"UINT32 setPhy32(UINT32 *pulAddr, UINT32 writeval);"			},
+		{"setPhy64", 		(void *)setPhy64,		"UINT64 setPhy64(UINT64 *pulAddr, UINT64 writeval);"			},
 //		{"explainUART",	(void *)explainUART,		"void explainUART();"			},
 
 #if 0		

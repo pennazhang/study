@@ -39,8 +39,21 @@ void cmdLoop(void)
 	startShellThread(5023);
 
 	printf("sizeof(char *) = %d\n", (int)sizeof(char *));
-	printf("sizeof(long) = %d\n", (int)sizeof(long));
-	printf("sizeof(int) = %d\n", (int)sizeof(int));
+	printf("sizeof(UINT32) = %d\n", (int)sizeof(UINT32));
+	printf("sizeof(UINT64) = %d\n", (int)sizeof(UINT64));
+	
+	if (sizeof(UINT32) != 4)
+	{
+		printf("Invalid UINT32, Please check it again\n");
+		return;
+	}
+	
+	if (sizeof(UINT64) != 8)
+	{
+		printf("Invalid UINT64, Please check it again\n");
+		return;
+	}
+
 	
     for (;;)
     {

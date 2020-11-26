@@ -1,5 +1,6 @@
 #ifndef TYPEDEF_H
 #define TYPEDEF_H
+#include <stdbool.h>
 
 typedef 	unsigned long	SYSWORD;
 
@@ -8,6 +9,9 @@ typedef long			LONG;
 
 typedef  unsigned int   UINT;
 typedef  int     		INT;
+
+typedef unsigned long	UINT64;
+typedef long			INT64;
 
 typedef unsigned int	UINT32;
 typedef signed int		INT32;
