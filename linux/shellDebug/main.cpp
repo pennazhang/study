@@ -114,7 +114,7 @@ int sub(int a, int b)
 }
 
 
-static FUNC_MAP theFuncList[] = 
+static FuncMapType theFuncList[] = 
 {
 
 		{"add",		  	(void *)add, 		"int add(int a, int b)"},		
@@ -131,7 +131,7 @@ int main (int argc, char *argv[])
     char cBegin, cEnd;
     int nLen;
 
-	addFunctionMap(theFuncList, sizeof(theFuncList) / sizeof(FUNC_MAP));
+	addFunctionMap(theFuncList, sizeof(theFuncList) / sizeof(FuncMapType));
 	
     if (argc == 2)
     {

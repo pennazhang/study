@@ -18,7 +18,26 @@
 long d0, d1, d2, d3, d4, d5, d6, d7, d8, d9;
 void *p0, *p1, *p2, *p3, *p4, *p5, *p6, *p7, *p8, *p9;
 
-DATA_MAP g_theDataList[] = 
+/* Used to store the user command */
+char s_lpszCommand[MAX_COMMAND_LEN + 2 * MAX_SYMBOL_COUNT];
+int s_commandLength = 0;
+char * addSymbol(int index, char *lpszSymbol, int length)
+{
+	char *newSymbolAddr;
+	if (index == 0)
+	{
+		s_commandLength = 0;
+	}
+
+	newSymbolAddr = &s_lpszCommand[s_commandLength];
+	strcpy(newSymbolAddr, lpszSymbol); 
+	s_commandLength += length;
+	s_commandLength++;
+
+	return (newSymbolAddr);
+}
+
+DataMapType g_theDataList[] = 
 {
 		{"d1", 		&d1		 	},
 		{"d2", 		&d2			},
@@ -39,10 +58,10 @@ DATA_MAP g_theDataList[] =
 		{"p8", 		&p8			},
 		{"p9", 		&p9			},
 };
-//const int g_theDataListCount = sizeof(g_theDataList) / sizeof(FUNC_MAP);
+//const int g_theDataListCount = sizeof(g_theDataList) / sizeof(FuncMapType);
 
 
-static FUNC_MAP s_theFuncList[] = 
+static FuncMapType s_theFuncList[] = 
 {
 #if 0
 		{"Add",		  		Add, "SYSWORD Add(SYSWORD a, SYSWORD b)"},		
@@ -56,7 +75,7 @@ static FUNC_MAP s_theFuncList[] =
 #endif        
 //		{"malloc",			(void *)malloc,				"void *malloc(int nSize)"							},	
 //		{"free",			(void *)free,				"void free(void *ptr);"							},	
-		{"help", 			(void *)help,				"void help(char *lpszFuncName)"								},
+//		{"help", 			(void *)help,				"void help(char *lpszFuncName)"								},
 //		{"lkup", 			(void *)lkup,		        "void lkup(char *lpszFuncName))"						},
 
 //		{"readHexString",	(void *)readHexString,		"int readHexString(const char *lpszBuffer, UINT8 *pucData, int nLen)"	},
@@ -64,9 +83,9 @@ static FUNC_MAP s_theFuncList[] =
 		{"sp", 				sp,		            "HANDLE sp(pFuncPtr pFunc, int nData1, int nData2, int nData3, int nData4, int nData5, int nData6, int nData7, int nData8, int nData9, int nData10)"						},		
 #endif		
 //		{"d", 				(void *)d,					"void d(void *pAddr, int nByteCount, int nWidth, int nDisplayOffset"						},
-		{"readPhyAddr",		(void *)readPhyAddr,		"UINT32 readPhyAddr(UINT32 *pulAddr);"			},
+//		{"readPhyAddr",		(void *)readPhyAddr,		"UINT32 readPhyAddr(UINT32 *pulAddr);"			},
 //		{"writePhyAddr", 	(void *)writePhyAddr,		"UINT32 writePhyAddr(UINT32 *pulAddr, UINT32 writeval);"			},
-		{"explainUART",	(void *)explainUART,		"void explainUART();"			},
+//		{"explainUART",	(void *)explainUART,		"void explainUART();"			},
 
 #if 0		
 		{"ShowRegArray", 	ShowRegArray,		"SYSWORD ShowRegArray(char *lpszArray)"						},
@@ -74,14 +93,14 @@ static FUNC_MAP s_theFuncList[] =
 		{"ShowRegFunc", 	ShowRegFunc,		"void ShowRegFunc()"						},
 
 		{"RunCommand", 		RunCommand,			"VOS_STATUS RunCommand(UINT32 ulCommandID, char *lpszCommandName, UINT32 ulParam1, UINT32 ulParam2, UINT32 ulParam3, UINT32 ulParam4, UINT32 ulParam5, UINT32 ulParam6, UINT32 ulParam7, UINT32 ulParam8, UINT32 ulParam9, UINT32 ulParam10)"},
-
-		{"SetUINT32", 		SetUINT32,			"void SetUINT32(UINT32 *pulAddr, UINT32 ulData);"},
-		{"SetUINT16", 		SetUINT16,			"void SetUINT16(UINT16 *pusAddr, UINT16 usData);"},
-		{"SetUINT8", 		SetUINT8,			"void SetUINT8(UINT16 *pucAddr, UINT8 ucData);"},
-		{"GetUINT32", 		GetUINT32,			"UINT32 GetUINT32(UINT32 *pulAddr);"},
-		{"GetUINT16", 		GetUINT16,			"UINT16 GetUINT16(UINT16 *pusAddr);"},
-		{"GetUINT8", 		GetUINT8,			"UINT8 GetUINT8(UINT8 *pucAddr);"},
-
+#endif
+		{"set32", 			(void *)set32,			"void set32(UINT32 *pulAddr, UINT32 ulData);"},
+		{"set16", 			(void *)set16,			"void set16(UINT16 *pusAddr, UINT16 usData);"},
+		{"set8", 			(void *)set8,			"void set8(UINT8 *pucAddr, UINT8 ucData);"},
+		{"get32", 			(void *)get32,			"UINT32 get32(UINT32 *pulAddr);"},
+		{"get16", 			(void *)get16,			"UINT16 get16(UINT16 *pusAddr);"},
+		{"get8", 			(void *)get8,			"UINT8 get8(UINT8 *pucAddr);"},
+#if 0
 		{"open",			open,				"int open( const char * pathname, int flags);"							},	
 		{"lseek",			lseek,				"off_t lseek(int fildes,off_t offset ,int whence);"							},	
 		{"close",			close,				"int close(int nFd)"							},	
@@ -139,22 +158,22 @@ static FUNC_MAP s_theFuncList[] =
 		{"ShowThreadPriority",	ShowThreadPriority, 		"void ShowThreadPriority();"		},
 #endif	
 
-//const int g_theFuncListCount = sizeof(g_theFuncList) / sizeof(FUNC_MAP);
+//const int g_theFuncListCount = sizeof(g_theFuncList) / sizeof(FuncMapType);
 };
 
-FUNC_MAP *g_pFuncMap = NULL;
+FuncMapType *g_pFuncMap = NULL;
 int g_FuncMapCount = 0;
 
-void addFunctionMap(FUNC_MAP *pFuncMap, int nCount)
+void addFunctionMap(FuncMapType *pFuncMap, int nCount)
 {
-	FUNC_MAP *pNewMap = NULL;
+	FuncMapType *pNewMap = NULL;
 	
 	if (nCount <= 0)
 	{
 		return;
 	}
 
-	pNewMap = new FUNC_MAP[g_FuncMapCount + nCount];
+	pNewMap = new FuncMapType[g_FuncMapCount + nCount];
 	for (int i = 0; i < g_FuncMapCount; i++)
 	{
 		pNewMap[i] = g_pFuncMap[i];
@@ -180,7 +199,7 @@ void addBasicFuncMap()
 		return;
 	}
 	init = 1;
-	addFunctionMap(s_theFuncList, sizeof(s_theFuncList) / sizeof(FUNC_MAP));
+	addFunctionMap(s_theFuncList, sizeof(s_theFuncList) / sizeof(FuncMapType));
 }
 
 
@@ -314,34 +333,29 @@ int ReadSymbol(char *string, char *lpszResult)
 	}
 }
 
-int ReadSymbolTable(char *lpszCommand, char lpszSymbol[MAX_SYMBOL_COUNT][MAX_SYMBOL_LENGTH])
+int ReadSymbolTable(char *lpszCommand, char *lpszSymbol[MAX_SYMBOL_COUNT])
 {
 	int nCount = 0;
 	int nIndex = 0;
-	char lpszData[1024];
-	char *lpszBuffer = lpszData;
+	int symbolLength = 0;
 	char lpszResult[MAX_SYMBOL_LENGTH];
-
-	if (strlen(lpszCommand) > 1024)
-	{
-        return (0);
-	}
-	strcpy(lpszBuffer, lpszCommand);
 
 	for (nCount = 0; nCount < MAX_SYMBOL_COUNT; nCount++)
 	{
-		nIndex = ReadString(lpszBuffer, " ,()\t");
-		lpszBuffer += nIndex;
-		if (*lpszBuffer == '\0')
+		/* pass through the some char */
+		nIndex = ReadString(lpszCommand, " ,()\t");
+		lpszCommand += nIndex;
+		if (*lpszCommand == '\0')
 		{
 			break;
 		}
-		nIndex = ReadSymbol(lpszBuffer, lpszResult);
-		if ((nIndex != 0) && (nIndex < MAX_SYMBOL_LENGTH))
+		symbolLength = ReadSymbol(lpszCommand, lpszResult);
+		
+		if (symbolLength != 0)
 		{
-			strcpy(lpszSymbol[nCount], lpszResult);
-//			Diag_Output("symbol %d = %s\n", nCount, lpszSymbol[nCount]);
-			lpszBuffer += nIndex;
+//			Diag_Output("symbol %d = %s (%d)\r\n", nCount, lpszResult, symbolLength);
+			lpszSymbol[nCount] = addSymbol(nCount, lpszResult, symbolLength);
+			lpszCommand += symbolLength;
 		}
 		else
 		{
@@ -371,7 +385,7 @@ STATUS GetSymbolAsFunc(char *lpszSymbol, SYSWORD *pulAddr)
 STATUS GetSymbolAsData(char *lpszSymbol, SYSWORD *pulData)
 {
 	int i;
-	for (i = 0; i < sizeof(g_theDataList) / sizeof(DATA_MAP); i++)
+	for (i = 0; i < sizeof(g_theDataList) / sizeof(DataMapType); i++)
 	{
 		if (strcmp(lpszSymbol, g_theDataList[i].m_lpszName) == 0)
 		{
@@ -383,7 +397,7 @@ STATUS GetSymbolAsData(char *lpszSymbol, SYSWORD *pulData)
 	return (STATUS_ERROR);
 }
 
-STATUS ExplainSymbol(char *lpszSymbol, char *lpszSymbolString, SYSWORD *pResult, SYMBOL_TYPE *pSymbolType)
+STATUS ExplainSymbol(char *lpszSymbol, SYSWORD *pResult, SymbolType *pSymbolType)
 {
 //	int i;
 	int nIndex = 0;
@@ -433,10 +447,9 @@ STATUS ExplainSymbol(char *lpszSymbol, char *lpszSymbolString, SYSWORD *pResult,
 				if (lpszSymbol[nIndex + 1] == 0)
 				{
 					*pSymbolType = SYMBOL_STRING;
-					strcpy(lpszSymbolString, lpszSymbol + 1);
-					lpszSymbolString[nIndex - 1] = 0;
+					lpszSymbol[nIndex] = 0;
 
-					*pResult = (SYSWORD)lpszSymbolString;
+					*pResult = (SYSWORD)(lpszSymbol + 1);
 					return (STATUS_OK);
 				}
 			}
@@ -473,7 +486,7 @@ STATUS ExplainSymbol(char *lpszSymbol, char *lpszSymbolString, SYSWORD *pResult,
 }
 
 
-STATUS GetSymbolValue(SYSWORD pSymbolData[MAX_SYMBOL_COUNT], SYMBOL_TYPE pSymbolType[MAX_SYMBOL_COUNT], int nSymbolCount, SYSWORD *pulResult, int nStartIndex)
+STATUS GetSymbolValue(SYSWORD pSymbolData[MAX_SYMBOL_COUNT], SymbolType pSymbolType[MAX_SYMBOL_COUNT], int nSymbolCount, SYSWORD *pulResult, int nStartIndex)
 {
 	pFuncPtr theFunc;
 	SYSWORD ulData, ulData1, ulData2;
@@ -560,7 +573,7 @@ STATUS GetSymbolValue(SYSWORD pSymbolData[MAX_SYMBOL_COUNT], SYMBOL_TYPE pSymbol
 			}
 		}
 
-		for (nIndex = nSymbolCount; nIndex <= 10 + nStartIndex; nIndex++)
+		for (nIndex = nSymbolCount; nIndex <= 8 + nStartIndex; nIndex++)
 		{
 			pSymbolData[nIndex] = 0;
 		}
@@ -568,44 +581,28 @@ STATUS GetSymbolValue(SYSWORD pSymbolData[MAX_SYMBOL_COUNT], SYMBOL_TYPE pSymbol
 		*pulResult = theFunc(pSymbolData[1 + nStartIndex], pSymbolData[2 + nStartIndex], 
 								pSymbolData[3 + nStartIndex], pSymbolData[4 + nStartIndex], 
 								pSymbolData[5 + nStartIndex], pSymbolData[6 + nStartIndex],
-								pSymbolData[7 + nStartIndex], pSymbolData[8 + nStartIndex],
-								pSymbolData[9 + nStartIndex], pSymbolData[10 + nStartIndex]
+								pSymbolData[7 + nStartIndex], pSymbolData[8 + nStartIndex]
 							);
 		return (STATUS_OK);	
 	}
 	
 }
 
-STATUS RunExpression(char lpszSymbol[MAX_SYMBOL_COUNT][MAX_SYMBOL_LENGTH], char lpszSymbolString[MAX_SYMBOL_COUNT][MAX_SYMBOL_LENGTH], int nSymbolCount, SYSWORD *pulResult, int nStartIndex)
+STATUS RunExpression(char *lpszSymbol[MAX_SYMBOL_COUNT], int nSymbolCount, SYSWORD *pulResult, int nStartIndex)
 {
 	/* Get Function Address */
 	SYSWORD pSymbolData[MAX_SYMBOL_COUNT];
-	int nIndex;
-	SYMBOL_TYPE	 pSymbolType[MAX_SYMBOL_COUNT];
+	SymbolType	 pSymbolType[MAX_SYMBOL_COUNT];
 	STATUS iRet;
-
-	/* Check the parameter */
-	if (nSymbolCount - nStartIndex > 11)
-	{
-		printf("too many parameters!\n");
-		return (STATUS_ERROR);
-	}
+	int nIndex;
 
 	for (nIndex = nStartIndex; nIndex < nSymbolCount; nIndex++)
 	{
-		if (ExplainSymbol(lpszSymbol[nIndex], lpszSymbolString[nIndex] , (SYSWORD *)(pSymbolData + nIndex), pSymbolType + nIndex) == STATUS_ERROR)
+//		Diag_Output("nIndex = %d, %s\r\n", nIndex, lpszSymbol[nIndex]);
+		if (ExplainSymbol(lpszSymbol[nIndex], (SYSWORD *)(pSymbolData + nIndex), pSymbolType + nIndex) == STATUS_ERROR)
 		{
-#ifndef RUN_SYSTEM_WHEN_POSSIBLE 	
-			printf("ExplainSymblo failed for %s!\n", lpszSymbol[nIndex]);
-#endif
 			return (STATUS_ERROR);
 		}
-	}
-
-	/* Can not explain the expression */
-	if (nIndex != nSymbolCount)
-	{
-		return (STATUS_ERROR);
 	}
 
 	iRet = GetSymbolValue(pSymbolData, pSymbolType, nSymbolCount, pulResult, nStartIndex);
@@ -613,15 +610,16 @@ STATUS RunExpression(char lpszSymbol[MAX_SYMBOL_COUNT][MAX_SYMBOL_LENGTH], char 
 	return (iRet);
 }
 
-
 STATUS explainCmd(char *lpszBuffer, SYSWORD * pulResult)
 {
 	int nSymbolCount;
-	char lpszSymbol[MAX_SYMBOL_COUNT][MAX_SYMBOL_LENGTH];
-	char lpszSymbolString[MAX_SYMBOL_COUNT][MAX_SYMBOL_LENGTH];
+	char *lpszSymbol[MAX_SYMBOL_COUNT];
+//	char *lpszSymbolString[MAX_SYMBOL_COUNT];
 	SYSWORD nResult = 0;
 	SYSWORD SymbolData;
-	SYMBOL_TYPE SymbolType;
+	SymbolType SymbolType;
+
+//	Diag_Output("pulResult = 0x%p\r\n", pulResult);
 
 	if (checkQuot(lpszBuffer) == false)
 	{
@@ -634,11 +632,16 @@ STATUS explainCmd(char *lpszBuffer, SYSWORD * pulResult)
 		return (STATUS_ERROR);
 	}
 
+//	for (int i = 0; i < nSymbolCount; i++)
+//	{
+//		Diag_Output("symbol %d = %s\r\n", i, lpszSymbol[i]);
+//	}
+
 	/* if the second symbol is '=', it means a = func(b) */
 	if ((nSymbolCount > 2) && (strcmp(lpszSymbol[1], "=") == 0))
 	{
 		/* Explain the first symbol */
-		if (ExplainSymbol(lpszSymbol[0], lpszSymbolString[0], (SYSWORD *)&SymbolData, &SymbolType) == STATUS_ERROR)
+		if (ExplainSymbol(lpszSymbol[0], (SYSWORD *)&SymbolData, &SymbolType) == STATUS_ERROR)
 		{
 			return (STATUS_ERROR);
 		}
@@ -647,11 +650,14 @@ STATUS explainCmd(char *lpszBuffer, SYSWORD * pulResult)
 			return (STATUS_ERROR);
 		}
 
-		if (RunExpression(lpszSymbol, lpszSymbolString, nSymbolCount, &nResult, 2) == STATUS_ERROR)
+//		Diag_Output("pulResult3 = 0x%p\r\n", pulResult);
+		if (RunExpression(lpszSymbol, nSymbolCount, &nResult, 2) == STATUS_ERROR)
 		{
 			return STATUS_ERROR;
 		}
+//		Diag_Output("pulResult4 = 0x%p\r\n", pulResult);
 
+//		Diag_Output("SymbolType = %d, nResult = 0x%x\r\n", SymbolType, (UINT32)nResult);
 		if (SymbolType == SYMBOL_CONTENT)
 		{
 			SymbolData = *(SYSWORD *)SymbolData;
@@ -666,12 +672,14 @@ STATUS explainCmd(char *lpszBuffer, SYSWORD * pulResult)
 			return (STATUS_ERROR);
 		}
 
+//		Diag_Output("pulResult10 = 0x%p\r\n", pulResult);
 		*pulResult = nResult;
+//		Diag_Output("Result1 *(0x%p) = 0x%x = 0X%X\r\n", pulResult, (UINT32)*pulResult, nResult);
 		return (STATUS_OK);
 	}
 	else
 	{
-		if (RunExpression(lpszSymbol, lpszSymbolString, nSymbolCount, &nResult, 0) == STATUS_OK)
+		if (RunExpression(lpszSymbol, nSymbolCount, &nResult, 0) == STATUS_OK)
 		{
 			*pulResult = nResult;
 			return (STATUS_OK);

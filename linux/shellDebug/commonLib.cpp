@@ -304,7 +304,7 @@ UINT32 readPhyAddr(UINT32 *pulAddr)
     }
 //    printf("Memory mapped at address %p.n", map_base); 
 
-    virt_addr = map_base + (target & MAP_MASK);
+    virt_addr = (UINT8 *)map_base + (target & MAP_MASK);
 
     ulValue = *((UINT32*) virt_addr);
  //   printf("Value at address 0x%X (%p): 0x%Xn", target, virt_addr, ulValue); 
@@ -360,13 +360,13 @@ UINT32 writePhyAddr(UINT32 *pulAddr, UINT32 writeval)
     }
 //    printf("Memory mapped at address %p.n", map_base); 
 
-    virt_addr = map_base + (target & MAP_MASK);
+    virt_addr = (UINT8 *)map_base + (target & MAP_MASK);
 
     ulValue = *((UINT32*) virt_addr);
 	*((unsigned long *) virt_addr) = writeval;
 	ulValue = *((unsigned long *) virt_addr);
 	
-    printf("Value at address 0x%X (%p): write: 0x%X, read: 0x%Xn", target, virt_addr, writeval, ulValue); 
+    printf("Value at address 0x%X (%p): write: 0x%X, read: 0x%Xn", (UINT32)target, virt_addr, writeval, ulValue); 
 	
 END:
 	if (map_base != (void *)-1)
@@ -383,32 +383,32 @@ END:
 }
 	
 
-void setUINT32(UINT32 *pulAddr, UINT32 ulData)
+void set32(UINT32 *pulAddr, UINT32 ulData)
 {
 	*pulAddr = ulData;
 }
 
-void setUINT16(UINT16 *pusAddr, UINT16 usData)
+void set16(UINT16 *pusAddr, UINT16 usData)
 {
 	*pusAddr = usData;
 }
 
-void SetUINT8(UINT8 *pucAddr, UINT8 ucData)
+void set8(UINT8 *pucAddr, UINT8 ucData)
 {
 	*pucAddr = ucData;
 }
 
-UINT32 GetUINT32(UINT32 *pulAddr)
+UINT32 get32(UINT32 *pulAddr)
 {
 	return (*pulAddr);
 }
 
-UINT16 GetUINT16(UINT16 *pusAddr)
+UINT16 get16(UINT16 *pusAddr)
 {
 	return (*pusAddr);
 }
 
-UINT8 GetUINT8(UINT8 *pucAddr)
+UINT8 get8(UINT8 *pucAddr)
 {
 	return (*pucAddr);
 }
@@ -476,18 +476,18 @@ void explainField(const char * description, int value, int size, DESCRIPTION_ITE
 	printf("%s - Value:0x%x (no match) : %s\n", description, value, noneMatchString);
 }
 
-DESCRIPTION_ITEM_TYPE g_uartEnableDescription[] =  
+DESCRIPTION_ITEM_TYPE g_UCRDescription[] =  
 {
 	{ 0, "Disable the UART" }, 
 	{ 1, "Enable the UART" }, 
 };
 
-void explainUCR1(UINT32 ulPhyAddr, const char *lpszRegDescription)
+void explainUCR1(SYSWORD ulPhyAddr, const char *lpszRegDescription)
 {
 	const char *regDescription = "UART Control Register 1";
 	UINT32 ulValue = readPhyAddr((UINT32 *)ulPhyAddr);
-	printf("    0x%x - %s (%s)= 0x%x\n", ulPhyAddr, lpszRegDescription, regDescription, ulValue);
-	explainField("        bit 0 - UART Enable", (ulValue >> 0) & 1, sizeof(g_uartEnableDescription), g_uartEnableDescription); 
+	printf("    0x%lx - %s (%s)= 0x%x\n", ulPhyAddr, lpszRegDescription, regDescription, ulValue);
+	explainField("        bit 0 - UART Enable", (ulValue >> 0) & 1, sizeof(g_UCRDescription), g_UCRDescription); 
 }
 
 DESCRIPTION_ITEM_TYPE g_uartEnableDescription[] =  
@@ -496,13 +496,13 @@ DESCRIPTION_ITEM_TYPE g_uartEnableDescription[] =
 	{ 1, "Slave address detected" }, 
 };
 
-void explainUSR1(UINT32 ulPhyAddr, const char *lpszRegDescription)
+void explainUSR1(SYSWORD ulPhyAddr, const char *lpszRegDescription)
 {
 	const char *regDescription = "UART Status Register 1";
 	UINT32 ulValue = readPhyAddr((UINT32 *)ulPhyAddr);
-	printf("    0x%x - %s (%s)= 0x%x\n", ulPhyAddr, lpszRegDescription, regDescription, ulValue);
+	printf("    0x%lx - %s (%s)= 0x%x\n", ulPhyAddr, lpszRegDescription, regDescription, ulValue);
 	printf("\t bit2-bit 0 - Reserved\n");
-	printf("\t", (ulValue >> 3) & 1, sizeof(g_uartEnableDescription), g_uartEnableDescription); 
+	explainField("\t bit3 ", (ulValue >> 3) & 1, sizeof(g_uartEnableDescription), g_uartEnableDescription); 
 	explainField("\tbit 0 - UART Enable", (ulValue >> 0) & 1, sizeof(g_uartEnableDescription), g_uartEnableDescription); 
 }
 	

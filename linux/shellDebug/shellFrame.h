@@ -5,13 +5,15 @@
 #include "shellFrame.h"
 #include "tcpServerFrame.h"
 
-#define MAX_SYMBOL_COUNT 20
-#define MAX_SYMBOL_LENGTH 60
+#define MAX_SYMBOL_COUNT 		10
+#define MAX_SYMBOL_LENGTH 	60
+#define MAX_COMMAND_LEN 		120
 
 extern long d0, d1, d2, d3, d4, d5, d6, d7, d8, d9;
 extern void *p0, *p1, *p2, *p3, *p4, *p5, *p6, *p7, *p8, *p9;
 
-typedef SYSWORD (*pFuncPtr)(SYSWORD ulData1, SYSWORD ulData2, SYSWORD ulData3, SYSWORD ulData4, SYSWORD ulData5, SYSWORD ulData6, SYSWORD ulData7, SYSWORD ulData8, SYSWORD ulData9, SYSWORD ulData10);
+#define MAX_PARAM_COUNT		8
+typedef SYSWORD (*pFuncPtr)(SYSWORD ulData1, SYSWORD ulData2, SYSWORD ulData3, SYSWORD ulData4, SYSWORD ulData5, SYSWORD ulData6, SYSWORD ulData7, SYSWORD ulData8);
 
 typedef enum
 {
@@ -21,8 +23,8 @@ typedef enum
 	SYMBOL_VALUE = 3,		// Key = 
 	SYMBOL_STRING = 4,		// "Key"
 	SYMBOL_NUMBER = 5,		// 0x
-	SYMBOL_OPERATION = 6,		// ¶¨ÒåÎª + - * /
-}SYMBOL_TYPE;
+	SYMBOL_OPERATION = 6,		// a + b
+}SymbolType;
 
 
 typedef struct
@@ -42,9 +44,12 @@ typedef struct
 
 typedef struct
 {
-	char m_lpszName[40];
+	const char *m_lpszName;
 	void * m_pAddr;
-}DATA_MAP;
+}DataMapType;
+
+
+
 
 void help(char *lpszFunctionName);
 
@@ -66,21 +71,20 @@ STATUS explainCmd(char *lpszBuffer, SYSWORD * pulResult);
 STATUS ExplainSignleCmd(char *lpszBuffer, SYSWORD * pulResult);
 
 STATUS ExecuteScript(char *lpszFileName);
-int ReadSymbolTable(char *lpszCommand, char lpszSymbol[MAX_SYMBOL_COUNT][MAX_SYMBOL_LENGTH]);
+int ReadSymbolTable(char *lpszCommand, char *lpszSymbol[MAX_SYMBOL_COUNT]);
 
 
 STATUS RunCommand(UINT ulCommandID, char *lpszCommandName, SYSWORD ulParam1, SYSWORD ulParam2,
             SYSWORD ulParam3, SYSWORD ulParam4, SYSWORD ulParam5, SYSWORD ulParam6, SYSWORD ulParam7, 
             SYSWORD ulParam8, SYSWORD ulParam9, SYSWORD ulParam10);
 
-void SetUINT(UINT *pulAddr, UINT ulData);
+void set32(UINT32 *pulAddr, UINT32 ulData);
+void set16(UINT16 *pulAddr, UINT16 ulData);
+void set8(UINT8 *pucAddr, UINT8 ucData);
 
-void SetUINT8(UINT8 *pucAddr, UINT8 ucData);
-
-UINT GetUINT(UINT *pulAddr);
-
-
-UINT8 GetUINT8(UINT8 *pucAddr);
+UINT32 get32(UINT32 *pulAddr);
+UINT16 get16(UINT16 *pusAddr);
+UINT8 get8(UINT8 *pucAddr);
 
 void version(void);
 
