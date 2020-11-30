@@ -6,7 +6,7 @@ export PATH=$PATH:${HOME}/workspace/gclient/depot-tools
 export dbg='-D'
 export cache='-S http://provideo-build.ad.harman.com/files/mirror/jarvis/ish/sstate'
 
-cd ~/workspace/jetstream/js-gclient/elina-distro
+cd ~/workspace/AMX/js-gclient/elina-distro
 . bld.imx8mmddr3lval-cdl.log
 
 # The following commands are added after the docker image was built.
