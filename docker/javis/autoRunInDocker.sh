@@ -3,8 +3,8 @@ export P4PORT=10.90.66.25:3501
 export DEPOT_TOOLS_UPDATE=0
 export PATH=$PATH:${HOME}/workspace/gclient/depot-tools
 
-export dbg='-D'
-export cache='-S http://provideo-build.ad.harman.com/files/mirror/jarvis/ish/sstate'
+#export dbg='-D'
+#export cache='-S http://provideo-build.ad.harman.com/files/mirror/jarvis/ish/sstate'
 
 cd ~/workspace/AMX/js-gclient/elina-distro
 . bld.imx8mmddr3lval-cdl.log
