@@ -1,0 +1,96 @@
+#!/bin/bash
+
+set -e
+
+if [  ! $# -eq 1 ];then
+	echo "Error: Invalid parameter: $#."
+	echo "Usage: $0 Proj_Dir"
+	exit -1
+fi
+
+PROJECT_DIR=$1
+if [ ! -d $PROJECT_DIR ];then
+	echo "Error: Invalid Proj_Dir: $PROJECT_DIR"
+	exit -1
+fi
+PROJECT_DIR=`realpath "$PROJECT_DIR"`
+PROJECT_NAME=${PROJECT_DIR##*/}
+
+USER_NAME=`whoami`
+HOME_DIR=/home/$USER_NAME
+
+
+#You can add you dir map here with the format : -v $MAP_DIR_IN_HOST:$MAP_DIR_IN_DOCKER
+FOLDER_MAP=" -v $HOME_DIR:$HOME_DIR "
+
+#Auto run script to starting docker
+HOST_SCRIPT_DIR=$PROJECT_DIR
+DOCKER_SCRIPT_DIR=/bin/docker/$PROJECT_NAME
+DOCKER_SCRIPT=autoRunInDocker.sh
+echo "auto run in Docker: cd $DOCKER_SCRIPT_DIR && ./$DOCKER_SCRIPT"
+FOLDER_MAP+="-v ${HOST_SCRIPT_DIR}:${DOCKER_SCRIPT_DIR} "
+
+if [ ! -f $HOST_SCRIPT_DIR/$DOCKER_SCRIPT ];then
+    echo "Error : Can't find the auto run script : $HOST_SCRIPT_DIR/$DOCKER_SCRIPT"
+    exit -1
+fi
+FOLDER_MAP+=$START_DOCKER_FOLDER_MAP
+
+if [ -z ${DOCKER_RUN_NAME} ];then
+    DOCKER_RUN_NAME=${DOCKER_IMAGE_NAME}
+fi
+DOCKER_RUN_NAME=${DOCKER_RUN_NAME//\./_}
+HOST_NAME=" -h ${DOCKER_RUN_NAME} "
+
+
+
+#Check if the image is already exist.
+imageExistFlag="$(docker images $DOCKER_IMAGE_NAME:0.2 | grep $DOCKER_IMAGE_NAME)" || true
+if [ -z "$imageExistFlag" ];then
+    echo ------------------------------------------------------------------------------
+    echo "Error --  dokcer image: $DOCKER_IMAGE_NAME:0.2 not exist, please build it first!"
+    echo ------------------------------------------------------------------------------
+    exit 1
+fi
+if [ ! $USE_GUI_IN_DOCKER == 0 ]; then
+    #We need to use GUI in docker.
+
+    #Add FOLDER_MAP for display.
+    FOLDER_MAP+=" -v $XDG_RUNTIME_DIR:$XDG_RUNTIME_DIR "
+    
+    # Add environment parameter for Display.
+    RUN_ENV=" -e XDG_RUNTIME_DIR "
+
+    #Add Fond map
+    FOLDER_MAP+=" -v /usr/share/fonts:/usr/share/fonts"
+    
+    # disable X-Windows server access control, clients can connect from any host
+    xhost + || true
+    export XSOCK=/tmp/.X11-unix
+    export XAUTH=/tmp/.docker.xauth
+    touch /tmp/.docker.xauth
+    xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $XAUTH nmerge -
+
+    if [[ $DISPLAY =~ "localhost" ]]; then 
+        echo DISPLAY=$DISPLAY
+        echo "Please startDocker from Host terminal, not SSH shell."
+    fi	
+
+    X11_OPTION="-v $XSOCK:$XSOCK -v $XAUTH:$XAUTH -e XAUTHORITY=$XAUTH -e DISPLAY --net=host --env QT_X11_NO_MITSHM=1 "
+fi
+
+USER_ID=`id -u`
+GROUP_ID=`id -g`
+USER_LOGIN="--user $USER_ID:$GROUP_ID"
+
+#Add some additional environment for different product.
+RUN_ENV+=$ADDITIONAL_ENV
+
+if [ -z $EXTRA_SCRIPT ]; then
+    echo docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 bash -c "source ${DOCKER_SCRIPT_DIR}/autoRunInDocker.sh; bash"
+    docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 bash -c "source ${DOCKER_SCRIPT_DIR}/autoRunInDocker.sh; bash"
+else
+    echo docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 bash -c "source ${DOCKER_SCRIPT_DIR}/autoRunInDocker.sh; source ${DOCKER_SCRIPT_DIR}/${EXTRA_SCRIPT}; bash"
+    docker run -it --rm $X11_OPTION $FOLDER_MAP $USER_LOGIN $RUN_ENV $HOST_NAME $DNS_Map $PORT_MAP $DOCKER_IMAGE_NAME:0.2 bash -c "source ${DOCKER_SCRIPT_DIR}/autoRunInDocker.sh && source ${DOCKER_SCRIPT_DIR}/${EXTRA_SCRIPT}; bash"
+fi
+

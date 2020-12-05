@@ -14,7 +14,9 @@ cd ~/workspace/AMX/js-gclient/elina-distro
 #source setup-environment build-xwayland
 
 # The following commands are added for yocto SDK.
-#source /home/pzhang/workspace/cacheData/fsl-imx-sdk/environment-setup-aarch64-poky-linux
-#export ARCH=arm64
-#echo CROSS_COMPILE=$CROSS_COMPILE
-#echo "IMX8 SDK environment has been set."
+source /home/pzhang/workspace/cacheData/elina_1.16.16/environment-setup-aarch64-elina-linux
+export ARCH=arm64
+echo CROSS_COMPILE=$CROSS_COMPILE
+export ConfigManager_DIR="/home/pzhang/workspace/cacheData/elina_1.16.16/sysroots/aarch64-elina-linux/usr/lib/cmake/ConfigManager"
+export JarvisCivet_DIR="/home/pzhang/workspace/cacheData/elina_1.16.16/sysroots/aarch64-elina-linux/usr/lib/cmake"
+echo "Javis jetstream SDK environment has been set."

@@ -2,41 +2,51 @@
 
 set -e
 
-CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
+if [  ! $# -eq 1 ];then
+	echo "Error: Invalid parameter: $#."
+	echo "Usage: $0 Proj_Dir"
+	exit -1
+fi
+
+PROJECT_DIR=$1
+if [ ! -d $PROJECT_DIR ];then
+	echo "Error: Invalid Proj_Dir: $PROJECT_DIR"
+	exit -1
+fi
+PROJECT_DIR=`realpath "$PROJECT_DIR"`
+PROJECT_NAME=${PROJECT_DIR##*/}
+
 USER_NAME=`whoami`
 HOME_DIR=/home/$USER_NAME
 
-source docker.conf
-FOLDER_MAP+=$BUILD_DOCKER_FOLDER_MAP
-echo DOCKER_CACHE_DIR = $DOCKER_CACHE_DIR
+#DOCKER_RUN_NAME="${DOCKER_IMAGE_NAME}_debug"
 
-#HOST_NAME is host name in the building container,  only available when DEBUG_FLAG=1
-HOST_NAME=" -h ${DOCKER_BUILD_NAME} "
+echo PROJECT_DIR=$PROJECT_DIR
+echo PROJECT_NAME=$PROJECT_NAME
+echo DOCKER_BUILD_NAME=$DOCKER_BUILD_NAME
+echo HOST_NAME=${HOST_NAME}
+echo "BUILD_DOCKER_FOLDER_MAP=$BUILD_DOCKER_FOLDER_MAP"
 
-#Let's check is something file is missing here...
-preCheck
+FOLDER_MAP=" -v $HOME_DIR:$HOME_DIR "
 
-#For some software that need to be mapped into docker container, we can use "-v HOST_CACHE_DIR:/${DOCKER_CACHE_DIR}"
-if [ ! -z $HOST_CACHE_DIR ];then 
-    FOLDER_MAP=" -v ${HOST_CACHE_DIR}:${DOCKER_CACHE_DIR} "
-fi
+#Auto run script to build docker
+HOST_SCRIPT_DIR=$PROJECT_DIR
+DOCKER_SCRIPT_DIR=/bin/docker/$PROJECT_NAME
+DOCKER_SCRIPT=setupEnv.sh
+echo "auto run in Docker: cd $DOCKER_SCRIPT_DIR && ./$DOCKER_SCRIPT"
+FOLDER_MAP+="-v ${HOST_SCRIPT_DIR}:${DOCKER_SCRIPT_DIR} "
 
-CURRENT_DIR=`dirname "$0"`; CURRENT_DIR=`realpath "$CURRENT_DIR"`
-PROJECT_DIR=$CURRENT_DIR
-PROJECT_NAME=${PROJECT_DIR##*/}
-HOST_GIT_DIR=`cd $PROJECT_DIR/..; pwd`; 
-
-echo "PROJECT_NAME = $PROJECT_NAME"
-
-#Auto run script in Docker to build environment
-AUTO_START_DIR=/git/$PROJECT_NAME
-AUTO_START_SCRIPT=setupEnv.sh
-echo "auto run in Docker: cd $AUTO_START_DIR && ./$AUTO_START_SCRIPT"
-
-if [ -z $AUTO_START_DIR ] || [ -z $AUTO_START_SCRIPT ];then
-    echo "Error : Please define AUTO_START_DIR and AUTO_START_SCRIPT to setup the building environment"
+if [ ! -f $HOST_SCRIPT_DIR/$DOCKER_SCRIPT ];then
+    echo "Error : Can't find the auto run script : $HOST_SCRIPT_DIR/$DOCKER_SCRIPT"
     exit -1
 fi
+FOLDER_MAP+=$BUILD_DOCKER_FOLDER_MAP
+
+if [ -z ${DOCKER_RUN_NAME} ];then
+    DOCKER_RUN_NAME=${DOCKER_IMAGE_NAME}
+fi
+DOCKER_RUN_NAME=${DOCKER_RUN_NAME//\./_}
+HOST_NAME=" -h ${DOCKER_RUN_NAME} "
 
 # install docker
 DOCKER_VERSION="$(docker --version | grep $Docker version)"
@@ -48,7 +58,9 @@ fi
 #Check if the image is already exist.
 imageExistFlag="$(docker images $DOCKER_IMAGE_NAME:0.2 | grep $DOCKER_IMAGE_NAME)" || true
 if [ ! -z "$imageExistFlag" ]; then
-    echo "$DOCKER_IMAGE_NAME:0.2 already exist!"
+    echo "------------------------------------------------------------------------------"
+    echo "Warning --  dokcer image: $DOCKER_IMAGE_NAME:0.2 already exist!"
+    echo "------------------------------------------------------------------------------"
     exit 1
 fi
 
@@ -72,7 +84,7 @@ PASSWORD="12345678"
 createDockerFile (){
     rm -rf $2
     cp -f $1 $2
-    sed -i "s/LINUX:VERSION/$LINUX_VERSION/g" $2
+    sed -i "s/LINUX:VERSION/$BASE_DOCKER_IMAGE/g" $2
     sed -i "s/USER_NAME/$USER_NAME/g" $2
     sed -i "s/USER_ID/$USER_ID/g" $2
     sed -i "s/GROUP_ID/$GROUP_ID/g" $2
@@ -96,14 +108,13 @@ fi
 #-----------------------------------------------------------------------------
 # create docker_image:0.2
 #-----------------------------------------------------------------------------
-FOLDER_MAP+=" -v $HOME_DIR:$HOME_DIR -v $HOST_GIT_DIR:/git "
 TEMP_CONTAINER_NAME="$(date +%s)"
 echo "FOLDER_MAP = $FOLDER_MAP"
 
 echo ------------------------------------------------------------------------------
 echo --  building $DOCKER_IMAGE_NAME:0.2                                   --
 echo ------------------------------------------------------------------------------
-echo "auto run in Docker: cd $AUTO_START_DIR && ./$AUTO_START_SCRIPT"
+echo "auto run in Docker: cd $DOCKER_SCRIPT_DIR && ./$DOCKER_SCRIPT"
 echo ""
 
 if [ $BUILD_DEBUG_FLAG == 1 ]; then
@@ -111,7 +122,7 @@ if [ $BUILD_DEBUG_FLAG == 1 ]; then
     docker run -it ${FOLDER_MAP} $HOST_NAME --name "${TEMP_CONTAINER_NAME}" ${DOCKER_IMAGE_NAME}:0.1 bash
     exit 0
 else
-    docker run -it ${FOLDER_MAP} --name "${TEMP_CONTAINER_NAME}" ${DOCKER_IMAGE_NAME}:0.1 sh -c "cd $AUTO_START_DIR && ./$AUTO_START_SCRIPT"
+    docker run -it ${FOLDER_MAP} --name "${TEMP_CONTAINER_NAME}" ${DOCKER_IMAGE_NAME}:0.1 sh -c "cd $DOCKER_SCRIPT_DIR && ./$DOCKER_SCRIPT"
 fi
     
 #Save the container to docker image and delete the container.
