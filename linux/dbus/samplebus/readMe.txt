@@ -25,3 +25,5 @@ Then you will see the following information in the first terminal as below:
 pzhang@video-and-control:~/workspace/study/linux/dbus/sampledbus$ ./adaptor
 Hello 'world'
 Hello 'world'
+
+
