@@ -20,4 +20,14 @@ Start Docker:
 		/home/$USER_NAME => /home/$USER_NAME (/home/$USER_NAME must be mapped)	
 		$XDG_RUNTIME_DIR => $XDG_RUNTIME_DIR   (XDG_RUNTIME_DIR is defined only for display. You can delete it if you don't want to display in docker")
 		/usr/share/fonts => /usr/share/fonts (it is mapped only for fonts. You can delete it if you don't want to display Chinese in docker")
+
+Other issue:
+	Please check: https://confluence.harman.com/confluence/display/HPROVC/Via+Build+Instructions for the process.
+	Before building the docker image, you must apply for the account: ELINA_Guests and stash_elina_r.
+
+	When building and running the docker, you must input the P4 password ( 2 times ).
+	Normally the P4 Password is the same as the windows domain login password.
+	Also you must input "no" when you are asked to input your choice for the command: dpkg-reconfigure dash. 
+	
+	Again, You must enter 2 times of Harman domain password and then ("no") when building docker image.
 	
