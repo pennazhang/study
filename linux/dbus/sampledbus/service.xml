@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<node name="/com/example/Hello">
+  <interface name="com.example.Hello">
+    <!-- dbusxx-xml2cpp service.xml -proxy=proxy.hpp -adaptor=adaptor.hpp -->
+    <method  name="SayHello">
+      <arg type="s" name="name" direction="in" />
+    </method>
+  </interface>
+</node>
