@@ -14,7 +14,7 @@ export PATH=$PATH:${HOME}/workspace/gclient/depot-tools
 #source setup-environment build-xwayland
 
 # The following commands are added for yocto SDK.
-source /home/pzhang/workspace/cacheData/elina_1.16.16/environment-setup-aarch64-elina-linux
+source /home/pzhang/workspace/cacheData/elina_sdk/environment-setup-aarch64-elina-linux
 export ARCH=arm64
 echo CROSS_COMPILE=$CROSS_COMPILE
 export ConfigManager_DIR="/home/pzhang/workspace/cacheData/elina_1.16.16/sysroots/aarch64-elina-linux/usr/lib/cmake/ConfigManager"
