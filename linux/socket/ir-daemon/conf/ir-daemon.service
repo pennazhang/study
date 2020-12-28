@@ -1,0 +1,11 @@
+[Unit]
+Description=ir-daemon
+Requires=ir-daemon.service
+After=networkconfig.service configmanager.service
+
+[Service]
+ExecStart=/usr/bin/ir-daemon
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

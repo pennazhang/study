@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<node name="/com/harman/videoworx/CmdHandlerManager">
+  <interface name="com.harman.videoworx.CmdHandlerManager">
+
+    <!-- dbusxx-xml2cpp CmdHandlerManager.xml -proxy=CmdHandlerManagerProxy-glue.hpp -adaptor=CmdHandlerManagerAdapter-glue.hpp -->
+    <method  name="getCmdResponse">
+      <arg type="s" name="cmdStr" direction="in" />
+      <arg type="y" name="cmdType" direction="in" />
+      <arg type="i" name="errCode" direction="in" />
+      <arg type="s" name="errStr" direction="in" />
+    </method>
+
+    <!-- need to do, need to consider about veSet
+    <method  name="processCommands">
+      <arg type="s" name="cmdArgs" direction="in" />
+      <arg type="(???)" name="veSet" direction="in" /> // complicated need to seperate
+      <arg type="s" name="buffer" direction="in" />
+      <arg type="i" name="inputLen" direction="in" />
+      <arg type="s" name="outPutStr" direction="in" />
+      <arg type="i" name="maxOutSize" direction="in" />
+    </method>-->
+  <!--
+    ircmdtime, irc2rtime, irCompatibilityMode
+  -->
+    <signal name="processSettings">
+      <arg type="s" name="cmdStr" />
+      <arg type="y" name="cmdType" />
+      <arg type="s" name="cmdArg" />
+    </signal>
+    <signal name="sendIR">
+      <arg type="s" name="cmdStr" direction="in" />
+      <arg type="y" name="cmdType" direction="in" />
+      <arg type="s" name="cmdArg" direction="in" /><!--sendir:[IRCommand]-->
+    </signal>
+
+    <signal name="sendIRRaw">
+      <arg type="s" name="cmdStr" direction="in" />
+      <arg type="y" name="cmdType" direction="in" />
+      <arg type="s" name="cmdArg" direction="in" /><!--sendirraw:[data series]-->
+    </signal>
+
+    <signal name="TestIRCommand">
+      <arg type="s" name="cmdStr" direction="in" />
+      <arg type="y" name="cmdType" direction="in" />
+    </signal>
+
+    <signal name="repeatIR">
+      <arg type="s" name="cmdStr" direction="in" />
+      <arg type="y" name="cmdType" direction="in" />
+      <arg type="s" name="cmdArg" direction="in" /><!--repeatIR:[data series]-->
+    </signal>
+
+    <signal name="stopIR">
+      <arg type="s" name="cmdStr" direction="in" />
+      <arg type="y" name="cmdType" direction="in" />
+    </signal>
+
+  </interface>
+</node>
