@@ -19,7 +19,7 @@ endif
 #
 export 
 
-all: clean adaptor proxy
+all: clean header adaptor proxy
 
 ADAPTOR_OBJ = adaptor.o
 PROXY_OBJ = proxy.o
@@ -34,5 +34,7 @@ proxy:  $(PROXY_OBJ)
 	$(CC) -o $@ $(PROXY_OBJ) -L. $(LDFLAGS) 
 
 clean:
-	$(RM) *.o *.exe *.bak *.pre adaptor proxy
-		
+	$(RM) *.o *.exe *.bak *.pre adaptor proxy adaptor.hpp proxy.hpp
+
+header:
+	dbusxx-xml2cpp service.xml --proxy=proxy.hpp --adaptor=adaptor.hpp

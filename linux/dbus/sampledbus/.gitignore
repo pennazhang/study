@@ -9,3 +9,5 @@
 *.o
 adaptor
 proxy
+adaptor.hpp
+proxy.hpp
