@@ -3,7 +3,10 @@
 #include <sstream>
 #include <string>
 #include <dbus-c++/connection.h>
+#include <unistd.h>
 #include "adaptor.hpp"
+
+#define VERSION  "1.0.0.0"
 
 class Hello : public com::example::Hello_adaptor,
 				public DBus::IntrospectableAdaptor,
@@ -18,8 +21,17 @@ public:
 	virtual void SayHello(const std::string& name)
 	{
 		std::cout << "Hello '" << name << "'" << std::endl;
+		for (int i = 0; i < 10; i++)
+		{
+			sleep(1);
+		}
 	}
-	
+	    
+	virtual std::string getversion()
+    {
+        std::string version(VERSION);
+        return version;
+    }
 };
 DBus::BusDispatcher dispatcher;
 

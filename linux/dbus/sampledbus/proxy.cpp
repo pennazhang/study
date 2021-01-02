@@ -23,10 +23,14 @@ int main(int argc, char** argv)
 
 	Hello hello(bus, "/com/example/Hello", "com.example.Hello");
 
+	std::cout << "Adaptor version: " << hello.getversion();
+	
 	if(argc>=2)
 		hello.SayHello(argv[1]);
 	else
-		hello.SayHello("world");
+		hello.SayHello("world");	
+		
+	printf("Returned...\n");
 	
 	return 0;
 }
