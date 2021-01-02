@@ -10,7 +10,7 @@
 #include <sys/select.h> 
 #include <sys/time.h> 
 
-#define SERVER_PORT 9994
+#define SERVER_PORT 50021
 
 /*
 	Function: check that if some data is received by the socket.
@@ -20,7 +20,7 @@
 */
 int isSocketReadable(int socket)
 {
-	//socket 采用select来判断fd是否可读
+	//use select function to judge that if the block socket is readable.
 	int rc;
 	fd_set fds;
 	struct timeval tv = {0, 0};
@@ -59,7 +59,8 @@ int main(int argc,char* argv[])
     int ret= connect(sock, (struct sockaddr *)&server_sock, sizeof(server_sock));
     if (ret < 0)
     {
-        printf("connect()\n");
+        printf("connect() failed!\n");
+		close(sock);
         return 1;
     }
     printf("connect success, type command: \"quit\" to exit!\n");

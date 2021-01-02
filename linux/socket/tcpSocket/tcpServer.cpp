@@ -10,7 +10,7 @@
 #include <pthread.h> 
 #include <signal.h>
 
-#define _PORT_ 9994
+#define _PORT_ 50021
 #define  LISTEN_COUNT 10
 
 void *fun(void* arg)
