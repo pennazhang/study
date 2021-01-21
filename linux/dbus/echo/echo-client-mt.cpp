@@ -44,7 +44,7 @@ void *greeter_thread(void *arg)
 
 	snprintf(idstr, sizeof(idstr), "%lu", pthread_self());
 
-	for (int i = 0; i < 30 && spin; ++i)
+	for (int i = 0; i < 1 && spin; ++i)
 	{
 //		cout << client.Hello(idstr) << endl;
 

@@ -60,6 +60,8 @@ if [ ! -f /tmp/.jetstream_java_done ]; then
     touch /tmp/.jetstream_java_done
 fi
 
+sudo apt-get install -y libdbus-c++-dev
+
 #mkdir -p ${HOME}/workspace/gclient || true
 #cd ${HOME}/workspace/gclient
 #if [ ! -d depot-tools ];then
