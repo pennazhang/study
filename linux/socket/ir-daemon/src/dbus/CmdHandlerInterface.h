@@ -97,6 +97,31 @@ public:
      * \return None.
      */
     void stopIR(const std::string& cmdStr, const uint8_t& cmdType);
+    /**
+     * \brief Repeat IR as count = DEFAULT_IR_REPEAT_COUNT
+     * \param cmdStr The commands in string type.
+     * \param cmdType The command type.
+     * \param cmdArg The string type of cmdArg.
+     * \return None.
+     */
+    void repeatIRCount(const std::string& cmdStr, const uint8_t& cmdType, const std::string& cmdArg);
+    /**
+     * \brief Repeat IR as total time = DEFAULT_REPEAT_TIME_IN_MS
+     * \param cmdStr The commands in string type.
+     * \param cmdType The command type.
+     * \param cmdArg The string type of cmdArg.
+     * \return None.
+     */
+    void repeatIRTime(const std::string& cmdStr, const uint8_t& cmdType, const std::string& cmdArg);
+    /**
+     * \brief Repeat IR until g_irSetting.m_repeatFlag is set to FALSE.
+     * \param cmdStr The commands in string type.
+     * \param cmdType The command type.
+     * \param cmdArg The string type of cmdArg.
+     * \return None.
+     */
+    void repeatIRUntil(const std::string& cmdStr, const uint8_t& cmdType, const std::string& cmdArg);
+
 
 
 

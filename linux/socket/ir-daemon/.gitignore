@@ -7,14 +7,11 @@
 #
 
 *.o
-adaptor
-proxy
-adaptor.hpp
-proxy.hpp
-echo-server-glue.h
-echo-client-glue.h
-ef-echo-server-glue.h
-ef-echo-client-glue.h
-echo-server
-echo-client
-echo-client-mt
+build/
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+ir-daemon
+src/dbus/CmdHandlerManagerProxy-glue.h
+src/dbus/CmsfsIrProxy-glue.h

@@ -16,6 +16,9 @@ public:
 
 	void on_set_property
 		(DBus::InterfaceAdaptor &interface, const std::string &property, const DBus::Variant &value);
+
+//    void on_get_property (InterfaceAdaptor &, const std::string &, Variant &);
+//  virtual void 	on_set_property (InterfaceAdaptor &, const std::string &, const Variant &);
 };
 
 #endif//__DEMO_PROPS_SERVER_H

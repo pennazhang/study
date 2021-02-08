@@ -11,7 +11,7 @@ class EchoServer
 {
 public:
 
-	EchoServer(DBus::Connection &connection);
+	EchoServer(DBus::Connection &connection, const char * objectPath);
 
 	int32_t Random();
 

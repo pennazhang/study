@@ -42,173 +42,134 @@
 #include <arpa/inet.h>
 #include <dbus-c++-1/dbus-c++/dbus.h>
 #include "config.h"
-#include "videoEP.h"
-#include "UDPServer.h"
-#include "IrUDPServerHandler.h"
-#include "irUtilities.h"
+#include "jsIrUtils.h"
 #include "CmdHandlerInterface.h"
 #include "CmsfsIrInterface.h"
 #include "ConfigManagerAPI.h"
 #include "NetworkCfg.h"
+#include "ClientSetting.h"
+#include "ServerSetting.h"
+#include <HxLogCpp.h>
+#include "BaseCfgAPI.h"
+#include "DataManagementCfg.h"
 
+using NJarvis::HxLogCpp;
 
-const char *DAEMON_NAME = "ir-daemon";
 //
 // Global Variables.
 //
-clock_t gStartClock = 0;
-HxLogger* logger = nullptr;
-
-// The Golbal stuct.
-VE_Settings_t G_veSet = {0};
-irParamsFIFO_t G_irCommandFIFO = {0};
+const char *DAEMON_NAME = "ir-daemon";
+clock_t g_StartClock = 0;
+HxLogger* g_logger = nullptr;
 
 // Dbus connections.
-DBus::BusDispatcher*    dbusDispatcherPtr;
-DBus::Connection*       dbusConnPtr;
+DBus::BusDispatcher*    g_dbusDispatcherPtr;
+DBus::Connection*       g_dbusConnPtr;
 
 //
 // DBus Interface.
 //
-CmdHandlerInterface* m_pCmdHandlerInterface;
-CmsfsIrInterface* m_pCmsfsIrInterface;
+CmdHandlerInterface* g_pCmdHandlerInterface;
+CmsfsIrInterface* g_pCmsfsIrInterface;
 
-// UDP Server and Handler.
-UDPServer* m_pIrUDPServer = nullptr;
-IrUDPServerHandler* m_pIrUDPServerHandler = nullptr;
-
+//
+// Clean up all resource in this file before quit the appliation.
+//
 void cleanup()
 {
-    hxDebug(logger, "[%s]%s.", DAEMON_NAME, __FUNCTION__);
+    logDebug("[%s]%s.", DAEMON_NAME, __FUNCTION__);
 
-    if (m_pCmdHandlerInterface) {
-        delete m_pCmdHandlerInterface;
+    if (g_pCmdHandlerInterface) {
+        delete g_pCmdHandlerInterface;
     }
-    if (m_pCmsfsIrInterface)
+    if (g_pCmsfsIrInterface)
     {
-        delete m_pCmsfsIrInterface;
+        delete g_pCmsfsIrInterface;
     }
-    if (m_pIrUDPServer) {
-        delete m_pIrUDPServer;
+    if (g_dbusDispatcherPtr) {
+        delete g_dbusDispatcherPtr;
     }
-    if (m_pIrUDPServerHandler) {
-        delete m_pIrUDPServerHandler;
-    }
-    if (dbusDispatcherPtr) {
-        delete dbusDispatcherPtr;
-    }
-    if (dbusConnPtr) {
-        delete dbusConnPtr;
+    if (g_dbusConnPtr) {
+        delete g_dbusConnPtr;
     }
 }
 
-void coastDBus()
-{
-    hxDebug(logger, "[%s]%s.", DAEMON_NAME, __FUNCTION__);
-    dbusDispatcherPtr->enter();
-}
-
+//
+// New resource for DBus interface, but won't start the DBus Thread
+//
 void startDBusDispatcher()
 {
-    dbusDispatcherPtr = new DBus::BusDispatcher();
+    g_dbusDispatcherPtr = new DBus::BusDispatcher();
 
     DBus::_init_threading();
-    DBus::default_dispatcher = dbusDispatcherPtr;
+    DBus::default_dispatcher = g_dbusDispatcherPtr;
 
 #ifdef DBUS_SYSTEM_BUS
-    dbusConnPtr = new DBus::Connection(DBus::Connection::SystemBus());
+    g_dbusConnPtr = new DBus::Connection(DBus::Connection::SystemBus());
 #else
-    dbusConnPtr = new DBus::Connection(DBus::Connection::SessionBus());
+    g_dbusConnPtr = new DBus::Connection(DBus::Connection::SessionBus());
 #endif
-    // Request the dbus service.
-    ///dbusConnPtr->request_name(IR_SERVER_NAME);
+
+    g_pCmsfsIrInterface = new CmsfsIrInterface(*g_dbusConnPtr);
+    g_pCmdHandlerInterface = new CmdHandlerInterface(*g_dbusConnPtr);
 }
 
+//
+// Set flag to quit the DBus thread, if the DBus thread is already start.
+//
 void stopDBus()
 {
-    if (dbusDispatcherPtr)
+    if (g_dbusDispatcherPtr)
     {
-        dbusDispatcherPtr->leave();
+        g_dbusDispatcherPtr->leave();
     }
 }
 
-void getIrConfig(void)
-{
-    std::map<std::string,std::string> m_sconfig = m_pCmsfsIrInterface->getAll();
-
-    if (!m_sconfig.empty())
-    {
-        // Debug
-        std::cout << "Config From CMFS: " << std::endl;
-        for (auto const& x : m_sconfig)
-        {
-            std::cout << x.first  // string (key)
-                << ':' 
-                << x.second // string's value 
-                << std::endl ;
-        } 
-        std::cout << std::endl;
-        //end debug
-
-        // Set ir parameters
-        G_irCommandFIFO.timeCommandHoldoff = std::stoi(m_sconfig[IR_COMMAND_HOLD_OFF], nullptr, 0);
-        G_irCommandFIFO.timeRepeatHoldoff = std::stoi(m_sconfig[IR_REPEAT_HOLD_OFF], nullptr, 0);
-        //Setup my IP
-        //establishes a connection to ConfigManagerService
-        cmAPI* api = getCMApi();
-  
-        //NetworkCfg net instantiation gives access to network configuration sets/gets
-        NetworkCfg net(api);
-        std::string ipAddr = net.getIP();  // Currently eth0 link local. Should be br0/br1 once we get Jarvis support
-        int err = inet_pton(AF_INET, ipAddr.c_str(), G_veSet.myip);
-        if (err < 1) {
-            printf("Invalid IPv4 Address, set to default.");
-            G_veSet.myip[0] = 0;
-            G_veSet.myip[1] = 0;
-            G_veSet.myip[2] = 0;
-            G_veSet.myip[3] = 0;
-        }
-        else
-        {
-            strncpy(G_veSet.currentIP, ipAddr.c_str(), 32);
-        }
-    }
-    else
-    {
-        //empty config is not good
-        hxDebug(logger, "[%s] Config Not Found In CMSFS", DAEMON_NAME);
-        std::cerr << DAEMON_NAME << " Config Not Found In CMSFS." << std::endl;
-        exit(1);
-    }
-}
-
+//
+// Handle to dispatch "Ctrl + C"
+//
 void sighandler(int sig)
 {
-    hxDebug(logger, "[%s]%s.", DAEMON_NAME, __FUNCTION__);
+    logDebug("[%s]%s.", DAEMON_NAME, __FUNCTION__);
 
     stopDBus();
+    g_client.stop();
+    g_server.stop();
     exit(1);
-}
-
-void* irServiceThread(void *arg)
-{
-	VE_Settings_t *veSetLocal = (VE_Settings_t*)arg;
-    ///VideoEP_MainLoop(veSetLocal);
-    pthread_exit(NULL);
 }
 
 //
 // Process Start.
 //
-int main(int argc, char** argv)
+STATUS main(int argc, char** argv)
 {
-    pthread_t thread_ir_service;
-    pthread_attr_t attr_ir_service;
+    SingletonProcess singletonProcess;
+
+    /* Only one instance for this application */
+    if (singletonProcess.isSingleton() == false)
+    {
+        fprintf(stderr, "Another instance is already running.\n");
+        exit(1);
+   }
+
+    // Initial the start clock.
+    g_StartClock = clock();
 
     // Logger initialization.
-    logger = hxLogGetLogger(DAEMON_NAME);
-    hxLogSetLevel(logger, HXLOG_DEBUG);
+    g_logger = hxLogGetLogger("ir-daemon");
+    printf("g_logger - %p\n", g_logger);
+    hxLogSetLevel(g_logger, HXLOG_DEBUG);
+    hxInfo(g_logger, "IR-Daemon starts.");
 
+    static std::unique_ptr<HxLogCpp> _logger = make_unique<HxLogCpp>("ir-Daemon", true);
+    _logger->setLevel(HXLOG_DEBUG);
+    _logger->d << "IRMain connection DNE" << endl;
+    _logger->i << "IRMain connection DNE" << endl;
+    _logger->w << "MD5 set failed." << endl;
+    _logger->e << "MD5 set failed." << endl;
+    _logger->f << "IRMain connection DNE" << endl;
+
+//    return (0);
     // Signal Handlers
     signal(SIGTERM, sighandler);
     signal(SIGINT, sighandler);
@@ -217,69 +178,32 @@ int main(int argc, char** argv)
     // Create and start the DBus dispatcher
     startDBusDispatcher();
 
-    m_pCmsfsIrInterface = new CmsfsIrInterface(*dbusConnPtr);
+    // get the global settings.
+    g_irSetting.getIrConfig();
 
-    if (argc > 1)
-    {
-        strncpy(G_veSet.currentIP, argv[1], 32);
+    logDebug("The Local IP Address is : %d.%d.%d.%d",
+                        g_irSetting.m_myip[0],
+                        g_irSetting.m_myip[1],
+                        g_irSetting.m_myip[2],
+                        g_irSetting.m_myip[3]);
 
-        int err = inet_pton(AF_INET, G_veSet.currentIP, G_veSet.myip);
-        if (err < 1) {
-            printf("Invalid IPv4 Address, set to default.");
-            G_veSet.myip[0] = 0;
-            G_veSet.myip[1] = 0;
-            G_veSet.myip[2] = 0;
-            G_veSet.myip[3] = 0;
-            strncpy(G_veSet.currentIP, "0.0.0.0", 32);
-        }
-    }
-    else
-    {
-        //Retrieve all serial service config from cmsfs
-        getIrConfig();
-    }
+    logDebug("Processing...");
 
-    printf("The Local IP Address is : %d.%d.%d.%d\n",
-                        G_veSet.myip[0],
-                        G_veSet.myip[1],
-                        G_veSet.myip[2],
-                        G_veSet.myip[3]);
+    /* Start the thread of client */
+    g_client.start(g_irSetting.m_passThroughFlag, g_irSetting.m_irPassThroughPeerIP);
 
-
-    SVSI_SYSLOG("[%s] startup", DAEMON_NAME);
-    // Initial the start clock.
-    gStartClock = clock();
-
-    hxDebug(logger, "[%s] Processing...", DAEMON_NAME);
-
-    // Create an interface to the CmdHandlerInterface.
-    m_pCmdHandlerInterface = new CmdHandlerInterface(*dbusConnPtr);
-
-    m_pIrUDPServerHandler = new IrUDPServerHandler;
-    m_pIrUDPServer = new UDPServer;
-
-    int ret =  m_pIrUDPServer->create((unsigned short)VOLANTE_PORT_IR, IPAddress(G_veSet.currentIP), 0, DAEMON_NAME, m_pIrUDPServerHandler);
-    if(ret != 0)
-    {
-        hxDebug(logger, "UDP Server Create failed!\n");
-        exit(1);
-    }
-
-    //pthread_attr_init(&attr_ir_service);
-    //pthread_attr_setdetachstate(&attr_ir_service, PTHREAD_CREATE_DETACHED);
-//
-    //int rc = pthread_create(&thread_ir_service, &attr_ir_service,
-    //            irServiceThread,
-    //            (void *)&G_veSet);
+    /* start the thread of server */
+    g_server.start(g_irSetting.m_passThroughFlag, g_irSetting.m_irPassThroughPeerIP);
 
     // Setting readytorun flag to start handling datachanged signals
-    m_pCmsfsIrInterface->SetReadyRun(true);
+    g_pCmsfsIrInterface->SetReadyRun(true);
 
-    coastDBus();
+    g_dbusDispatcherPtr->enter();
+
     // Finished running...
     cleanup();
 
-    hxDebug(logger, "[%s] exited.", DAEMON_NAME);
+    logDebug("Daemon exited.");
 
-    exit(EX_OK);
+    exit(STATUS_OK);
 }

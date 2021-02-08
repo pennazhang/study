@@ -37,10 +37,13 @@
 #include <dbus-c++-1/dbus-c++/dbus.h>
 #include "CmsfsIrProxy-glue.h"
 #include "CmsfsUtils.h"
+#include "typedef.h"
 
 #define     IR_COMMAND_HOLD_OFF                 "irCommandHoldoff"
 #define     IR_REPEAT_HOLD_OFF                  "irRepeatHoldoff"
 #define     EXECUTE_IR_COMMAND                  "ExecuteIRCommand"
+#define     IR_ENABLE_PASSTHROUGH                  "irEnablePassThrough"
+#define     IR_PASSTHROUGH_PEER_IP                 "irPassThroughPeerIP"
 
 
 /**
@@ -79,5 +82,9 @@ private:
 
     void CommandHoldOff(std::string para);
     void RepeatHoldOff(std::string para);
-    void ExecuteIRCommand(std::string para);
+    STATUS ExecuteIRCommand(std::string para);
+    void EnablePassThrough(std::string para);
+    void setPeerIPAddress(std::string para);
 };
+
+extern CmsfsIrInterface* g_pCmsfsIrInterface;

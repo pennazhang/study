@@ -41,5 +41,5 @@ clean:
 	$(RM) *.o *.exe *.bak *.pre echo-client echo-server echo-client-mt echo-client-glue.h ef-echo-server-glue.h
 
 header:
-	dbusxx-xml2cpp echo-introspect.xml --proxy=echo-client-glue.h --adaptor=ef-echo-server-glue.h --adaptor=echo-server-glue.h
-	dbusxx-xml2cpp echo-introspect.xml --adaptor=ef-echo-server-glue.h
+	dbusxx-xml2cpp echo-introspect.xml --proxy=echo-client-glue.h --adaptor=echo-server-glue.h
+	dbusxx-xml2cpp echo-introspect.xml --proxy=ef-echo-client-glue.h --adaptor=ef-echo-server-glue.h

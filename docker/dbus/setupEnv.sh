@@ -21,6 +21,6 @@ echo PROJ_DIR=$PROJ_DIR
 cd $MYDIR
 sudo apt update
 #sudo bash -e "$MYDIR/setupEnv_root.sh" "$1"
-sudo apt-get install -y libdbus-c++-dev
+sudo apt-get install -y libdbus-c++-dev libjsoncpp-dev
 
 echo "setupEnv.sh is called successfully!"

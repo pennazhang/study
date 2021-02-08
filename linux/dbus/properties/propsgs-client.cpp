@@ -5,6 +5,7 @@
 #include <unistd.h>
 
 using namespace org::freedesktop::DBus;
+using namespace std;
 
 static const char *PROPS_SERVER_NAME = "org.freedesktop.DBus.Examples.Properties";
 static const char *PROPS_SERVER_PATH = "/org/freedesktop/DBus/Examples/Properties";
@@ -39,6 +40,8 @@ void *test_property_proxy(void * input)
 
 	std::cout << "changing Data" << "\n";
 	client->Data(1.1);
+
+	std::cout << "Message = " << client->Message() << endl;
 	
 	std::cout << "End of proxy_test\n";
 

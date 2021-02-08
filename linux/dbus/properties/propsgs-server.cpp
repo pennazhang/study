@@ -3,6 +3,8 @@
 #include <signal.h>
 #include <unistd.h>
 
+using namespace std;
+
 static const char *PROPS_SERVER_NAME = "org.freedesktop.DBus.Examples.Properties";
 static const char *PROPS_SERVER_PATH = "/org/freedesktop/DBus/Examples/Properties";
 
@@ -17,9 +19,11 @@ void PropsServer::on_set_property
 	(DBus::InterfaceAdaptor &interface, const std::string &property, const DBus::Variant &value)
 {
 	std::cout << "on_set_property called here, property = " << property << std::endl;
-	sleep(10);
+//	return;
+	
 	if (property == "Message")
 	{
+#if 0		
 		std::cout << "'Message' has been changed\n";
 
 		std::string msg = value;
@@ -27,13 +31,18 @@ void PropsServer::on_set_property
 		this->MessageChanged(msg);
 		std::cout << "call MessageChanged end...\n";
 		sleep(5);
+#endif
+		std::string msg = value;
+		cout << "value = " << msg << endl;
 	}
 	if (property == "Data")
 	{
-		std::cout << "'Data' has been changed\n";
+//		std::cout << "'Data' has been changed\n";
 
+//		string data = value;
 		double data = value;
-		this->DataChanged(data);
+		cout << "value = " << data << endl;
+//		this->DataChanged(data);
 	}
 }
 

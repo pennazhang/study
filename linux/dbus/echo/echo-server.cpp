@@ -8,12 +8,15 @@
 #include <signal.h>
 #include <stdio.h>
 #include <limits.h>
+#include <iostream>
+
+using namespace std;
 
 static const char *ECHO_SERVER_NAME = "org.freedesktop.DBus.Examples.Echo";
 static const char *ECHO_SERVER_PATH = "/org/freedesktop/DBus/Examples/Echo";
 
-EchoServer::EchoServer(DBus::Connection &connection)
-: DBus::ObjectAdaptor(connection, ECHO_SERVER_PATH)
+EchoServer::EchoServer(DBus::Connection &connection, const char *ObjectPath)
+: DBus::ObjectAdaptor(connection, ObjectPath)
 {
 }
 
@@ -89,7 +92,12 @@ int main()
 	DBus::Connection conn = DBus::Connection::SessionBus();
 	conn.request_name(ECHO_SERVER_NAME);
 
-	EchoServer server(conn);
+	ostringstream os;
+	os << ECHO_SERVER_PATH << "/" << getpid();
+	string objectPath = os.str();
+
+	printf("Obejct Path = %s\n", objectPath.c_str());
+	EchoServer server(conn, objectPath.c_str());
 
 	dispatcher.enter();
 
