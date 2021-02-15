@@ -110,6 +110,13 @@ void Serializer::loadFromVector(std::vector<unsigned char> & buffer)
 //    m_stringStream.seekp(0, std::ios::beg);
     m_stringStream.write((char *)buffer.data(), buffer.size());
 }
+
+void Serializer::loadFromBuffer(UINT8 *pData, int size)
+{
+//    m_stringStream.seekp(0, std::ios::beg);
+    m_stringStream.write((char *)pData, size);
+}
+
 #if 0
 Serializer & operator << (Serializer & ar, int value)
 {

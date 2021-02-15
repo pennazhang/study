@@ -95,5 +95,16 @@ int main()
 	assert(stud2 == student2);
 	assert(stud3 == student3);
 
+	Student liMing(3, "Liming", "00998877"), someBody;
+	int bufferLen;
+
+//	for (int i = 0; i < 10000000; i++)
+	{
+		UINT8 *pData = liMing.serializeToBuffer(bufferLen);
+		someBody.serializeFromBuffer(pData, bufferLen);
+		dumpHex(pData, bufferLen, 1);
+		assert(liMing == someBody);
+		delete pData;
+	}
 	return 0;
 }

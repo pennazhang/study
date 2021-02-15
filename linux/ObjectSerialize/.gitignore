@@ -7,6 +7,6 @@
 #
 
 *.o
-hello
+test
 hello.exe
 *.dll
