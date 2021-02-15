@@ -4,9 +4,6 @@
 #include <string.h>
 #include <string>
 #include "student.h"
-#include "utility.h"
-
-using namespace std;
 
 bool Student::operator==(const Student &obj)
 {
@@ -43,22 +40,3 @@ Serializer& operator>>(Serializer& in, Student& value) {  return value.operator>
 Serializer& operator<<(Serializer& out, Point& value) {  return value.operator<<(out); }
 Serializer& operator>>(Serializer& in, Point& value) {  return value.operator>>(in); }
 
-UINT8 *Student::serializeToBuffer(int &len)
-{
-  	Serializer out;
-    this->operator<<(out);
-    std::vector<UINT8> buffer;
-	out.saveToVector(buffer);
-
-    len = buffer.size();
-    UINT8 *pData = new UINT8[len];
-    memcpy(pData, buffer.data(), len);
-    return (pData);
-}
-
-void Student::serializeFromBuffer(UINT8 * pucData, int len)
-{  	
-    Serializer in;
-    in.loadFromBuffer(pucData, len);
-    this->operator>>(in);
-}

@@ -29,6 +29,7 @@ public:
 //    Serializer& operator << (int value);
     void saveToVector(std::vector<unsigned char> & buffer);
     void loadFromVector(std::vector<unsigned char> & buffer);
+    void loadFromBuffer(UINT8* pData, int bufferLen);
 
     friend Serializer& operator<<(Serializer& out, UINT8 value)    { out.m_stringStream.write((char *)&value, sizeof(value));  return out; }
     friend Serializer& operator>>(Serializer& in, UINT8& value)   { in.m_stringStream.read((char *)&value, sizeof(value));  return in; }
@@ -81,3 +82,11 @@ public:
 //Serializer & operator >> (Serializer & ar, int &value);
 
 
+class Serializable
+{
+public:
+    virtual Serializer& operator<<(Serializer& out) = 0;
+    virtual Serializer& operator>>(Serializer& in) = 0;
+    UINT8 *serializeToBuffer(int &len);
+    void serializeFromBuffer(UINT8 * pucData, int len);
+};

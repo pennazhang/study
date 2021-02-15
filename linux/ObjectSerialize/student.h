@@ -5,7 +5,7 @@
 #include <iostream>
 #include "serializer.h"
 
-class Student
+class Student : public Serializable
 {
 public:
     std::string m_name;
@@ -14,9 +14,6 @@ public:
     Student(int id = 0, std::string name = "", std::string phone = "") : m_id(id), m_name(name), m_phoneNumber(phone) { };
 //    Student(const Student & obj);
     bool operator==(const Student & obj);
-
-    UINT8 *serializeToBuffer(int &len);
-    void serializeFromBuffer(UINT8 * pucData, int len);
     
     Serializer& operator<<(Serializer& out); 
     Serializer& operator>>(Serializer& in);

@@ -178,3 +178,23 @@ Serializer& operator>>(Serializer& in, float& value)
     operator>>(in, value1);
     return (in);
 }
+
+UINT8 *Serializable::serializeToBuffer(int &len)
+{
+  	Serializer out;
+    this->operator<<(out);
+    std::vector<UINT8> buffer;
+	out.saveToVector(buffer);
+
+    len = buffer.size();
+    UINT8 *pData = new UINT8[len];
+    memcpy(pData, buffer.data(), len);
+    return (pData);
+}
+
+void Serializable::serializeFromBuffer(UINT8 * pucData, int len)
+{  	
+    Serializer in;
+    in.loadFromBuffer(pucData, len);
+    this->operator>>(in);
+}
