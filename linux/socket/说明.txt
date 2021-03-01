@@ -1,0 +1,30 @@
+1. dc-daemon是一个完成度较高的Linux socket编程的代码，仅仅使用了c++，未使用QT。
+2. dc-daemon采用的是非阻塞编程，包括TCP Server / SSL Server / UDP socke. 因为采用的是非阻塞，所有所有的网络操作都可以在一个线程NetworkThread中完成。该线程将所有的socket上的信息以消息的格式发送给ModuleThread来进行处理。
+3. 编译：我们必须采用DBUS的docker image来进行编译。
+	cd ~/workspace/study/docker/dbus
+	./startDockerImage.sh 
+	cd ~/workspace/study/linux/socket/dc-daemon
+	mkdir build
+	cd build
+	cmake ..
+	make
+	
+4. 运行： 
+	由于包含了SSL的代码，因此我们必须以root来运行:
+	cd /home/pzhang/workspace/study/linux/dc-daemon/build
+	cp ../mycert.pem .
+	sudo ./dc-daemon
+
+5. 测试：
+	在这个程序中，我们使用了如下端口：
+	TCP Server listen at: 5023
+	SSL Server listen at: 5024
+	UDP Server bing port 5023
+	因此我们可以使用Packet Send来进行发包测试。 Packet Senderd的下载地址： https://packetsender.com/download
+
+6. 如果要进行内存泄露测试，我们可以使用下面的命令：
+	su root
+	valgrind --leak-check=full --show-reachable=yes --trace-children=yes   ./dc-daemon
+	按下Ctrl + c退出。
+
+	
