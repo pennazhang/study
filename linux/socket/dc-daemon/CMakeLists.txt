@@ -10,7 +10,7 @@ if(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
     message("DBUS Configuration: SYSTEM")
 else()
     message("DBUS Configuration: SESSION")
-    include_directories(/usr/include/jsoncpp)
+    include_directories(/usr/include/jsoncpp /usr/include/dbus-c++-1)
 endif()
 
 #if (NOT ${SKIP_UNIT_TEST} STREQUAL "ON")
