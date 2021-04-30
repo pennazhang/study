@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<node name="/com/harman/jetstream">
+  <!-- getall missing from bindings-->
+  <interface name="com.harman.jetstream.commonInterface">
+
+    <method name="get">
+      <arg name="keyList" 		type="as" 	direction="in" />
+      <arg name="jsonResult" 	type="s" 		direction="out"/>
+    </method>
+
+	<method name="set">
+      <arg name="jsonPair" 	  type="s" 		direction="in"/>
+      <arg name="jsonResult" 	type="s" 		direction="out"/>
+    </method>
+
+	<method name="daemonControl">
+      <arg name="cmd" 			  type="s" 	  direction="in" />
+      <arg name="jsonParam" 	type="s" 		direction="in"/>
+      <arg name="jsonResult" 	type="s" 		direction="out"/>
+    </method>
+
+  </interface>
+</node>

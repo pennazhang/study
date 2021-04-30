@@ -1,0 +1,17 @@
+#
+# NOTE! Don't add files that are generated in specific
+# subdirectories here. Add them in the ".gitignore" file
+# in that subdirectory instead.
+#
+# Normal rules
+#
+
+*.o
+build/
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+ir-daemon
+src/dbus/CmdHandlerManagerProxy-glue.h
+src/dbus/CmsfsIrProxy-glue.h
