@@ -43,7 +43,6 @@
 #include <algorithm> // std::find
 #include <vector>    // std::vector
 #include "udpSocketThread.h"
-#include "dcUtility.h"
 
 using namespace std;
 
@@ -123,8 +122,6 @@ void *UDPSocketThread::run()
 //                        unsigned char discoverCmd = (DCSettings::IamTx() == true) ? 20 : 25;
 //                        if (opcode == discoverCmd)
                         {
-                            DCSettings::getStatus(outputBuffer);
-
                             // In a large network, there may be many decoders/encoders all trying
                             // to respond at the same time.  To avoid a suddenly large number of
                             // colliding broadcast messages, we're going to delay some random time.
@@ -155,17 +152,21 @@ void *UDPSocketThread::run()
                         std::string outputInfo;
                     
                         // Dispatch Direct Control Command.
-                        int status = m_protocol.dispatchCommand(byteArray, outputInfo);
+                    // dispatch the command in the protocol class.
+                        int result = 0;
+                        STATUS status = m_protocol.dispatchCommand(byteArray, result, outputInfo);
 
-                        // Send back the result.
+                        std::string outputString;
                         if (status == STATUS_OK)
                         {
-                            m_udpSocket->sendTo(*peerIP, std::string("Execute command ok!\r\n") + outputInfo + std::string("\r\n"));
+                            outputString = outputInfo + std::string("\r\n  retult = ") + std::to_string(result) + "\r\n";
                         }
                         else
                         {
-                            m_udpSocket->sendTo(*peerIP, std::string("Execute command failed!\r\n") + outputInfo + std::string("\r\n"));
+                            outputString = outputInfo + std::string("\r\nExecute command failed!\r\n");
                         }
+
+                        m_udpSocket->sendTo(*peerIP, outputString);
                     }
                     else
                     {

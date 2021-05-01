@@ -63,6 +63,7 @@ public:
 
         try
         {
+            logDebug("set: %s", jsonPair.c_str());
             wi << jsonPair;
             call.member("set");
             ::DBus::Message ret = invoke_method (call);
@@ -70,6 +71,7 @@ public:
 
             std::string argout;
             ri >> argout;
+            logDebug("set response: %s", argout.c_str());
             return argout;
         }
         catch (std::exception &e)

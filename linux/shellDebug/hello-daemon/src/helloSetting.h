@@ -40,41 +40,8 @@
 #include "utility.h"
 
 
+int add(const std::string& cmdArg, std::string& outputInfo);
 
-int setIRCommandID(const std::string& cmdArg, std::string& outputInfo);
+int onSetDelayTime(const std::string &cmdArg, std::string &outputInfo);
 
-int setIRCommands(const std::string& cmdArg, std::string& outputInfo);
-
-// cmdArg = "25"
-int setRepeatHoldOff(const std::string& cmdArg, std::string& outputInfo);
-
-// cmdArg = "25"
-int setCommandHoldOff(const std::string& cmdArg, std::string& outputInfo);
-
-// cmdArg = "0000 006a 0013 0013 0141 00a1 0014 0014 0014 0014 0014 0015 0014 0015 0014 003d 0014 003d 0014 003d 0014 003c 0014 00a1 0014 0014 0014 0014 0014 0014 0014 0014 0014 0014 0014 0015 0014 003d 0014 0014 0014 03ae 0141 00a1 0014 0014 0014 0014 0014 0014 0014 0015 0014 003d 0014 003d 0014 003d 0014 003c 0014 00a1 0014 0014 0014 0014 0014 0014 0014 0014 0014 0014 0014 0015 0014 003d 0014 0014 0014 03b8";
-int sendIRRaw(const std::string& cmdArg, std::string& outputInfo);
-
-// cmdArg = "toshibaPowerOn"
-int sendIR(const std::string& cmdArg, std::string& outputInfo);
-
-// cmdArg = ""
-int testIR(const std::string& cmdArg, std::string& outputInfo);
-
-// cmdArg = "0000 006a 0013 0013 0141 00a1 0014 0014 0014 0014 0014 0015 0014 0015 0014 003d 0014 003d 0014 003d 0014 003c 0014 00a1 0014 0014 0014 0014 0014 0014 0014 0014 0014 0014 0014 0015 0014 003d 0014 0014 0014 03ae 0141 00a1 0014 0014 0014 0014 0014 0014 0014 0015 0014 003d 0014 003d 0014 003d 0014 003c 0014 00a1 0014 0014 0014 0014 0014 0014 0014 0014 0014 0014 0014 0015 0014 003d 0014 0014 0014 03b8";
-// repeat the ProntoCode in cmdArg until stopIR is called or timeout (timeout = 5seconds).
-int repeatIR(const std::string& cmdArg, std::string& outputInfo);
-
-// cmdArg = "", just set g_irSetting.m_repeatFlag to FALSE.
-int stopIR(const std::string& cmdArg, std::string& outputInfo);
-
-//- set time for an IR to hold off between commands in ms
-int setIRCmdTime(const std::string& cmdArg, std::string& outputInfo);
-
-//- set time for an IR to hold off between command and repeat.
-int setIRRepeatTime(const std::string& cmdArg, std::string& outputInfo);
-
-// cmdArg = "0" or "1"
-int enablePassThrough(const std::string& cmdArg, std::string& outputInfo);
-
-// cmdArg = "192.168.1.110"
-int setPeerIPAddress(const std::string& cmdArg, std::string& outputInfo);
+int onSetMuteFlag(const std::string &cmdArg, std::string &outputInfo);

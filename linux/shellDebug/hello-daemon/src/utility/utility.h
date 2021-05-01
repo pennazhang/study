@@ -120,6 +120,8 @@ std::string rtrim(const std::string& s, const char* blank = " \t\n\r\f\v");
 // trim from both ends (in place)
 std::string trim(const std::string& s, const char* blank = " \t\n\r\f\v");
 
+std::vector<std::string> split(const std::string &s, char delim);
+
 bool getNameByPid(pid_t pid, char task_name[128]);
 
 void dumpDecimal(UINT8 *data, int totalSizeInByte, int unitSizeInByte, int unitCountPerLine = 100);

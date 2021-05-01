@@ -48,32 +48,32 @@ extern clock_t g_StartClock;
 
 #define SVSI_SYSLOG(format, ...) { \
     uint32_t clock_elapse = ((float)(clock() - g_StartClock + 1) / 1000); \
-    printf("[%s]:[time elapse: %ds]:%s " format, DAEMON_NAME, clock_elapse, __PRETTY_FUNCTION__, ## __VA_ARGS__); \
+    printf("[%s]:[time elapse: %ds]:%s " format "\n", DAEMON_NAME, clock_elapse, __PRETTY_FUNCTION__, ## __VA_ARGS__); \
 }
 
 #define logFatal(format, ...) { \
     uint32_t clock_elapse = ((float)(clock() - g_StartClock + 1) / 1000); \
-    printf("[%s]:[time elapse: %ds]:%s [Fatal Error] " format, DAEMON_NAME, clock_elapse, __PRETTY_FUNCTION__, ## __VA_ARGS__); \
+    printf("[%s]:[time elapse: %ds]:%s [Fatal Error] " format "\n", DAEMON_NAME, clock_elapse, __PRETTY_FUNCTION__, ## __VA_ARGS__); \
 }
 
 #define logError(format, ...) { \
     uint32_t clock_elapse = ((float)(clock() - g_StartClock + 1) / 1000); \
-    printf("[%s]:[time elapse: %ds]:%s [Error] " format, DAEMON_NAME, clock_elapse, __PRETTY_FUNCTION__, ## __VA_ARGS__); \
+    printf("[%s]:[time elapse: %ds]:%s [Error] " format "\n", DAEMON_NAME, clock_elapse, __PRETTY_FUNCTION__, ## __VA_ARGS__); \
 }
 
 #define logWarning(format, ...) { \
     uint32_t clock_elapse = ((float)(clock() - g_StartClock + 1) / 1000); \
-    printf("[%s]:[time elapse: %ds]:%s [Warning] " format, DAEMON_NAME, clock_elapse, __PRETTY_FUNCTION__, ## __VA_ARGS__); \
+    printf("[%s]:[time elapse: %ds]:%s [Warning] " format "\n", DAEMON_NAME, clock_elapse, __PRETTY_FUNCTION__, ## __VA_ARGS__); \
 }
 
 #define logInfo(format, ...) { \
     uint32_t clock_elapse = ((float)(clock() - g_StartClock + 1) / 1000); \
-    printf("[%s]:[time elapse: %ds]:%s [Info] " format, DAEMON_NAME, clock_elapse, __PRETTY_FUNCTION__, ## __VA_ARGS__); \
+    printf("[%s]:[time elapse: %ds]:%s [Info] " format "\n", DAEMON_NAME, clock_elapse, __PRETTY_FUNCTION__, ## __VA_ARGS__); \
 }
 
 #define logDebug(format, ...) { \
     uint32_t clock_elapse = ((float)(clock() - g_StartClock + 1) / 1000); \
-    printf("[%s]:[time elapse: %ds]:%s [Debug] " format, DAEMON_NAME, clock_elapse, __PRETTY_FUNCTION__, ## __VA_ARGS__); \
+    printf("[%s]:[time elapse: %ds]:%s [Debug] " format "\n", DAEMON_NAME, clock_elapse, __PRETTY_FUNCTION__, ## __VA_ARGS__); \
 }
 
 #define ASSERT assert

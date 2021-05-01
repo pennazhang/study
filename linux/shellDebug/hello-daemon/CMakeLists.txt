@@ -20,7 +20,7 @@ include_directories(${CONFIGMANAGER_INCLUDES}
                     src/server
                     src/common
                     )
-set(EXECUTABLE_BIN  ir-daemon)
+set(EXECUTABLE_BIN  hello-daemon)
 
 add_executable(${EXECUTABLE_BIN} ${FILES_SOURCES} )
 

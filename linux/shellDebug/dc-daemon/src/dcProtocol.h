@@ -63,7 +63,7 @@ public:
     BOOL getNextCommand(ByteArray& byteArray);
 
     // dispatch a command read from protocol buffer.
-    int dispatchCommand(ByteArray& byteArray, std::string& outputInfo);
+    int dispatchCommand(ByteArray& byteArray, int& result, std::string& outputInfo);
 
     // to judge the start character of a direct control command.
     bool isValidStartChar(char c);
@@ -78,14 +78,15 @@ public:
     //- argument: None
     int help(char *argument, std::string& outputInfo);
 
-    //- argument: None
-    int getStatus(char *argument, std::string& outputInfo);
-
     //- Update firmware. 
     int updateUnit(char *parameter, std::string &outputInfo);
 
-    int setSettings(char *argument, std::string& outputInfo);
+    int setParam(char *argument, std::string& outputInfo);
+
+    int getParam(char *argument, std::string& outputInfo);
     
+    void setHelp(char *argument, std::string& outputInfo);
+
 protected:
     // used to store all commands.
     UINT8 m_protocolBuffer[BUFFER_SIZE];

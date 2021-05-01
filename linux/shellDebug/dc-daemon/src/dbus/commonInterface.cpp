@@ -41,10 +41,10 @@
 
 using namespace std;
 
-CommonInterface *g_irCommonInterface = NULL;
-CommonInterface *g_avCommonInterface = NULL;
-CommonInterface *g_serialCommonInterface = NULL;
-CommonInterface *g_kvmCommonInterface = NULL;
+CommonInterface *g_helloCommonInterface = NULL;
+//CommonInterface *g_avCommonInterface = NULL;
+//CommonInterface *g_serialCommonInterface = NULL;
+//CommonInterface *g_kvmCommonInterface = NULL;
 
 CommonInterface::CommonInterface(DBus::Connection &connection, const char *objectPath, const char *busName)
 : DBus::ObjectProxy(connection, objectPath, busName)

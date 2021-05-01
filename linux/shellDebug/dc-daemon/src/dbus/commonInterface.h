@@ -50,7 +50,7 @@ public:
     CommonInterface(DBus::Connection &connection, const char *objectPath, const char *busName);
 };
 
-extern CommonInterface *g_irCommonInterface;
-extern CommonInterface *g_avCommonInterface;
-extern CommonInterface *g_serialCommonInterface;
-extern CommonInterface *g_kvmCommonInterface;
+extern CommonInterface *g_helloCommonInterface;
+//extern CommonInterface *g_avCommonInterface;
+//extern CommonInterface *g_serialCommonInterface;
+//extern CommonInterface *g_kvmCommonInterface;

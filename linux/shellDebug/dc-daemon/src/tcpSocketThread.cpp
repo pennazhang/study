@@ -131,24 +131,27 @@ void *TCPSocketThread::run()
                     std::string outputInfo;
 
                     // dispatch the command in the protocol class.
-                    int status = m_protocol.dispatchCommand(byteArray, outputInfo);
-                    std::string output;
+                    int result = 0;
+                    STATUS status = m_protocol.dispatchCommand(byteArray, result, outputInfo);
+
+                    std::string outputString;
                     if (status == STATUS_OK)
                     {
-                        output = std::string("Execute command ok!\r\n") + outputInfo + std::string("\r\n");
+                        outputString = outputInfo + std::string("\r\n  retult = ") + std::to_string(result) + "\r\n";
                     }
                     else
                     {
-                        output = std::string("Execute command failed!\r\n") + outputInfo + std::string("\r\n");
+                        outputString = outputInfo + std::string("\r\nExecute command failed!\r\n");
                     }
-                    m_tcpSocket->send(output);
-//                    logInfo("Send TCP Message : %s", output.c_str());
+                    m_tcpSocket->send(outputString);
                 }
                 else
                 {
                     break;
                 }
             }
+
+            m_tcpSocket->send("\r\n -> ");
         }
     }
 

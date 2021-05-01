@@ -9,7 +9,6 @@ include_directories(/usr/include/jsoncpp /usr/include/dbus-c++-1)
 set(FILES_SOURCES   src/main.cpp
                     src/dbus/commonInterface.cpp
                     src/utility/utility.cpp
-                    src/utility/dcUtility.cpp
 					src/utility/thread.cpp
 					src/network/socket.cpp
 					src/network/tcpServer.cpp

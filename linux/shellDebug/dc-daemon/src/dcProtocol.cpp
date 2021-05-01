@@ -42,7 +42,6 @@
 #include "byteArray.h"
 #include "dcProtocol.h"
 #include "dcDaemonServer.h"
-#include "dcUtility.h"
 
 using namespace std;
 
@@ -200,8 +199,10 @@ struct CommandEntry
 };
 
 // - According to: https://confluence.harman.com/confluence/display/HPROVC/%5BREF%5D+NetLinx+and+Direct+Control+Command+Comparison
-CommandEntry s_commandList[] = {
+CommandEntry s_commandList[] = 
+{
 
+#if 0
     /* The following command is just for IR Daemon */
     {"sendir", NULL, &g_irCommonInterface, NULL, "sendir > Send IR command (example: sendir:toshibaPowerOn\n\r"},
     {"sendirraw", NULL, &g_irCommonInterface, NULL, " sendirraw > Send IR command (example: sendirraw:0000 12E4 ...)\n\r"},
@@ -244,71 +245,12 @@ CommandEntry s_commandList[] = {
     {"forceRestartHDMI", NULL, &g_avCommonInterface, NULL, "forceRestartHDMI > Restarts the HDMI interface.\n\r"},
 
     {"serSet", NULL, &g_serialCommonInterface, NULL, "serSet > set serial port serSet:baudrate,databits,parity,stop\n\r"},
-    {"dviOff", NULL, NULL, NULL, "dviOff > turns off output DVI \n\r"},
-    {"dviOn", NULL, NULL, NULL, "dviOn > turns on output DVI \n\r"},
-    {"veron", NULL, NULL, NULL, "veron > verbose mode on\n\r"},
-    {"veroff", NULL, NULL, NULL, "veroff > verbose mode off\n\r"},
-    {"rxdisable", NULL, NULL, NULL, "rxdisable > disable RX\n\r"},
-    {"rxenable", NULL, NULL, NULL, "rxenable > enable RX\n\r"},
-    {"setSettings", &DCProtocol::setSettings, NULL, NULL, "\n\r"},
-    {"local", NULL, NULL, NULL, "local > start local play list 0-7. local:4\n\r"},
-    {"convertimg", NULL, NULL, NULL, "convertimg > covert an image file to proper format convertimg:file.jpg\n\r"},
-    {"deleteimg", NULL, NULL, NULL, "deleteimg > delete an image file from unit deleteimg:filename\n\r"},
-    {"processlplist", NULL, NULL, NULL, "processlplist > process a lp list uploaded to unit processlplist:filename\n\r"},
-    {"processlpaudiolist", NULL, NULL, NULL, "processlpaudiolist > process a lp audio list uploaded to unit processlpaudiolist:filename\n\r"},
-    {"setjpegoptions", NULL, NULL, NULL, "setjpegoptions > set JPEG covert options setjpegoptions:targetWidth,targetHeight,maintainAspectFlag,fillColorRed,fillColorGreen,fillColorBlue\n\r"},
-    {"fetchLPlist", NULL, NULL, NULL, "fetchLPlist > fetch and process a lp list fetchLPlist:filename\n\r"},
-    {"fetchLPimages", NULL, NULL, NULL, "fetchLPimages > fetch a list of images to download to DB fetchLPimages:filename\n\r"},
-    {"fetchLPAudio", NULL, NULL, NULL, "fetchLPAudio > fetch an audio file fetchLPAudio:filename\n\r"},
-    {"resetData", NULL, NULL, NULL, "resetData > Reset data object groups\r"},
-    {"idOn", NULL, NULL, NULL, "idOn > Turn on ID mode for a short period of time\r"},
-    {"setbrightness", NULL, NULL, NULL, "setbrightness > set RGB brightness setbrightness:red,green,blue\n\r"},
-    {"deleteaudio", NULL, NULL, NULL, "deleteaudio > delete an audio file from unit deleteaudio:filename\n\r"},
-    {"fetchLPAudiolist", NULL, NULL, NULL, "fetchLPAudiolist > fetch and process an audio list fetchLPAudioListCommand:filename\n\r"},
-    {"ndreset", NULL, NULL, NULL, "ndreset > Network diagnostics reset\n\r"},
-    {"getNetStatus", NULL, NULL, NULL, "getNetStatus > Network diagnostics output\n\r"},
-    {"cmdhistreset", NULL, NULL, NULL, "cmdhistreset > Reset the command history\n\r"},
-    {"resetport", NULL, NULL, NULL, "resetport:<type>,<port number> > Reset a port of type TCP or ALL\n\r"},
-    {"sendser", NULL, NULL, NULL, "sendser > Send serial command (example: sendser:PowerOn\n\r"},
-    {"showinfo", NULL, NULL, NULL, "showinfo:<on|off> > Show the info page\n\r"},
-    {"showinfomsg", NULL, NULL, NULL, "showinfomsg:<msg number> > Show the info page's message by number\n\r"},
-    {"kvmfetch", NULL, NULL, NULL, "kvmfetch:<url> > Fetch the KVM show info page .png from the given url\n\r"},
-    {"kvmimport", NULL, NULL, NULL, "kvmimport:<urlOrFile> > Import a KVM csv configuration file from the given url or file\n\r"},
-    {"kvmgenimg", NULL, NULL, NULL, "kvmgenimg > Regenerate the standard KVM image as designed by the webpage\n\r"},
-    {"encryptPassword", NULL, NULL, NULL, "encryptPassword:<password> > Sets the encryption password when encryption is on\n\r"},
-    {"resetkvmconfig", NULL, NULL, NULL, "kvmresetconfig > Resets KVM functionality to factory state\n\r"},
-    {"encryptedStream", NULL, NULL, NULL, "encryptedStream:<on/off> > Enables encrypting of the video stream\n\r"},
-    {"forceHTTPS", NULL, NULL, NULL, "forceHTTPS:<on/off> > Force to require HTTPS on web pages\n\r"},
-    {"settingslock", NULL, NULL, NULL, "settingslock:<on/off> > Enables locking of settings from being changed.\n\r"},
-    {"forceRestartDVI", NULL, NULL, NULL, "forceRestartDVI > Restarts the DVI interface.\n\r"},
-    {"KVMMasterIP", NULL, NULL, NULL, "KVMMasterIP > Connects KVM to given IP address\n\r"},
-    {"testusb", NULL, NULL, NULL, "testusb > Test the existence of the usb loopback on ports.  Returns 0, 1, or 2\n\r"},
-    {"readsyslog", NULL, NULL, NULL, "readsyslog > Read enable syslog.\n\r"},
-    {"resetsyslog", NULL, NULL, NULL, "resetsyslog > Reset syslog.\n\r"},
-    {"lpnext", NULL, NULL, NULL, "lpnext > Immediately cycle to the next local/host play image.\n\r"},
-    {"debugLog", NULL, NULL, NULL, "debugLog > Prepare a debug log package.\n\r"},
-    {"analogTableChanged", NULL, NULL, NULL, "analogTableChanged > The analog mode table has changed.  Reload and restart DVI.\n\r"},
-    {"switchStatsUpdate", NULL, NULL, NULL, "switchStatsUpdate > Request an update of the switch stats\n\r"},
-    {"switchStatsReset", NULL, NULL, NULL, "switchStatsReset > Request a reset of the switch stats\n\r"},
-    {"abortimgconvert", NULL, NULL, NULL, "abortimgconvert > Abort any active image conversions\n\r"},
-    {"eventsChanged", NULL, NULL, NULL, "eventsChanged > N-Act events file has changed, reload settings\n\r"},
-    {"regsdump", NULL, NULL, NULL, "eventsChanged > Internal command to dump register\n\r"},
-    {"securePortsOnly", NULL, NULL, NULL, "securePortsOnly > enables/disables clear command ports. securePortsOnly:[on:off]\n\r"},
-    {"commandPassword", NULL, NULL, NULL, "commandPassword > Sets secure command password. commandPassword:password\n\r"},
-    {"regenCert", NULL, NULL, NULL, "regenCert > Regenerate SSL certificates\n\r"},
-    {"manifest", NULL, NULL, NULL, "manifest > Create a migration manifest document\n\r"},
-    {"mget", NULL, NULL, NULL, "mget > Get a file that's in the current manifest\n\r"},
-    {"mput", NULL, NULL, NULL, "mput > Put a file that's in the current manifest onto the drive\n\r"},
-
-
-    {"webPageEnable", NULL, NULL, NULL, "webPageEnable > enable the web page (secure socket command only)\n\r"},
-    {"webPageDisable", NULL, NULL, NULL, "webPageDisable > disable the page (secure socket command only)\n\r"},
-
-    {"xml", NULL, NULL, NULL, "xml:<type> > Return the xml of the given type \n\r"},
-    {"chg_admin_pwd", NULL, NULL, NULL, "chg_admin_pwd:<pwd> > Set a new admin password.  <pwd> is base64 encoded password\n\r"},
+#endif    
+    {"add", NULL, &g_helloCommonInterface, NULL, "add:a b > return the sum of a and b\n\r"},
+    {"set", &DCProtocol::setParam, NULL, NULL, "set:variable:param > set parameter to the variable\n\r"},
+    {"get", &DCProtocol::getParam, NULL, NULL, "get:variable > get the value of the variable\n\r"},
 
     /* The following command is just for Global Settings */
-    {"getStatus", &DCProtocol::getStatus, NULL, NULL, "getStatus returns status string.\n\r"},
     {"help", &DCProtocol::help, NULL, NULL, "\n\rhelp > shows this help\n\r"},
     {"?", &DCProtocol::help, NULL, NULL, "? > shows this help\n\r"},
 
@@ -326,9 +268,9 @@ CommandEntry s_commandList[] = {
  *
  * @return Returned STATUS_OK is the command is executed successfully, or STATUS_ERROR if there is some error.
  * <!------------------------------------------------------------------------*/
-int DCProtocol::dispatchCommand(ByteArray &byteArray, std::string &outputInfo)
+int DCProtocol::dispatchCommand(ByteArray &byteArray, int& result, std::string &outputInfo)
 {
-    int index, result;
+    int index;
     char *commandLine = (char *)byteArray.data();
     char *command = commandLine;
     char *argument = NULL;
@@ -364,6 +306,7 @@ int DCProtocol::dispatchCommand(ByteArray &byteArray, std::string &outputInfo)
             // If there is command dispatch function, then we just need to run the dispatch function.
             CommandDispatchFunc func = s_commandList[index].m_cmdFunction;
             result = (this->*func)(argument, outputInfo);
+            return (STATUS_OK);
         }
         else if (s_commandList[index].m_pInterface != NULL)
         {
@@ -392,8 +335,8 @@ int DCProtocol::dispatchCommand(ByteArray &byteArray, std::string &outputInfo)
                 resultString = pInterface->daemonControl(command, param.toStyledString());
                 getIntFromJsonString(resultString, "result", result);
                 getStringFromJsonString(resultString, "resultInfo", outputInfo);
-//                logInfo("DBus: return = %d - %s", result, outputInfo.c_str());
-                return (result);
+                logInfo("DBus: return = %d - %s", result, outputInfo.c_str());
+                return (STATUS_OK);
             }
             else
             {
@@ -417,8 +360,7 @@ int DCProtocol::dispatchCommand(ByteArray &byteArray, std::string &outputInfo)
                 resultString = pInterface->set(param.toStyledString());
                 getIntFromJsonString(resultString, "result", result);
                 getStringFromJsonString(resultString, "resultInfo", outputInfo);
-//                logInfo("DBus: return = %d - %s", command, result, outputInfo.c_str());
-                return (result);
+                return (STATUS_OK);
             }
         }
         else
@@ -426,9 +368,8 @@ int DCProtocol::dispatchCommand(ByteArray &byteArray, std::string &outputInfo)
             // No dispatch function, no DBus CommonInterface, we don't know how to dispatch this command.
             logFatal("Can't dispatch command: %s, please re-check the dispatcher function!", command);
             outputInfo = std::string("Invalid dispatch function!");
-            result = STATUS_ERROR;
+            return (STATUS_ERROR);
         }
-        return (result);
     }
     else
     {
@@ -474,43 +415,74 @@ int DCProtocol::updateUnit(char *parameter, std::string &outputInfo)
 CommandEntry s_setSettingsList[] = 
 {
     /* The following command is just for IR Daemon */
-    {"ircmdtime",  NULL,     &g_irCommonInterface,  "irCommandHoldoff",   "set time for an IR to hold off between commands in ms(example: ircmdtime:90)\n\r"},
-    {"irc2rtime",  NULL,     &g_irCommonInterface,  "irRepeatHoldoff",   "set time for an IR to hold off between command and repeat(example: irc2rtime:25)\n\r"},
+    {"muteFlag",  NULL,     &g_helloCommonInterface,  "muteFlag",   "set muteFlag to true or false (example: muteFlag:true)"},
+    {"delayTime",  NULL,     &g_helloCommonInterface,  "delayTime",   "set delayTime in ms (example: delayTime:90)"},
 
     /* The following command is just for kvm Daemon */
-    {"kvmIP",  NULL,     &g_kvmCommonInterface, "kvmIPAddress", "updateUnit > updateUnit remoteIP(example: updateUnit:192.168.1.100)\n\r"},
+//    {"kvmIP",  NULL,     &g_kvmCommonInterface, "kvmIPAddress", "updateUnit > updateUnit remoteIP(example: updateUnit:192.168.1.100)\n\r"},
 
     /* The following command is just for axmupdate */
     {"updateUnit",  &DCProtocol::updateUnit,     NULL, NULL, "updateUnit > updateUnit remoteIP(example: updateUnit:192.168.1.100)\n\r"},
 
 };
 
-int DCProtocol::setSettings(char *parameter, std::string& outputInfo)
+void DCProtocol::setHelp(char *argument, std::string& outputInfo)
+{
+    printf("g_helloCommonInterface = %p\n", g_helloCommonInterface);
+    printf("&g_helloCommonInterface = %p\n", &g_helloCommonInterface);
+
+    for (UINT32 i = 0; i < sizeof(s_setSettingsList)/ sizeof(CommandEntry); i++)
+    {
+        printf("%s - 0x%p - 0x%p - %s  - %s - %s\n", s_setSettingsList[i].m_command, 
+        (void *)s_setSettingsList[i].m_cmdFunction, (void *)s_setSettingsList[i].m_pInterface, s_setSettingsList[i].m_helpString, 
+        s_setSettingsList[i].m_setKey, s_setSettingsList[i].m_helpString);
+    }
+}
+
+int DCProtocol::setParam(char *parameter, std::string& outputInfo)
 {
     char *commandLine = parameter;
-    char *command = commandLine;
-    char *argument = NULL;
+    char *keyString = commandLine;
+    char *valueString = NULL;
     UINT32 index;
     bool commandFound = false;
     STATUS result;
 
-//    logInfo("setSettings called here, parameter = %s", parameter);
+    if ((parameter == NULL) || (strlen(parameter) == 0))
+    {
+        outputInfo = "Invalid format for set function!\r\n Valid Usage = set:$(key):$(value).  For example: set:delayTime:30";
+        return (STATUS_ERROR);
+    }
+
     for (UINT32 index = 0; index < strlen(commandLine); index++)
     {
         if (commandLine[index] == ':')
         {
             commandLine[index] = 0;
-            argument = &commandLine[index + 1];
+            valueString = &commandLine[index + 1];
             break;
         }
     }
-    logInfo("setSettings called with command = %s, param = %s", command, argument);
+
+    if (valueString == NULL)
+    {
+        outputInfo = "Invalid format for set function!\r\n Valid Usage = set:$(key):$(value).  For example: set:delayTime:30";
+        return (STATUS_ERROR);
+    }
+
+    string key = trim(string(keyString));
+    string value = trim(string(valueString));
+    if (key.empty() || value.empty())
+    {
+        outputInfo = "Invalid format for set function!\r\n Valid Usage = set:$(key):$(value).  For example: set:delayTime:30";
+        return (STATUS_ERROR);
+    }
 
     // We need to search the command in the s_setSettingsList.
     for (index = 0; index < sizeof(s_setSettingsList) / sizeof(CommandEntry); index++)
     {
         /*same name and same length*/
-        if ((strlen(command) == strlen(s_setSettingsList[index].m_command)) && !(strncmp(command, s_setSettingsList[index].m_command, strlen(command))))
+        if (key == std::string(s_setSettingsList[index].m_command))
         {
             commandFound = true;
             break;
@@ -524,7 +496,7 @@ int DCProtocol::setSettings(char *parameter, std::string& outputInfo)
         {
             // If there is command dispatch function, then we just need to run the dispatch function.
             CommandDispatchFunc func = s_setSettingsList[index].m_cmdFunction;
-            result = (this->*func)(argument, outputInfo);
+            result = (this->*func)((char *)value.c_str(), outputInfo);
             return (result);
         }
 
@@ -532,80 +504,57 @@ int DCProtocol::setSettings(char *parameter, std::string& outputInfo)
         {
             if (s_setSettingsList[index].m_setKey == NULL)
             {
-                // If m_setKey == NULL, then we will call CommonInterface::daemonControl function.
-                std::string resultString;
-                Json::Value param;
-                if (argument != NULL)
-                {
-                    param["parameter"] = argument;
-                }
-                else
-                {
-                    param["parameter"] = "";
-                }
-                //    cout << param.toStyledString() << endl;
-                CommonInterface *pInterface = *s_commandList[index].m_pInterface;
-                if (pInterface == NULL)
-                {
-                    outputInfo = std::string("Interface is not initialized.");
-                    logError("%s", outputInfo.c_str());
-                    return (STATUS_ERROR);
-                }
-
-                resultString = pInterface->daemonControl(command, param.toStyledString());
-                getIntFromJsonString(resultString, "result", result);
-                getStringFromJsonString(resultString, "resultInfo", outputInfo);
-//                logInfo("DBus: return = %d - %s", command, result, outputInfo.c_str());
-                return (result);
+                outputInfo = std::string("setParam called with: ") + key + std::string(" Failed: - Invalid interface parameter.");
+                return (STATUS_ERROR);
             }
             else
             {
                 // If m_setKey != NULL, then we will call CommonInterface::set function.
                 std::string resultString;
                 Json::Value param;
-                if (argument == NULL)
-                {
-                    logError("Invalid set parameter: no param!");
-                    return (STATUS_ERROR);
-                }
-                param[s_setSettingsList[index].m_setKey] = argument;
-                CommonInterface *pInterface = *s_commandList[index].m_pInterface;
-                if (pInterface == NULL)
-                {
-                    outputInfo = std::string("Interface is not initialized.");
-                    logError("%s", outputInfo.c_str());
-                    return (STATUS_ERROR);
-                }
+                param[s_setSettingsList[index].m_setKey] = value;
+                printf("index = %d, m_pInerface = %p\n", index, (void *)s_commandList[index].m_pInterface);
+                printf("index = %d, *m_pInerface = %p\n", index, (void*)*(s_commandList[index].m_pInterface));
 
+                CommonInterface *pInterface = *(s_commandList[index].m_pInterface);
                 resultString = pInterface->set(param.toStyledString());
                 getIntFromJsonString(resultString, "result", result);
                 getStringFromJsonString(resultString, "resultInfo", outputInfo);
-//                logInfo("DBus: return = %d - %s", command, result, outputInfo.c_str());
-                return (result);
 
+//                logError("result = %d, resultInfo = %s", result, outputInfo.c_str());
+                return (result);
             }
         }
         else
         {
             ostringstream ss;
-            ss << "setSettings called with: " << parameter << ", Return Failed - No dispatch function for this command!";
+            ss << "setParam called with: " << key << " Failed: - Invalid interface.";
             outputInfo = ss.str();
             return (STATUS_ERROR);
         }
-
     }
 
     ostringstream ss;
-    ss << "setSettings called with: " << parameter << ", Return Failed!";
+    ss << "setParam called with: " << key << " Failed: No key matched!";
+    setHelp((char *)"", outputInfo);
     outputInfo = ss.str();
 
     return (STATUS_ERROR);
 }
 
-int DCProtocol::getStatus(char *argument, std::string& outputInfo)
+int DCProtocol::getParam(char *parameter, std::string& outputInfo)
 {
-    DCSettings::getStatus(outputInfo);
-//    logInfo("DCProtocol::getStatus = %s", outputInfo.c_str());
+//    UINT32 index;
+//    bool commandFound = false;
+//    STATUS result;
+
+    if ((parameter == NULL) || (strlen(parameter) == 0))
+    {
+        outputInfo = "Invalid format for get function!\r\n Valid Usage = get:$(key).  For example: get:delayTime";
+        return (STATUS_ERROR);
+    }
+
+
+
     return (STATUS_OK);
 }
-

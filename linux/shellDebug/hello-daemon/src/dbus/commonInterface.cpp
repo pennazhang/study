@@ -35,13 +35,8 @@ std::string CommonInterface::get(const std::vector< std::string >& keyList)
 
 std::map<std::string, commonInterfaceFunctionPtr *> s_setMap = 
 {
-	{std::string("ExecuteIRCommand"), sendIR },
-	{std::string("irCommandHoldoff"), setCommandHoldOff },
-	{std::string("irRepeatHoldoff"), setRepeatHoldOff },
-	{std::string("irCommandID"), setIRCommandID },
-	{std::string("irCommands"), setIRCommands },
-	{std::string("irEnablePassThrough"), enablePassThrough },
-	{std::string("irPassThroughPeerIP"), setPeerIPAddress },
+	{std::string("delayTime"), onSetDelayTime },
+	{std::string("muteFlag"), onSetMuteFlag },
 };
 
 std::string CommonInterface::set(const std::string& jsonPair)
@@ -58,6 +53,7 @@ std::string CommonInterface::set(const std::string& jsonPair)
 		for (auto command : members) 
     	{
 			std::string value = jsonValue.operator[](command).toStyledString();
+            value = trim(value, " \"\n");
 			logInfo("DBus Set: %s = %s", command.c_str(), value.c_str());
 			
 			for (const auto &item: s_setMap)
@@ -65,18 +61,28 @@ std::string CommonInterface::set(const std::string& jsonPair)
 				if (item.first == command)
 				{
 					commonInterfaceFunctionPtr *pFunc = item.second;
+//                    logInfo("call function with : %s", value.c_str());
 					result = (*pFunc)(value, outputInfo);
+
+                    if ((result == STATUS_OK) && (outputInfo.empty()))
+                    {
+                        outputInfo = std::string("set ") + command + std::string(" = ") + value;
+                    }
 					return (resultInfo(result, outputInfo.c_str()));
 				}
 			}
+    
+            std::string info = std::string("No match for parameter: ") + command;
+        	return (resultInfo(STATUS_ERROR, info.c_str()));
 		} 
 	}
-	return (resultInfo(STATUS_ERROR, "Invalid param"));
+
+   	return (resultInfo(STATUS_ERROR, "Invalid param"));
 }
 
 std::map<std::string, commonInterfaceFunctionPtr *> s_commandMap = 
 {
-//	{std::string("sendirraw"), sendIRRaw },
+	{std::string("add"), add },
 //	{std::string("sendir"), sendIR },
 //	{std::string("testIR"), testIR },
 //	{std::string("irrepeat"), repeatIR },

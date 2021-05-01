@@ -48,100 +48,41 @@
 #include "utility.h"	// mSleep
 #include <stdlib.h>     // abs 
 
-
-int setIRCommandID(const std::string& cmdArg, std::string& outputInfo)
+int add(const std::string& cmdArg, std::string& outputInfo)
 {
-    logInfo("setIRCommandID called here, cmdArg = %s", cmdArg.c_str());
-    outputInfo = "Timeout!";
-    return (STATUS_ERROR);
+    std::vector<std::string> params = split(cmdArg, ',');
+   	for(UINT32 i = 0; i < params.size(); i++)
+    {
+        printf("param[%d] = [%s]\n", i, params[i].c_str());
+    } 
+    return (params.size());
 }
 
-int setIRCommands(const std::string& cmdArg, std::string& outputInfo)
+int onSetDelayTime(const std::string &cmdArg, std::string &outputInfo)
 {
-    logInfo("setIRCommands called here, cmdArg = %s", cmdArg.c_str());
-    outputInfo = "Timeout!";
-    return (STATUS_ERROR);
+    int value = atoi(cmdArg.c_str());
+//    logInfo("cmdArg = %s, value = %d", cmdArg.c_str(), value);
+    if (value > 10)
+    {
+        return (STATUS_OK);
+    }
+    else
+    {
+        outputInfo = std::string("Invalid delayTime: ") + cmdArg + std::string(" : ASSERT(delayTime >= 10)");
+        return (STATUS_ERROR);
+    }
 }
 
-// cmdArg = "25"
-int setCommandHoldOff(const std::string& cmdArg, std::string& outputInfo)
+int onSetMuteFlag(const std::string &cmdArg, std::string &outputInfo)
 {
-    logInfo("setCommandHoldOff called here, cmdArg = %s", cmdArg.c_str());
-    outputInfo = "Timeout!";
-    return (STATUS_ERROR);
-}
-
-// cmdArg = "25"
-int setRepeatHoldOff(const std::string& cmdArg, std::string& outputInfo)
-{
-    logInfo("setRepeatHoldOff called here, cmdArg = %s", cmdArg.c_str());
-    outputInfo = "Timeout!";
-    return (STATUS_ERROR);
-}
-
-int sendIRRaw(const std::string& cmdArg, std::string& outputInfo)
-{
-    logInfo("sendIRRaw called here, cmdArg = %s", cmdArg.c_str());
-    outputInfo = "Timeout!";
-    return (STATUS_ERROR);
-}
-
-int sendIR(const std::string& cmdArg, std::string& outputInfo)
-{
-    logInfo("sendIR called here, cmdArg = %s", cmdArg.c_str());
-    outputInfo = "Timeout!";
-    return (STATUS_ERROR);
-}
-
-int testIR(const std::string& cmdArg, std::string& outputInfo)
-{
-    logInfo("testIR called here, cmdArg = %s", cmdArg.c_str());
-    outputInfo = "Timeout!";
-    return (STATUS_ERROR);
-}
-
-int repeatIR(const std::string& cmdArg, std::string& outputInfo)
-{
-    logInfo("repeatIR called here, cmdArg = %s", cmdArg.c_str());
-    outputInfo = "Timeout!";
-    return (STATUS_ERROR);
-}
-
-int stopIR(const std::string& cmdArg, std::string& outputInfo)
-{
-    logInfo("stopIR called here, cmdArg = %s", cmdArg.c_str());
-    outputInfo = "Timeout!";
-    return (STATUS_ERROR);
-}
-
-//- set time for an IR to hold off between commands in ms
-int setIRCmdTime(const std::string& cmdArg, std::string& outputInfo)
-{
-    logInfo("setIRCmdTime called here, cmdArg = %s", cmdArg.c_str());
-    outputInfo = "Timeout!";
-    return (STATUS_ERROR);
-}
-
-//- set time for an IR to hold off between command and repeat.
-int setIRRepeatTime(const std::string& cmdArg, std::string& outputInfo)
-{
-    logInfo("setIRRepeatTime called here, cmdArg = %s", cmdArg.c_str());
-    outputInfo = "Timeout!";
-    return (STATUS_ERROR);
-}
-
-//- set time for an IR to hold off between command and repeat.
-int enablePassThrough(const std::string& cmdArg, std::string& outputInfo)
-{
-    logInfo("enablePassThrough called here, cmdArg = %s", cmdArg.c_str());
-    outputInfo = "Timeout!";
-    return (STATUS_ERROR);
-}
-
-
-int setPeerIPAddress(const std::string& cmdArg, std::string& outputInfo)
-{
-    logInfo("setPeerIPAddress called here, cmdArg = %s", cmdArg.c_str());
-    outputInfo = "Timeout!";
-    return (STATUS_ERROR);
+//    logInfo("cmdArg = %s", cmdArg.c_str());
+    if ((cmdArg == "true") || (cmdArg == "false"))
+    {
+        return (STATUS_OK);
+    }
+    else
+    {
+        outputInfo = std::string("Invalid muteFlag: ") + cmdArg + std::string(" : ASSERT((muteFlag == true) || (muteFlag == false))");
+        return (STATUS_ERROR);
+    }
 }

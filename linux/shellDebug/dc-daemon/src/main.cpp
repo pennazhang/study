@@ -19,7 +19,6 @@
 #include "config.h"
 #include "main.h"
 #include "sslLib.h"
-#include "dcUtility.h"
 #include "dcDaemonServer.h"
 
 using namespace std;
@@ -38,20 +37,20 @@ static const char *DCSERVER_OBJECT_PATH = "/com/harman/jetstream/dcDaemon";
 //static const char *KVM_OBJECT_PATH = "/com/harman/jetstream/kvmDaemon";
 
 // ir-Daemon
-static const char *IR_BUS_NAME = "com.harman.jetstream.IrDaemon";
-static const char *IR_OBJECT_PATH = "/com/harman/jetstream/irDaemon";
+static const char *HELLO_BUS_NAME = "com.harman.jetstream.helloDaemon";
+static const char *HELLO_OBJECT_PATH = "/com/harman/jetstream/helloDaemon";
 
 // av-Daemon
-static const char *AV_BUS_NAME = "com.harman.jetstream.avdaemon";
-static const char *AV_OBJECT_PATH = "/com/harman/jetstream/avdaemon";
+//static const char *AV_BUS_NAME = "com.harman.jetstream.avdaemon";
+//static const char *AV_OBJECT_PATH = "/com/harman/jetstream/avdaemon";
 
 // kvm-Daemon
-static const char *KVM_BUS_NAME = "com.harman.jetstream.KvmDaemon";
-static const char *KVM_OBJECT_PATH = "/com/harman/jetstream/KvmDaemon";
+//static const char *KVM_BUS_NAME = "com.harman.jetstream.KvmDaemon";
+//static const char *KVM_OBJECT_PATH = "/com/harman/jetstream/KvmDaemon";
 
 // serialDaemon
-static const char *SERIAL_BUS_NAME = "com.harman.jetstream.SerialDaemon";
-static const char *SERIAL_OBJECT_PATH = "/com/harman/jetstream/serialDaemon";
+//static const char *SERIAL_BUS_NAME = "com.harman.jetstream.SerialDaemon";
+//static const char *SERIAL_OBJECT_PATH = "/com/harman/jetstream/serialDaemon";
 
 /* Used to store the pid of dc-daemon */
 const char g_SingletonFileName[] = "/tmp/dc-daemon-singleton"; 
@@ -100,20 +99,20 @@ int main(int argc, char **argv)
     g_pDcDaemonServer = &server;
 
     /* Create IR CommonInterface */
-    CommonInterface irCommonInterface(conn, IR_OBJECT_PATH, IR_BUS_NAME);
-    g_irCommonInterface = &irCommonInterface;
+    CommonInterface helloCommonInterface(conn, HELLO_OBJECT_PATH, HELLO_BUS_NAME);
+    g_helloCommonInterface = &helloCommonInterface;
 
     /* Create AV CommonInterface */
-    CommonInterface avCommonInterface(conn, AV_OBJECT_PATH, AV_BUS_NAME);
-    g_avCommonInterface = &avCommonInterface;
+//    CommonInterface avCommonInterface(conn, AV_OBJECT_PATH, AV_BUS_NAME);
+//    g_avCommonInterface = &avCommonInterface;
 
     /* Create serial CommonInterface */
-    CommonInterface serialCommonInterface(conn, SERIAL_OBJECT_PATH, SERIAL_BUS_NAME);
-    g_serialCommonInterface = &serialCommonInterface;
+//    CommonInterface serialCommonInterface(conn, SERIAL_OBJECT_PATH, SERIAL_BUS_NAME);
+//    g_serialCommonInterface = &serialCommonInterface;
 
     /* Create KVM CommonInterface */
-    CommonInterface kvmCommonInterface(conn, KVM_OBJECT_PATH, KVM_BUS_NAME);
-    g_kvmCommonInterface = &kvmCommonInterface;
+//    CommonInterface kvmCommonInterface(conn, KVM_OBJECT_PATH, KVM_BUS_NAME);
+//    g_kvmCommonInterface = &kvmCommonInterface;
 
     logInfo("Goodluck!");
 
