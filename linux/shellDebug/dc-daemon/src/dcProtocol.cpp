@@ -252,9 +252,6 @@ CommandEntry s_commandList[] =
 
     /* The following command is just for Global Settings */
     {"help", &DCProtocol::help, NULL, NULL, "\n\rhelp > shows this help\n\r"},
-    {"?", &DCProtocol::help, NULL, NULL, "? > shows this help\n\r"},
-
-
 };
 
 /*---------------------------------------------------------------------------*
@@ -286,6 +283,8 @@ int DCProtocol::dispatchCommand(ByteArray &byteArray, int& result, std::string &
 
     bool commandFound = false;
     ostringstream ss;
+
+    command = strstrip(command);
 
     // We need to search the command in the s_commandList.
     for (index = 0; index < (int)sizeof(s_commandList) / (int)sizeof(CommandEntry); index++)
@@ -374,7 +373,7 @@ int DCProtocol::dispatchCommand(ByteArray &byteArray, int& result, std::string &
     else
     {
         // If we can't find the command in s_commandList, then just return STATUS_ERROR.
-        ss << "Can't found command: " << command << "\r\n";
+        ss << "Can't found the command: " << command << "\r\n";
         outputInfo = ss.str();
         return (STATUS_ERROR);
     }
@@ -394,7 +393,6 @@ int DCProtocol::lineOutVolume(char *parameter, std::string &outputInfo)
 int DCProtocol::help(char *parameter, std::string &outputInfo)
 {
     int index;
-    outputInfo = std::string("\n\r*** Help ***\n\r") + std::string("*** Control ***\n\r") + std::string("General form for> set:setting1, setting2,...\n\r");
     for (index = 0; index < (int)sizeof(s_commandList) / (int)sizeof(CommandEntry); index++)
     {
         outputInfo += std::string(s_commandList[index].m_helpString);
@@ -428,14 +426,11 @@ CommandEntry s_setSettingsList[] =
 
 void DCProtocol::setHelp(char *argument, std::string& outputInfo)
 {
-    printf("g_helloCommonInterface = %p\n", g_helloCommonInterface);
-    printf("&g_helloCommonInterface = %p\n", &g_helloCommonInterface);
+    outputInfo += ("Format -> set:key:[value]\r\n For example -> set:muteFlag:true\r\n \r\nAvailable key: \r\n");
 
-    for (UINT32 i = 0; i < sizeof(s_setSettingsList)/ sizeof(CommandEntry); i++)
+    for (UINT32 i = 0; i < sizeof(s_setSettingsList) / sizeof(CommandEntry); i++)
     {
-        printf("%s - 0x%p - 0x%p - %s  - %s - %s\n", s_setSettingsList[i].m_command, 
-        (void *)s_setSettingsList[i].m_cmdFunction, (void *)s_setSettingsList[i].m_pInterface, s_setSettingsList[i].m_helpString, 
-        s_setSettingsList[i].m_setKey, s_setSettingsList[i].m_helpString);
+        outputInfo += (std::string("    ") + std::string(s_setSettingsList[i].m_command) + std::string(" -> ") + std::string(s_setSettingsList[i].m_helpString) + std::string("\r\n"));
     }
 }
 
@@ -450,8 +445,8 @@ int DCProtocol::setParam(char *parameter, std::string& outputInfo)
 
     if ((parameter == NULL) || (strlen(parameter) == 0))
     {
-        outputInfo = "Invalid format for set function!\r\n Valid Usage = set:$(key):$(value).  For example: set:delayTime:30";
-        return (STATUS_ERROR);
+        setHelp(parameter, outputInfo);
+        return (STATUS_OK);
     }
 
     for (UINT32 index = 0; index < strlen(commandLine); index++)
