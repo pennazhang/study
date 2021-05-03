@@ -8,7 +8,9 @@ execute_process( COMMAND dbusxx-xml2cpp ${CMAKE_CURRENT_SOURCE_DIR}/xml/commonIn
 
 set(FILES_SOURCES   src/main.cpp
                     src/utility/utility.cpp
+					src/utility/thread.cpp
                     src/dbus/commonInterface.cpp
+                    src/dbus/dbusThread.cpp
 					src/helloSetting.cpp
                     )
 
@@ -30,7 +32,7 @@ target_link_libraries(${EXECUTABLE_BIN}
     dbus-c++-1
     )
 
-set (CMAKE_CXX_FLAGS "-ldbus-c++-1 -std=c++14 -lpthread -g ${CMAKE_CXX_FLAGS} -Wall")
+set (CMAKE_CXX_FLAGS "-ldbus-c++-1 -std=c++14 -pthread -g ${CMAKE_CXX_FLAGS} -Wall")
 set_property(TARGET PROPERTY CXX_STANDARD 14)
 
 install(TARGETS ${EXECUTABLE_BIN} DESTINATION bin)

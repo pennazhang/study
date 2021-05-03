@@ -33,15 +33,64 @@
 //####
 #pragma once
 
+#include <thread>
 #include "typedef.h"
-#include <iostream>
-#include <chrono>
-#include <unistd.h>
-#include "utility.h"
+
+/*---------------------------------------------------------------------------*
+ * Class: Thread
+ *---------------------------------------------------------------------------*/
+/**
+ * This is an encapsulation of a pthread in the system.  A thread type is
+ * subclassed, instantiated, and then called with run.  The thread will
+ * then run until complete.
+ *
+ * <!------------------------------------------------------------------------*/
+class Thread 
+{
+    protected:
+        BOOL m_isRunning;
+        BOOL m_needStop;
+        void * m_threadReturn;
+        UINT32 m_threadID;
+        std::string m_threadName;
+        
+    public:
+        Thread(const char * threadName = NULL);
+        virtual ~Thread();
+
+        UINT32 getThreadID() { return m_threadID; };
+
+        std::string getThreadName() { return m_threadName; }
+
+        void setThreadName(const char * threadName);
+
+        /* Can be called by any Thread and any times, just trigger the quit process, never block!!! */
+        virtual void quit() { };
+
+        /* Must NOT be called by this Thread */
+        void start();
+
+        /* Must NOT be called by this Thread. it will block the caller! */
+        void stop();
+
+        /* Must NOT be called by this Thread */
+        void * getThreadReturn() { return m_threadReturn; }
+
+        /* Can be called by this Thread */
+        /* If called by this thread, it always returns true. */
+        bool isRunning(void) { return this->m_isRunning; }
+
+        /* Must be called by this Thread */
+        static void mSleep(unsigned int milliseconds);
+
+        virtual STATUS onStart() {  return STATUS_OK; };
+
+        // just called by the this thread itself.
+        virtual void onClose() = 0;
+
+    protected:
+        virtual void *run() = 0;
+        static void runThread(void *aThread);
+};
 
 
-int add(const std::string& cmdArg, std::string& outputInfo);
-
-int onSetDelayTime(const std::string &cmdArg, std::string &outputInfo);
-
-int onSetMuteFlag(const std::string &cmdArg, std::string &outputInfo);

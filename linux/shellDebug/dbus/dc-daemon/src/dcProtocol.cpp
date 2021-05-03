@@ -424,7 +424,7 @@ CommandEntry s_setSettingsList[] =
 
 };
 
-void DCProtocol::setHelp(char *argument, std::string& outputInfo)
+void DCProtocol::setHelp(std::string& outputInfo)
 {
     outputInfo += ("Format -> set:key:[value]\r\n For example -> set:muteFlag:true\r\n \r\nAvailable key: \r\n");
 
@@ -445,7 +445,7 @@ int DCProtocol::setParam(char *parameter, std::string& outputInfo)
 
     if ((parameter == NULL) || (strlen(parameter) == 0))
     {
-        setHelp(parameter, outputInfo);
+        setHelp(outputInfo);
         return (STATUS_OK);
     }
 
@@ -508,10 +508,10 @@ int DCProtocol::setParam(char *parameter, std::string& outputInfo)
                 std::string resultString;
                 Json::Value param;
                 param[s_setSettingsList[index].m_setKey] = value;
-                printf("index = %d, m_pInerface = %p\n", index, (void *)s_commandList[index].m_pInterface);
-                printf("index = %d, *m_pInerface = %p\n", index, (void*)*(s_commandList[index].m_pInterface));
+                printf("index = %d, m_pInerface = %p\n", index, (void *)s_setSettingsList[index].m_pInterface);
+                printf("index = %d, *m_pInerface = %p\n", index, (void*)*(s_setSettingsList[index].m_pInterface));
 
-                CommonInterface *pInterface = *(s_commandList[index].m_pInterface);
+                CommonInterface *pInterface = *(s_setSettingsList[index].m_pInterface);
                 resultString = pInterface->set(param.toStyledString());
                 getIntFromJsonString(resultString, "result", result);
                 getStringFromJsonString(resultString, "resultInfo", outputInfo);
@@ -531,25 +531,115 @@ int DCProtocol::setParam(char *parameter, std::string& outputInfo)
 
     ostringstream ss;
     ss << "setParam called with: " << key << " Failed: No key matched!";
-    setHelp((char *)"", outputInfo);
+    setHelp(outputInfo);
     outputInfo = ss.str();
 
     return (STATUS_ERROR);
 }
 
+typedef int (DCProtocol::*GetDispatchFunc)(std::string &outputInfo);
+
+struct GetEntry
+{
+    const char *m_key;
+    GetDispatchFunc m_getFunction;  /* Dispatch function. If not NULL, then we will call the dispatch function directly */
+    CommonInterface **m_pInterface;     /* DBus CommonInterface. If (m_cmdFunction == NULL), and (m_pInterface != NULL), then we will call the DBus CommonInterface */
+    const char *m_helpString;   /* Help information */
+};
+
+GetEntry s_getSettingsList[] = 
+{
+    /* The following command is just for IR Daemon */
+    {"muteFlag",  NULL,     &g_helloCommonInterface,  "get muteFlag. (example: true or false)"},
+    {"delayTime",  NULL,     &g_helloCommonInterface,  "get delayTime in ms. (example: 90)"},
+
+    /* The following command is just for axmupdate */
+//    {"updateUnit",  &DCProtocol::updateUnit,     NULL, NULL, "updateUnit > updateUnit remoteIP(example: updateUnit:192.168.1.100)\n\r"},
+
+};
+
+void DCProtocol::getHelp(std::string& outputInfo)
+{
+    outputInfo += ("Format -> get:key\r\n For example -> get:muteFlag:true\r\n \r\nAvailable key: \r\n");
+
+    for (UINT32 i = 0; i < sizeof(s_getSettingsList) / sizeof(GetEntry); i++)
+    {
+        outputInfo += (std::string("    ") + std::string(s_getSettingsList[i].m_key) + std::string(" -> ") + std::string(s_getSettingsList[i].m_helpString) + std::string("\r\n"));
+    }
+}
+
 int DCProtocol::getParam(char *parameter, std::string& outputInfo)
 {
-//    UINT32 index;
-//    bool commandFound = false;
-//    STATUS result;
+    UINT32 index;
+    bool commandFound = false;
+    STATUS result;
 
     if ((parameter == NULL) || (strlen(parameter) == 0))
     {
-        outputInfo = "Invalid format for get function!\r\n Valid Usage = get:$(key).  For example: get:delayTime";
-        return (STATUS_ERROR);
+        getHelp(outputInfo);
+        return (STATUS_OK);
     }
 
+    string key = trim(string(parameter));
 
+    // We need to search the command in the s_setSettingsList.
+    for (index = 0; index < sizeof(s_getSettingsList) / sizeof(GetEntry); index++)
+    {
+        /*same name and same length*/
+        if (key == std::string(s_getSettingsList[index].m_key))
+        {
+            commandFound = true;
+            break;
+        }
+    }
 
-    return (STATUS_OK);
+    if (commandFound == true)
+    {
+        // We found the command in the s_getSettingsList.
+        if (s_setSettingsList[index].m_cmdFunction != NULL)
+        {
+            // If there is command dispatch function, then we just need to run the dispatch function.
+            GetDispatchFunc func = s_getSettingsList[index].m_getFunction;
+            result = (this->*func)(outputInfo);
+            return (result);
+        }
+
+        else if (s_setSettingsList[index].m_pInterface != NULL)
+        {
+            std::string resultString;
+            // If m_setKey != NULL, then we will call CommonInterface::set function.
+            std::vector<std::string> keyList = { key };
+            CommonInterface *pInterface = *(s_getSettingsList[index].m_pInterface);
+            resultString = pInterface->get(keyList);
+            cout << "get method returned: " << resultString << endl << endl;
+
+            int result = 0;
+            getIntFromJsonString(resultString, "result", result);
+            if (result == -1)
+            {
+                getStringFromJsonString(resultString, "resultInfo", outputInfo);
+                return (STATUS_ERROR);
+            }
+            else
+            {
+                getStringFromJsonString(resultString, key.c_str(), outputInfo);
+                outputInfo = trim(outputInfo, "\"\r\n");
+                return (STATUS_OK);
+            }
+        }
+        else
+        {
+            ostringstream ss;
+            ss << "getParam called with: " << key << " Failed: - Invalid interface.";
+            outputInfo = ss.str();
+            return (STATUS_ERROR);
+        }
+    }
+
+    ostringstream ss;
+    ss << "setParam called with: " << key << " Failed: No key matched!";
+    getHelp(outputInfo);
+    outputInfo = ss.str();
+
+    return (STATUS_ERROR);
 }

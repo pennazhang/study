@@ -34,62 +34,18 @@
 #pragma once
 
 #include "typedef.h"
+#include <iostream>
+#include <chrono>
+#include <unistd.h>
 #include "utility.h"
-#include "byteArray.h"
 
-/*---------------------------------------------------------------------------*
- * Class: DCProtocol
- *---------------------------------------------------------------------------*/
-/**
- * A DCProtocol is only used to dispatch Direct Control Protocol.
- * The format of direct Control command is :  Command [:parameter]
- * For example:
- *              sendir:toshibaPowerOn
- *              testIR
- *
- * A command should start with [a:z | A:Z] and end with [\r|\n|;]. This is very important!!!
- * 
- * <!------------------------------------------------------------------------*/
-class DCProtocol
-{
-public:
-    DCProtocol();
-    ~DCProtocol();
 
-    // append the commands received from socket to protocol buffer.
-    void appendCommand(UINT8 *buffer, int len);
+int add(const std::string& cmdArg, std::string& outputInfo);
 
-    // get a command from protocol buffer.
-    BOOL getNextCommand(ByteArray& byteArray);
+int onSetDelayTime(const std::string &cmdArg, std::string &outputInfo);
 
-    // dispatch a command read from protocol buffer.
-    int dispatchCommand(ByteArray& byteArray, int& result, std::string& outputInfo);
+int onSetMuteFlag(const std::string &cmdArg, std::string &outputInfo);
 
-    // to judge the start character of a direct control command.
-    bool isValidStartChar(char c);
+std::string  onGetDelayTime();
 
-    // to judge a end character of a direct control command.
-    bool isValidEndChar(char c);
-
-    // Protocol dispatch function:
-    //- argument: linout volume (0-100)
-    int lineOutVolume(char *argument, std::string& outputInfo);
-
-    //- argument: None
-    int help(char *argument, std::string& outputInfo);
-
-    //- Update firmware. 
-    int updateUnit(char *parameter, std::string &outputInfo);
-
-    int setParam(char *argument, std::string& outputInfo);
-
-    int getParam(char *argument, std::string& outputInfo);
-    
-    void setHelp(char *argument, std::string& outputInfo);
-
-protected:
-    // used to store all commands.
-    UINT8 m_protocolBuffer[BUFFER_SIZE];
-    int m_efficientLen;    
-};
-
+std::string  onGetMuteFlag();

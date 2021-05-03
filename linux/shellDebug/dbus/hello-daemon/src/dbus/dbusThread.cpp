@@ -31,20 +31,14 @@
 //#    the Commercial Computer Software Restricted Rights at 48 CFR 52.227-19,
 //#    as applicable.
 //####
-
-#include <iostream>
-#include <string>
-#include <sysexits.h>
-#include <signal.h>
-#include <unistd.h>
+/*-------------------------------------------------------------------------*/
+#include <stdlib.h>
 #include <string.h>
-#include <pthread.h>
-#include <arpa/inet.h>
-#include <dbus-c++-1/dbus-c++/dbus.h>
-#include "config.h"
-#include "commonInterface.h"
 #include "utility.h"
-#include "typedef.h"
+#include "dbusThread.h"
+#include "commonInterface.h"
+#include "config.h"
+
 //
 // Global Variables.
 //
@@ -53,41 +47,42 @@ static const char *OBJECT_PATH = "/com/harman/jetstream/helloDaemon";
 clock_t g_StartClock = 0;
 
 // Dbus connections.
-DBus::BusDispatcher*    g_dbusDispatcherPtr;
-DBus::Connection*       g_dbusConnPtr;
+DBus::BusDispatcher*    g_dbusDispatcherPtr = NULL;
+DBus::Connection*       g_dbusConnPtr = NULL;
 
 //
 // DBus Interface.
 //
 CommonInterface* g_pCommonInterface = NULL;
 
-//
-// SingleonProcess is used to enusre that only one application instance is running in the system.
-// Used to store the pid of ir-daemon */
-const char g_SingletonFileName[] = "/tmp/hello-daemon-singleton"; 
-//
-// Clean up all resource in this file before quit the appliation.
-//
-void cleanup()
+DBusThread::DBusThread(const char * threadName) : Thread(threadName)
 {
-    logDebug("[%s]%s.", DAEMON_NAME, __FUNCTION__);
 
-    if (g_pCommonInterface) {
-        delete g_pCommonInterface;
-    }
-    if (g_dbusDispatcherPtr) {
-        delete g_dbusDispatcherPtr;
-    }
-    if (g_dbusConnPtr) {
-        delete g_dbusConnPtr;
+}
+
+void DBusThread::quit() 
+{ 
+    if (g_dbusDispatcherPtr)
+    {
+        logInfo("call quit()");
+        g_dbusDispatcherPtr->leave();
     }
 }
 
-//
-// New resource for DBus interface, but won't start the DBus Thread
-//
-void startDBusDispatcher()
+void DBusThread::onClose()
 {
+    return;
+}
+
+void* DBusThread::run()
+{
+    // Initial the start clock.
+    g_StartClock = clock();
+
+
+
+    // Setup DBUS connection to cmsfs since we need config early
+    // Create and start the DBus dispatcher
     g_dbusDispatcherPtr = new DBus::BusDispatcher();
 
     DBus::_init_threading();
@@ -99,69 +94,29 @@ void startDBusDispatcher()
 	g_dbusConnPtr->request_name(BUS_NAME);
 	std::string objectPath(OBJECT_PATH);
 	g_pCommonInterface = new CommonInterface(*g_dbusConnPtr, objectPath.c_str());
-}
-
-//
-// Set flag to quit the DBus thread, if the DBus thread is already start.
-//
-void stopDBus()
-{
-    if (g_dbusDispatcherPtr)
-    {
-        g_dbusDispatcherPtr->leave();
-    }
-}
-
-//
-// Handle to dispatch "Ctrl + C"
-//
-void sighandler(int sig)
-{
-    logDebug("[%s]%s.", DAEMON_NAME, __FUNCTION__);
-
-    stopDBus();
-    exit(1);
-}
-
-void  mainLoop(int argc, char** argv);
-//
-// Process Start.
-//
-STATUS main(int argc, char** argv)
-{
-    SingletonProcess singletonProcess(g_SingletonFileName);
-
-    /* Only one instance for this application */
-    if (singletonProcess.isSingleton() == false)
-    {
-        fprintf(stderr, "Another instance is already running.\n");
-        exit(1);
-   }
-
-    // Initial the start clock.
-    g_StartClock = clock();
-
-
-//    return (0);
-    // Signal Handlers
-    signal(SIGTERM, sighandler);
-    signal(SIGINT, sighandler);
-
-    // Setup DBUS connection to cmsfs since we need config early
-    // Create and start the DBus dispatcher
-    startDBusDispatcher();
-
-    // get the global settings.
-
-    logDebug("Processing...");
 
 
     g_dbusDispatcherPtr->enter();
 
+    logInfo("quit DBusThread1...");
+
     // Finished running...
-    cleanup();
+    if (g_pCommonInterface) 
+    {
+        delete g_pCommonInterface;
+    }
 
-    logDebug("Daemon exited.");
+    if (g_dbusConnPtr) 
+    {
+        delete g_dbusConnPtr;
+    }
 
-    exit(STATUS_OK);
+    if (g_dbusDispatcherPtr) 
+    {
+        delete g_dbusDispatcherPtr;
+    }
+        
+    logInfo("quit DBusThread2...");
+    return (NULL);
 }
+

@@ -31,58 +31,20 @@
 //#    the Commercial Computer Software Restricted Rights at 48 CFR 52.227-19,
 //#    as applicable.
 //####
+#pragma once
 
-#include <iostream>
-#include <string>
-#include <sysexits.h>
-#include <signal.h>
-#include <unistd.h>
-#include <string.h>
-#include <pthread.h>
-#include <arpa/inet.h>
-#include <dbus-c++-1/dbus-c++/dbus.h>
-#include <math.h>
-#include "config.h"
-#include "helloSetting.h"
-#include <fcntl.h>
-#include "utility.h"	// mSleep
-#include <stdlib.h>     // abs 
+#include "thread.h"
+#include "typedef.h"
 
-int add(const std::string& cmdArg, std::string& outputInfo)
+class DBusThread : public Thread
 {
-    std::vector<std::string> params = split(cmdArg, ',');
-   	for(UINT32 i = 0; i < params.size(); i++)
-    {
-        printf("param[%d] = [%s]\n", i, params[i].c_str());
-    } 
-    return (params.size());
-}
+public:
+    DBusThread(const char * threadName = NULL);
+    
+    /* Can be called by any Thread and any times, just trigger the quit process, never block!!! */
+    virtual void quit();
+    virtual void onClose();
 
-int onSetDelayTime(const std::string &cmdArg, std::string &outputInfo)
-{
-    int value = atoi(cmdArg.c_str());
-//    logInfo("cmdArg = %s, value = %d", cmdArg.c_str(), value);
-    if (value > 10)
-    {
-        return (STATUS_OK);
-    }
-    else
-    {
-        outputInfo = std::string("Invalid delayTime: ") + cmdArg + std::string(" : ASSERT(delayTime >= 10)");
-        return (STATUS_ERROR);
-    }
-}
-
-int onSetMuteFlag(const std::string &cmdArg, std::string &outputInfo)
-{
-//    logInfo("cmdArg = %s", cmdArg.c_str());
-    if ((cmdArg == "true") || (cmdArg == "false"))
-    {
-        return (STATUS_OK);
-    }
-    else
-    {
-        outputInfo = std::string("Invalid muteFlag: ") + cmdArg + std::string(" : ASSERT((muteFlag == true) || (muteFlag == false))");
-        return (STATUS_ERROR);
-    }
-}
+protected:
+    virtual void *run();
+};
