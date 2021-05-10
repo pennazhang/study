@@ -25,8 +25,6 @@
 #include <stdio.h>
 #include <iostream>
 
-#define PCM_DEVICE "plughw:0"
-
 typedef unsigned int UINT32 ;
 typedef unsigned short UINT16;
 typedef unsigned char UINT8;
@@ -80,6 +78,7 @@ struct WAVE_HEADER
 
 bool g_format_le = true;
 double g_amplifier[] = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
+char *g_pcmDevice; // "plughw:0" or "plughw:1"
 
 bool readWaveHeader(FILE *fp, unsigned int *rate, unsigned int *channels, unsigned int * sampleDepthInByte, unsigned int *sampleCount, unsigned short *format)
 {
@@ -340,12 +339,15 @@ int main(int argc, char **argv) {
 	int buff_size, loops;
 	FILE * wave_file;
 
-	if (argc < 3) {
-		printf("\nUsage: %s <wave_file_name> [format_le|format_be] <channel_0_amplifier> <channel_1_amplifier> ...\n", argv[0]);
-		printf("    for example: %s 48k_8bit.wav format_be 0.5 2.0 \n\n", argv[0]);
+	if (argc < 4) {
+		printf("\nUsage: %s <alsa_device> <wave_file_name> [format_le|format_be] <channel_0_amplifier> <channel_1_amplifier> ...\n", argv[0]);
+		printf("    for example: %s plug_hw:0 48k_8bit.wav format_be 0.5 2.0 \n\n", argv[0]);
 		return -1;
 	}
-	char *waveFileName = argv[1];
+	
+	g_pcmDevice = argv[1];
+	
+	char *waveFileName = argv[2];
 	printf("fileName = %s\n", waveFileName);
 	wave_file = getWaveData(waveFileName, &rate, &channels, &sampleDepthInByte, &sampleCount);
 	if (wave_file == NULL)
@@ -359,23 +361,23 @@ int main(int argc, char **argv) {
 	strcat(captureFileName, ".capture");
 	FILE *capture_file = fopen(captureFileName, "wb");
 
-	if (strcmp(argv[2], "format_le") == 0)
+	if (strcmp(argv[3], "format_le") == 0)
 	{
 		g_format_le = true;
 	} 
-	else if (strcmp(argv[2], "format_be") == 0)
+	else if (strcmp(argv[3], "format_be") == 0)
 	{
 		g_format_le = false;
 	}
 	else
 	{
-		printf("Invalid format param: [%s]. Valid format must be \"format_le\", or \"format_be\"!\n", argv[2]);
+		printf("Invalid format param: [%s]. Valid format must be \"format_le\", or \"format_be\"!\n", argv[3]);
 		exit(0);
 	}
 
-	for (int i = 3; i < argc; i++)
+	for (int i = 4; i < argc; i++)
 	{
-		if ((i - 3) >= 8)
+		if ((i - 4) >= 8)
 		{
 			// We support 8 channels at most!
 			break;
@@ -407,11 +409,11 @@ int main(int argc, char **argv) {
 	std::cout << "seconds = " << seconds << std::endl;
 
 	/* Open the PCM device in playback mode */
-	if (pcm = snd_pcm_open(&pcm_handle, PCM_DEVICE,
+	if (pcm = snd_pcm_open(&pcm_handle, g_pcmDevice,
 					SND_PCM_STREAM_PLAYBACK, 0) < 0) 
 	{
 		printf("ERROR: Can't open \"%s\" PCM device. %s\n",
-					PCM_DEVICE, snd_strerror(pcm));
+					g_pcmDevice, snd_strerror(pcm));
 		exit (0);
 	}
 
@@ -564,7 +566,7 @@ int main(int argc, char **argv) {
 		}
 
 		frames = pcm / channels / sampleDepthInByte;
-		printf("left %d, read = %d, fames = %ld\n", loops, pcm, frames);
+//		printf("left %d, read = %d, fames = %ld\n", loops, pcm, frames);
 
 		// Save to capture file.
 		fwrite(buff, 1, pcm, capture_file);
