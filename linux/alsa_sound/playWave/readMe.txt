@@ -26,3 +26,33 @@ https://www.cnblogs.com/ranson7zop/p/7657874.html
 
 该程序可以在intel和ARM等小端字节序的
 
+输出信息：
+pzhang@BS04:~/workspace/study/linux/alsa_sound/playWave$ ./playWave plughw:0 48k_24bit.wav format_be 0.5 2.0 
+fileName = 48k_24bit.wav
+total File Len = 11163504	（wave文件长度）
+format block len 16
+channel = 2
+SamplePerSecond = 48000
+BytesPerSecond = 288000		（每秒钟需要288000个字节的内容 = SamplePerSecond * BytesPerSample）
+BytesPerSample = 6
+BitsPerSample = 24
+data Block Len = 11163360
+sampleCount = 1860560
+Channel 1 will be amplified at 0.500000
+Channel 2 will be amplified at 2.000000
+rate = 48000
+channels = 2
+sampleDepthInByte = 3
+sampleCount = 1860560		（每个channel所含的采样点总数）
+seconds = 38
+!!-----------------------------pcm_format = S24_3BE!
+PCM name: 'plughw:0'		（播放设备名）
+PCM state: PREPARED
+channels: 2 (stereo)
+rate: 48000 bps
+seconds: 38					（总的播放时间）
+frames = 256				（每次播放需要256个采样点）	snd_pcm_hw_params_get_period_size(params, &frames, 0);	printf("frames = %ld\n", frames);
+period_size = 1536			（所有channel每次播放需要缓冲的空间为1536字节）
+period time = 5333			（每次播放所占用的时间，单位为微秒）	snd_pcm_hw_params_get_period_time(params, &tmp, NULL); 	printf("period time = %d\n", tmp);
+buffer_size = 16384			(整个播放缓冲区所占用的空间为16384字节)
+loops = 7267				

@@ -334,14 +334,14 @@ int main(int argc, char **argv) {
 	unsigned int rate, channels, seconds, sampleDepthInByte, sampleCount;
 	snd_pcm_t *pcm_handle;
 	snd_pcm_hw_params_t *params;
-	snd_pcm_uframes_t frames;
+	snd_pcm_uframes_t frames, bufferSize;
 	char *buff;
-	int buff_size, loops;
+	int period_size, loops;
 	FILE * wave_file;
 
 	if (argc < 4) {
 		printf("\nUsage: %s <alsa_device> <wave_file_name> [format_le|format_be] <channel_0_amplifier> <channel_1_amplifier> ...\n", argv[0]);
-		printf("    for example: %s plug_hw:0 48k_8bit.wav format_be 0.5 2.0 \n\n", argv[0]);
+		printf("    for example: %s plughw:0 48k_24bit.wav format_be 0.5 2.0 \n\n", argv[0]);
 		return -1;
 	}
 	
@@ -523,25 +523,33 @@ int main(int argc, char **argv) {
 
 	/* Allocate buffer to hold single period */
 	snd_pcm_hw_params_get_period_size(params, &frames, 0);
+	printf("peirod frames = %ld\n", frames);
 
-	printf("frames = %ld\n", frames);
-
-	buff_size = frames * channels * sampleDepthInByte;
-	printf("buff_size = %d\n", buff_size);
-	buff = (char *) malloc(buff_size);
-
+	period_size = frames * channels * sampleDepthInByte;
+	printf("period_size = %d\n", period_size);
+	buff = (char *) malloc(period_size);
+	
 	snd_pcm_hw_params_get_period_time(params, &tmp, NULL);
 	printf("period time = %d\n", tmp);
 
-	loops = sampleCount * channels * sampleDepthInByte / buff_size;
+	/* Get Buffer Size */
+	snd_pcm_hw_params_get_buffer_size(params, &bufferSize);  
+	printf("buffer_size = %ld\n", bufferSize);
+
+	loops = sampleCount * channels * sampleDepthInByte / period_size;
 	printf("loops = %d\n", loops);
+
+    snd_output_t* output = NULL;
+    snd_output_stdio_attach(&output, stdout, 0);
+    printf("-------------------  dump device -----------------\n");
+    snd_pcm_dump(pcm_handle, output);
 
 	for ( ; loops > 0; loops--) 
 	{
 		int channelIndex = 0;
 
-		pcm = fread(buff, 1, buff_size, wave_file);
-		if (pcm != buff_size) 
+		pcm = fread(buff, 1, period_size, wave_file);
+		if (pcm != period_size) 
 		{
 			printf("Early end of file.\n");
 			break;
