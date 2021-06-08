@@ -19,9 +19,10 @@ export ARCH=arm64
 echo CROSS_COMPILE=$CROSS_COMPILE
 export ConfigManager_DIR="/home/pzhang/workspace/cacheData/elina_sdk/sysroots/aarch64-elina-linux/usr/lib/cmake/ConfigManager"
 export JarvisCivet_DIR="/home/pzhang/workspace/cacheData/elina_sdk/sysroots/aarch64-elina-linux/usr/lib/cmake"
-#export CPLUS_INCLUDE_PATH=~/workspace/cacheData/elina_1.16.16/sysroots/aarch64-elina-linux/usr/include/
-#export LD_LIBRARY_PATH=~/workspace/cacheData/elina_1.16.16/sysroots/aarch64-elina-linux/usr/lib
+#export CPLUS_INCLUDE_PATH=~/workspace/cacheData/elina_sdk/sysroots/aarch64-elina-linux/usr/include/
+#export LD_LIBRARY_PATH=~/workspace/cacheData/elina_sdk/sysroots/aarch64-elina-linux/usr/lib
 export PKG_CONFIG_SYSROOT_DIR=~/workspace/cacheData/elina_sdk/sysroots/aarch64-elina-linux
+export SDK_DIR=~/workspace/cacheData/elina_sdk/sysroots/aarch64-elina-linux
 export CMAKE_SYSTEM_PROCESSOR=aarch64
 
 echo "Javis jetstream SDK environment has been set."
