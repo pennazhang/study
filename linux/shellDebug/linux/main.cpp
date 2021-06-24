@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/types.h>
+#include "shellFrame.h"
 
 using namespace std;
 
@@ -29,8 +30,9 @@ void Stop(int signo)
 
 void cmdLoop(void)
 {
-    std::string lpszCommand;
+    std::string command;
     SYSWORD ulResult;
+    int len;
 //    char lpszSymbol[MAX_SYMBOL_COUNT][MAX_SYMBOL_LENGTH];
 //    int nSymbolCount;
     //  BOOL bFlag;
@@ -54,63 +56,54 @@ void cmdLoop(void)
 		return;
 	}
 
+    mSleep(1000);
 	
     for (;;)
     {
+        char lpszCommand[256];
         outputDebug("\n->");
-#if 0
-		bool ret = isFdReadable(STDIN_FILENO, 10);
-		if (ret == true)
+        fflush(stdout);
+
+        for (;;)
+        {
+    		bool ret = isFdReadable(STDIN_FILENO, 10);
+            if (ret != true)
+            {
+                mSleep(1000);
+            }
+            else
+            {
+                break;
+            }
+        }
+//		if (ret == true)
 		{
 			len = read(STDIN_FILENO, lpszCommand, sizeof(lpszCommand));
 			if (len > 1)
 			{
 				// we need to delect the tail character: '\n'
-				len--;
-				buffer[len] = 0;
-				if(strncasecmp(buffer, "exit", 4) == 0)
-				{
-					printf("exit\n");
-					break;
-				}
-				else
-				{
-					printf("Press \"exit\" to quit...\n");
-				}
-				
-			}			
-		}
-#else
-		cin >> lpszCommand;
+//				len--;
+				lpszCommand[len] = 0;
 
-        if ((lpszCommand.compare("bye") == 0) ||
-            (lpszCommand.compare("exit") == 0))
-        {
-            break;
-        }
-#endif
-#if 0
-        /* 判断是否有内容 */
-        if (lpszCommand[0] != ':')
-        {
-            nSymbolCount = ReadSymbolTable(lpszCommand, lpszSymbol);
-            if (nSymbolCount == 0)
-            {
-                continue;
+                replaceString(lpszCommand, "\t\r\n", ' ');
+                trimStringAtHead(lpszCommand);
+                trimStringAtTail(lpszCommand);
+                if (strcmp(lpszCommand, "exit") == 0)
+                {
+                    break;
+                }
+
+                if (explainCmd(lpszCommand, &ulResult) == STATUS_OK)
+                {
+                    printf("\nExecute function successfully, Result = 0x%lX = %ld\n", ulResult,
+                                ulResult);
+                }
+                else
+                {
+                    printf("Execute function failed!\n");
+                }
             }
         }
-
-        /* 解释输入是否正确 */
-        if (ExplainCmd(lpszCommand, &ulResult) == VOS_OK)
-        {
-            Diag_Output("\nExecute function successfully, Result = 0x%lX = %ld\n", ulResult,
-                        ulResult);
-        }
-        else
-        {
-            Diag_Output("Execute function failed!\n");
-        }
-#endif	
     }
 
 	endShellThread();
