@@ -84,7 +84,7 @@ PASSWORD="12345678"
 createDockerFile (){
     rm -rf $2
     cp -f $1 $2
-    sed -i "s/LINUX:VERSION/$BASE_DOCKER_IMAGE/g" $2
+    sed -i "s#LINUX:VERSION#${BASE_DOCKER_IMAGE}#g" $2
     sed -i "s/USER_NAME/$USER_NAME/g" $2
     sed -i "s/USER_ID/$USER_ID/g" $2
     sed -i "s/GROUP_ID/$GROUP_ID/g" $2
