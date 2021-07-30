@@ -1,7 +1,7 @@
 FROM LINUX:VERSION
  
 RUN apt-get update && \
-	apt-get -y install apt-utils sudo && \
+	apt-get -y install apt-utils sudo realpath && \
 	apt-get -y install git iproute2 iputils-ping x11-utils vim dos2unix zip unzip  x11-apps wget cpio dos2unix iputils-ping net-tools iproute2 nano rsync gnupg && \
 	apt-get -y install build-essential libsdl2-dev cmake python
  

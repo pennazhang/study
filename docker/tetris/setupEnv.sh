@@ -23,10 +23,10 @@ sudo apt update
 #sudo bash -e "$MYDIR/setupEnv_root.sh" "$1"
 
 # install dependencies
-if [ ! -f /tmp/.done_dvi_apt ]; then
+if [ ! -f /tmp/.done_tetris_apt ]; then
     # development
     sudo apt-get install -y git build-essential cmake autogen autoconf libtool m4 pkg-config bc device-tree-compiler python wget cpio unzip rsync gnupg2 libc6-i386 lib32stdc++6 lib32z1
-    touch /tmp/.done_dvi_apt
+    touch /tmp/.done_tetris_apt
 fi
 
 echo "setupEnv.sh is called successfully!"
