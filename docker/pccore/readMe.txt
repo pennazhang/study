@@ -1,4 +1,4 @@
-
+PCCore is the firmeare of soundcraft-studer-pccore which is based on a X86 processor.
 
 Build Docker:
 	./buildDockerImage.sh

@@ -1,7 +1,9 @@
 FROM LINUX:VERSION
  
+ENV DEBIAN_FRONTEND=noninteractive TZ="Asia/Hong_Kong"
+
 RUN apt-get update && \
-	apt-get -y install apt-utils sudo realpath && \
+	apt-get -y install apt-utils sudo && \
 	apt-get -y install git iproute2 iputils-ping x11-utils vim dos2unix zip unzip  x11-apps wget cpio dos2unix iputils-ping net-tools iproute2 nano rsync gnupg && \
 	apt-get -y install build-essential libsdl2-dev cmake python
  
@@ -11,8 +13,9 @@ RUN groupadd USER_NAME -g GROUP_ID && \
 	echo USER_NAME:PASSWORD | chpasswd && \
 	echo "USER_NAME ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
-    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+RUN apt-get update && apt-get install -y locales mlocate && rm -rf /var/lib/apt/lists/* \
+    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
+	&& updatedb
 
 ENV LANG en_US.utf8
 

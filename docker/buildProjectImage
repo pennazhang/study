@@ -99,7 +99,12 @@ if [ -z "$imageExistFlag" ];then
     echo ------------------------------------------------------------------------------
     #Build the docker image.
     
-    createDockerFile Dockerfile Dockerfile.tmp  $USER_NAME $USER_ID  $GROUP_ID $PASSWORD
+    if [ -f ${PROJECT_DIR}/Dockerfile ]; then
+        createDockerFile ${PROJECT_DIR}/Dockerfile Dockerfile.tmp  $USER_NAME $USER_ID  $GROUP_ID $PASSWORD
+    else
+        createDockerFile Dockerfile Dockerfile.tmp  $USER_NAME $USER_ID  $GROUP_ID $PASSWORD
+    fi
+	
     docker build -f Dockerfile.tmp -t $DOCKER_IMAGE_NAME:0.1 .
     echo build $DOCKER_IMAGE_NAME:0.1 OK!
     rm Dockerfile.tmp

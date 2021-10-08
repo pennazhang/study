@@ -24,9 +24,14 @@ checkDir=()
 #checkDir[1]="~/workspace/cacheData/imx7-gcc1"
 
 checkFile=()
-#checkFile[0]="~/workspace/cacheData/qt-everywhere-opensource-src-5.3.2.tar.gz"
-#checkFile[1]="~/workspace/cacheData/qt-everywhere-opensource-src-5.6.1.tar.gz"
-#checkFile[2]="~/workspace/cacheData/qt-everywhere-src-5.10.1.tar.gz"
+#get the file from: \\amxsb01.ad.harman.com\Engineering\ENGINE\Firmware\ModeroX-G5\ANDROID-SDK\LB_ModeroE-G5_Tetris_1_8_1
+checkFile[0]="$HOME_DIR/workspace/cacheData/android-sdk_LB_ModeroE-G5_Tetris_1_8_1_linux-x86-updated.tar.gz"
+
+# get the file by the command:  svn checkout http://uss.amx.internal/scm/trunk/tools/java/lib lib && tar zcvf uss.amx.internal.lib.tar.gz lib
+checkFile[1]="$HOME_DIR/workspace/cacheData/uss.amx.internal.lib.tar.gz"
+
+# download this file from oracle website.
+checkFile[2]="$HOME_DIR/workspace/cacheData/jdk-6u45-linux-x64.bin"
 	
 
 #This function will be called before building the docker image. Normally it should return 0.
